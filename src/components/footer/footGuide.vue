@@ -51,9 +51,11 @@
     position: fixed;
     bottom:0;
     left:0;
+    z-index: 50;
     height:50px;
     width:100%;
     border-top:1px solid #eee;
+    background-color:#fff;
     box-shadow: 0 0 3px 0 rgba(155,143,143,0.6);
     overflow: hidden;
     .tab{

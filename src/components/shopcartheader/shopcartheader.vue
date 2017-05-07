@@ -1,42 +1,43 @@
 <template>
-    <div class="mine">
-      <!--header-->
-      <div class="mine-header">
-        <div class="header-left"></div>
-        <div class="header-title">京东登录</div>
-      </div>
-
-
-    </div>
+  <div class="shopcart-header">
+    <div class="header-title">购物车</div>
+    <div class="header-right"></div>
+  </div>
 </template>
 
-<script>
-    export default{};
+<script type="text/ecmascript-6">
+  export default {
+    data() {
+      return {
+
+      }
+    },
+    components: {}
+  };
 </script>
 
 <style lang="scss">
-
   $hei: 39px;
-  .mine-header{
+  .shopcart-header{
     display:flex;
+    flex-wrap:nowrap;
     height:$hei;
 
     .header-title{
       flex:1;
-      padding-right:15px;
+      padding-left:35px;
       text-align: center;
       font-size:20px;
       line-height: 39px;
-      color:#848689;
     }
 
-    .header-left{
+    .header-right{
       width:20px;
       height:20px;
-      margin:10px 9.5px;
+      margin:13px 9.5px;
       background:url('https://st.360buyimg.com/common/commonH_B/images/2015/jd-sprites.png?v=12') no-repeat;
       background-size:200px 200px;
-      background-position: -21px -1px;
+      background-position: -62px -1px;
     }
   }
 </style>

@@ -31,6 +31,7 @@
     flex-flow: row nowrap;
     height: 39px;
     width:100%;
+    background-color:#fff;
 
   .logo{
     width:39px;
@@ -73,7 +74,7 @@
     font-size:12px;
     line-height: 39px;
     text-align: center;
-    color:#fff;
+    color:#000;
   }
   }
 </style>

@@ -1,6 +1,9 @@
+// rem转px
 @mixin wid($size) {
   width: ($size / 23.4375)*1rem;
 }
 @mixin hei($size) {
   height: ($size / 23.4375)*1rem;
 }
+
+

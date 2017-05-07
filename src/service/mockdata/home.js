@@ -109,52 +109,55 @@ export default {
     }
 
   ],
-  "expressNews": [
-    {
-      "text": "露腿季到了，放假清凉上街就选牛仔短裙"
-    },
-    {
-      "text": "日本药妆店的5大“口碑王”面膜"
-    },
-    {
-      "text": "明星同款菜教你撩心撩胃撩迷妹！"
-    },
-    {
-      "text": "森田海外旗舰店开业199减50！"
-    }
-  ],
+  "expressNews": {
+    "image": "https://st.360buyimg.com/m/images/index/jd-news-tit.png",
+    "list": [
+      {
+        "text": "露腿季到了，放假清凉上街就选牛仔短裙"
+      },
+      {
+        "text": "日本药妆店的5大“口碑王”面膜"
+      },
+      {
+        "text": "明星同款菜教你撩心撩胃撩迷妹！"
+      },
+      {
+        "text": "森田海外旗舰店开业199减50！"
+      }
+    ]
+  },
   "seckill": {
     "titleImg": "https://m.360buyimg.com/mobilecms/jfs/t3451/307/73678054/7807/dd9134d/57fdff2eNb7cd186f.png",
     "startTime": "12点场",
     "titleText": "秒杀给你更好的",
     "list": [
       {
-        "image": "https://m.360buyimg.com/mobilecms/s220x220_jfs/t5467/173/78303354/170200/65c7eea5/58f85217N1e0a9e86.jpg!q70.jpg",
+        "image": "https://m.360buyimg.com/mobilecms/s220x220_jfs/t3076/168/1594054634/117143/cb42bca1/57d0a9b2N870f3c2f.jpg!q70.jpg",
         "old": "88",
         "now": "258"
       },
       {
-        "image": "https://m.360buyimg.com/mobilecms/s220x220_jfs/t4513/212/2173631461/328170/5e521301/58ec2700Nd5a246c0.jpg!q70.jpg",
+        "image": "https://m.360buyimg.com/mobilecms/s220x220_jfs/t4666/231/3496483430/352453/45b96e8b/58fef30eNee24d8b3.jpg!q70.jpg",
         "old": "2928",
         "now": "8998"
       },
       {
-        "image": "https://m.360buyimg.com/mobilecms/s220x220_jfs/t5401/262/345480554/274559/3a02a160/58fdd897Nbce58989.jpg!q70.jpg",
+        "image": "https://m.360buyimg.com/mobilecms/s220x220_jfs/t4276/278/2550623897/406024/1ab46b80/58d389b6N9dbac7d8.jpg!q70.jpg",
         "old": "129",
         "now": "699"
       },
       {
-        "image": "",
+        "image": "https://m.360buyimg.com/mobilecms/s220x220_jfs/t4300/18/3797756635/341336/69e5a6fe/58e83febN659a7f14.jpg!q70.jpg",
         "old": "2928",
         "now": "8998"
       },
       {
-        "image": "https://m.360buyimg.com/mobilecms/s220x220_jfs/t5401/262/345480554/274559/3a02a160/58fdd897Nbce58989.jpg!q70.jpg",
+        "image": "https://m.360buyimg.com/mobilecms/s220x220_jfs/t5218/208/855422118/209477/4a70f9bd/5908470aN2ae06b83.jpg!q70.jpg",
         "old": "129",
         "now": "699"
       },
       {
-        "image": "https://m.360buyimg.com/mobilecms/s220x220_jfs/t4513/212/2173631461/328170/5e521301/58ec2700Nd5a246c0.jpg!q70.jpg",
+        "image": "https://m.360buyimg.com/mobilecms/s220x220_jfs/t3901/24/1523308676/237648/fb80084c/587c3b67N6b97369f.jpg!q70.jpg",
         "old": "2928",
         "now": "8998"
       }
@@ -162,7 +165,7 @@ export default {
     "floorItem": "https://m.360buyimg.com/mobilecms/jfs/t5173/229/841882914/100519/b7fd644/59083e49N3d8604fb.jpg!q70.jpg",
     "graphicItem": [
       {
-        "spaceImg": "https://st.360buyimg.com/m/images/index/load/col02-con.png",
+        "spaceImg": "https://m.360buyimg.com/mobilecms/jfs/t4642/240/3937139534/4303/b59e292/59074406N6c803a66.jpg!q70.jpg",
         "title": "发现好货",
         "desc": "发现品质生活"
       },
@@ -172,14 +175,14 @@ export default {
         "desc": "实时热卖尖货"
       },
       {
-        "spaceImg": "https://m.360buyimg.com/n1/jfs/t4861/319/1946643150/51257/4aa929b0/58f63b73N53306c54.jpg!q70.jpg",
+        "spaceImg": "https://m.360buyimg.com/n1/jfs/t3100/213/8573389060/362607/11c923db/58c6631eN24231771.jpg!q70.jpg",
         "title": "闪购",
         "desc": "品牌特卖"
       }
     ]
   },
   "loveLife": {
-    "titleImg": "https://m.360buyimg.com/mobilecms/jfs/t2878/152/3484829401/8909/e1cf0ca/578de36bNae7bb54a.png!q70.jpg",
+    "titleImg": "https://st.360buyimg.com/m/images/index/floor-tit.png",
     "tetleTextImg": "https://m.360buyimg.com/mobilecms/jfs/t2878/152/3484829401/8909/e1cf0ca/578de36bNae7bb54a.png!q70.jpg",
     "list": [
       {
