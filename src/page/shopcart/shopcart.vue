@@ -64,7 +64,7 @@
 
     <!-- 购物车显示 -->
     <div class="shopcart-detail" v-show="isShowCart">
-      <div class="selectall" :class="{'is-selected': checkAllFlag}" @click="checkAll(!checkAllFlag)">全选</div>
+      <div class="selectall" :class="{'is-selected': checkAllFlag || isSelectAll}" @click="checkAll(!checkAllFlag)">全选</div>
       <div class="count">
         总额:
         <span class="total-price" v-show="calcTotalPrice">￥{{totalAllPrice}}</span>
@@ -96,6 +96,8 @@
         dataRecommend: homeData.recommend,
 
         selectGoods : [], // 被选中的商品
+        typeNum: -1, // 购物车商品类型的数量
+        typeSlectedNum: 0, // 被选中商品的数量
         isShowCart : false, // 是否显示购物车
         isCanBuy: true, // 推荐是否可以点击购买
 
@@ -144,7 +146,7 @@
         this.$store.dispatch('addShopCart', item); // <-- 提交给Vuex action addShopCart处理 更新Vuex购物车信息
 
         this.selectGoods = this.$store.state.selectedGoods; // 获取 Vuex.state.selectedGoods 更新后购物车的状态
-
+        this.typeNum = this.$store.state.selectedGoods.length;
 
         /* 这个做法可以避免再次点击，但是讲购物车里的商品全部删除后也不能再次添加-- 这里改变的是dataRecommend循环的item 但是foods如何操作它呢？
         if (typeof item.isCanBuy == 'undefined') { // 之前没点击过才能再次点击
@@ -162,8 +164,7 @@
       changeMoney: function (item, action, index) { //商品数量增加和减少
 
         if (action>0) { //点击了+
-          this.selectGoods[index].count ++;
-
+          item.count ++;
           this.$store.dispatch({ // <-- 提交购物车更改，使导航徽章数量变化
             type: 'updateShopCart',
             change: item,
@@ -172,8 +173,7 @@
           });
 
         } else { //点击了-
-          this.selectGoods[index].count --;
-
+          item.count --;
           this.$store.dispatch({ // <-- 提交购物车更改，使导航徽章数量变化
             type: 'updateShopCart',
             change: item,
@@ -182,8 +182,16 @@
           });
 
           if (!item.count) {
-            delete item.checked;
 
+            this.typeNum --;
+
+            // 1 避免商品商品从来未被选中时，将改商品添加的购物车数量减少到0时，被选中的商品类型的数量也-1的问题
+            // 2 避免被选中的商品取消选中后，... (取消选中我已经做了-1，再-1就多操作一次)
+            if (!(typeof item.checked == 'undefined') && item.checked) {
+              this.typeSlectedNum--;
+            };
+
+            delete item.checked;
             this.$store.dispatch({ // <-- 提交购物车更改，使导航徽章数量变化
               type: 'updateShopCart',
               change: item,
@@ -213,9 +221,18 @@
         if (typeof item.checked == 'undefined') { // 判断item.checked是否存在
           Vue.set(item, 'checked', true); //向item全局注册了一个属性checked值为true
           // this.$set(item, 'checked', true);//局部注册item.checke
+          this.typeSlectedNum++;
 
         } else { //存在--即至少点击了一次后
           item.checked = !item.checked;
+          item.checked > 0 ? this.typeSlectedNum++ : this.typeSlectedNum--; // 当前item被选中时，被选中商品类型的数量+1，没选中时-1
+
+          if (this.typeNum === this.typeSlectedNum) { // 此时将全选另一个切换标识也设为true，避免通过上面单个类型全选，全选样式变化，再次点击底部全选还是全选而不是取消全选问题
+            this.checkAllFlag = true;
+          } else {
+            this.checkAllFlag = false;
+          }
+
         };
 
         this.$store.dispatch({ // <-- 提交购物车更改 添加属性 check:
@@ -231,6 +248,13 @@
       /* 全选/全不选 */
       checkAll: function (flag) {
         this.checkAllFlag = flag;
+
+        if (flag) { //
+          this.typeSlectedNum = this.typeNum;
+        } else {
+          this.typeSlectedNum = 0;
+        }
+
         this.selectGoods.forEach((item, index) => {
           // 这里存在一个问题当用户直接点击全选
           // 此时item.check还未存在这个属性 所以要检测一下
@@ -266,11 +290,14 @@
 
     },
     computed: {
-      // 动态显示购物车里的商品数
-      /*selectGoods() {
-        // console.log(this.$store.state.selectedGoods);
-        return this.$store.state.selectedGoods;
-      }*/
+      isSelectAll() {
+          if (this.typeNum === this.typeSlectedNum) { // 此时将全选另一个切换标识也设为true，避免通过上面单个类型全选，全选样式变化，再次点击底部全选还是全选而不是取消全选问题
+              this.checkAllFlag = true;
+          } else {
+             this.checkAllFlag = false;
+          }
+          return this.typeNum === this.typeSlectedNum;
+      }
     },
     components: {
       shopcartHeader,
