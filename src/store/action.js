@@ -11,6 +11,8 @@ export default {
     commit('GET_SHOPCART')
   },
 
+
+  /* 添加商品到购物车里面 */
   addShopCart({ commit, state }, selectedGoods) {
     // console.log( selectedGoods );
     commit('ADD_SHOPCART', selectedGoods);
@@ -21,6 +23,12 @@ export default {
       selectedGoods: 10
     });
   }*/
+
+  /* 更新购物车里的商品信息 */
+  updateShopCart({commit}, nowSelectedGoods) {
+    // console.log(nowSelectedGoods);
+    commit('UPDATE_SHOPCART', nowSelectedGoods);
+  },
 
 };
 

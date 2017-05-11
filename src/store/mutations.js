@@ -14,6 +14,7 @@ import {
 const ADD_SHOPCART = 'ADD_SHOPCART';
 const ADD_SHOPCARTCOUNT = 'ADD_SHOPCARTCOUNT';
 const GET_SHOPCART = 'GET_SHOPCART';
+const UPDATE_SHOPCART = 'UPDATE_SHOPCART';
 
 export default {
 
@@ -29,5 +30,22 @@ export default {
   /* 获取购物车里的商品 */
   [GET_SHOPCART](state, playload) {
     return state.selectedGoods;
+  },
+
+  /* 更新购物车里商品的信息 */
+  [UPDATE_SHOPCART](state, playload) {
+    let UPDATE = 1;
+    let REMOVE = 0;
+    let index = playload.index;
+    let selectGood = playload.change;
+    let action = playload.action;
+
+    if ( action === UPDATE ) {
+      // 更新购物车中的某项
+      state.selectedGoods.splice(index, 1, selectGood);
+    } else if ( action === REMOVE ){
+      // 删除购物车中的某项
+      state.selectedGoods.splice(index, 1);
+    }
   }
 };

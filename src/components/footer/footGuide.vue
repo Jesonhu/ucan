@@ -46,7 +46,15 @@
     },
     computed: mapState({
       addShopCartGoodsNum: function(state) {
-          return state.selectedGoods.length;
+          if (state.selectedGoods.length) {
+              let tatalCount = 0;
+              state.selectedGoods.forEach((item) => {
+                  tatalCount += item.count;
+              })
+              return tatalCount;
+          } else {
+            return false;
+          }
       }
     }),
     components: {

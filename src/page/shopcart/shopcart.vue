@@ -9,7 +9,7 @@
       <ul class="list">
         <li class="item" v-for="(item, index) in selectGoods" v-show="item.count">
           <div class="item-body">
-            <div class="select" @click="selectedProduct(item)" :class="{'is-selected':item.checked}">选</div>
+            <div class="select" @click="selectedProduct(item, index)" :class="{'is-selected':item.checked}">选</div>
             <div class="img-wrap">
               <img :src="item.img" alt="" class="img">
             </div>
@@ -112,7 +112,7 @@
         // console.log( mapState );
         // console.log( mapActions );\
         // this.$store.dispatch('getShopCart'); // <-- 触发Vuex.store action
-        // this.selectGoods = this.$store.state.selectedGoods;
+        this.selectGoods = this.$store.state.selectedGoods;
     },
     filter: {  //局部过滤器
 
@@ -120,7 +120,7 @@
     methods: {
       showDetail() {
         // console.log(this.dataRecommend.list);
-        console.log(this.foods);
+        // console.log(this.selectGoods);
         // console.log(that.isShowCart);
       },
       /* 增加商品到购物车里 */
@@ -134,11 +134,16 @@
           item.count++;
         }
         // this.selectGoods.push(item);
+
+        // Vuex store action 方式1
         /*this.$store.dispatch({
           type: 'addShopCart',
           item: item
         });*/
-        this.$store.dispatch('addShopCart', item); // <--
+        // Vuex store action 方式2
+        this.$store.dispatch('addShopCart', item); // <-- 提交给Vuex action addShopCart处理 更新Vuex购物车信息
+
+        this.selectGoods = this.$store.state.selectedGoods; // 获取 Vuex.state.selectedGoods 更新后购物车的状态
 
 
         /* 这个做法可以避免再次点击，但是讲购物车里的商品全部删除后也不能再次添加-- 这里改变的是dataRecommend循环的item 但是foods如何操作它呢？
@@ -155,13 +160,35 @@
 
       /* 添加或减少 */
       changeMoney: function (item, action, index) { //商品数量增加和减少
+
         if (action>0) { //点击了+
-          item.count++;
+          this.selectGoods[index].count ++;
+
+          this.$store.dispatch({ // <-- 提交购物车更改，使导航徽章数量变化
+            type: 'updateShopCart',
+            change: item,
+            action: 1,
+            index: index
+          });
+
         } else { //点击了-
-          item.count--;
+          this.selectGoods[index].count --;
+
+          this.$store.dispatch({ // <-- 提交购物车更改，使导航徽章数量变化
+            type: 'updateShopCart',
+            change: item,
+            action: 1,
+            index: index
+          });
+
           if (!item.count) {
-            this.foods.splice(index, 1);
-            if (!this.foods.length) this.isShowCart = false;
+            this.$store.dispatch({ // <-- 提交购物车更改，使导航徽章数量变化
+              type: 'updateShopCart',
+              change: item,
+              action: 0,
+              index: index
+            });
+            if (!this.selectGoods.length) this.isShowCart = false;
           }
         }
         this.calcTotalPrice(); // <--
@@ -171,7 +198,7 @@
         this.totalAllPrice = 0;
         this.totalAllNum = 0;
 
-        this.foods.forEach((item, index) => {
+        this.selectGoods.forEach((item, index) => {
           if (item.checked) { // 说明这个商品选中了
             this.totalAllPrice += item.price*item.count;
             this.totalAllNum += item.count;
@@ -179,20 +206,30 @@
         })
       },
       /* 选中或取消 */
-      selectedProduct: function (item) {
+      selectedProduct: function (item,index) {
+
         if (typeof item.checked == 'undefined') { // 判断item.checked是否存在
           Vue.set(item, 'checked', true); //向item全局注册了一个属性checked值为true
-          // this.$set(item, 'checked', true);//局部注册item.checked
+          // this.$set(item, 'checked', true);//局部注册item.checke
+
         } else { //存在--即至少点击了一次后
           item.checked = !item.checked;
         };
+
+        this.$store.dispatch({ // <-- 提交购物车更改 添加属性 check:
+          type: 'updateShopCart',
+          change: item,
+          action: 1,
+          index: index
+        });
+
         this.calcTotalPrice(); // <--
       },
 
       /* 全选/全不选 */
       checkAll: function (flag) {
         this.checkAllFlag = flag;
-        this.foods.forEach((item, index) => {
+        this.selectGoods.forEach((item, index) => {
           // 这里存在一个问题当用户直接点击全选
           // 此时item.check还未存在这个属性 所以要检测一下
           if(typeof item.checked == 'undefined'){
@@ -201,6 +238,14 @@
           }else{
             item.checked = this.checkAllFlag;
           }
+
+          this.$store.dispatch({ // <-- 提交购物车更改 添加属性 check:
+            type: 'updateShopCart',
+            change: item,
+            action: 1,
+            index: index
+          });
+          
         });
         this.calcTotalPrice(); // <--
       },
@@ -216,13 +261,14 @@
 
     },
     watch: {
-      selectGoods() {
-          console.log($store.state.selectedGoods);
-          return this.$store.state.selectedGoods;
-      }
+
     },
     computed: {
-
+      // 动态显示购物车里的商品数
+      /*selectGoods() {
+        // console.log(this.$store.state.selectedGoods);
+        return this.$store.state.selectedGoods;
+      }*/
     },
     components: {
       shopcartHeader,
