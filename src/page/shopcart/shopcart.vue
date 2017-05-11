@@ -182,6 +182,8 @@
           });
 
           if (!item.count) {
+            delete item.checked;
+
             this.$store.dispatch({ // <-- 提交购物车更改，使导航徽章数量变化
               type: 'updateShopCart',
               change: item,
@@ -245,7 +247,7 @@
             action: 1,
             index: index
           });
-          
+
         });
         this.calcTotalPrice(); // <--
       },
