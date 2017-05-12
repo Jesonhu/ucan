@@ -5,6 +5,7 @@ import home from '../page/home/home';
 import list from '../page/list/list';
 import mm from '../page/mm/mm';
 import shopcart from '../page/shopcart/shopcart.vue';
+import goods from '../page/goods/goods';
 import mine from '../page/mine/mine';
 
 export default [
@@ -19,6 +20,10 @@ export default [
   {
     path: '/list',
     component: list
+  },
+  {
+    path: '/product/:page',
+    component: goods
   },
   {
     path: '/mm',

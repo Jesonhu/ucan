@@ -9,8 +9,8 @@
     <div class="recommend-body">
       <ul class="list">
         <li class="item"
-            v-for="(item,index) in dataRecommend.list">
-          <a href="" class="item-link">
+            v-for="(item, index) in dataRecommend.list">
+          <router-link :to="`/product/${item.id}.html`" class="item-link">
             <img v-lazy="item.img" alt="" class="item-img">
             <p class="desc linetwo">{{item.text}}</p>
             <div class="body-bottom">
@@ -22,7 +22,7 @@
 
               <div class="similar">看相似</div>
             </div>
-          </a>
+          </router-link>
         </li>
       </ul>
     </div>

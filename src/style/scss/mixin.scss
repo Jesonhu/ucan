@@ -1,9 +1,39 @@
-// rem转px
-@mixin wid($size) {
-  width: ($size / 23.4375)*1rem;
-}
-@mixin hei($size) {
-  height: ($size / 23.4375)*1rem;
+// scroll 外层盒子
+@mixin scroll-outwrap($top: 0px, $bottom: 0px) {
+  position:absolute;
+  top: $top;
+  bottom: $bottom;
+  z-index: 51;
+  width: 100%;
+  overflow: hidden;
 }
 
+// rem转px 采用iphone5=320 html的font-size
+@mixin wid($size) {
+  width: ($size / 20)*1rem;
+}
+@mixin hei($size) {
+  height: ($size / 20)*1rem;
+}
+
+// 响应式图片
+@mixin response-img{
+  margin:0 auto;
+  display:block;
+  max-width: 100%;
+}
+
+// 文字显示省略号
+@mixin single-line-ellipsis{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+@mixin mult-line-ellipse($lineNum: 2){
+  overflow : hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: $lineNum;
+  -webkit-box-orient: vertical;
+}
 
