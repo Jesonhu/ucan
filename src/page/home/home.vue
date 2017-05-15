@@ -51,7 +51,7 @@
           <img :src="dataExpressNews.image" alt="">
         </a>
         <div class="con-main">
-          <ul class="list">
+          <ul class="list" id="scrollTopList">
             <li class="item" v-for="item in dataExpressNews.list">
               <a href="" class="ellipsis">{{item.text}}</a>
             </li>
@@ -222,6 +222,7 @@
       that = this;
       this.$nextTick(function() {
         this._seckillTime();
+        this._autoScrollTop();
       })
     },
     watch: {
@@ -383,6 +384,82 @@
           }
           return str;
         }
+      },
+
+      /* 秒杀文字向上滚动 */
+      _autoScrollTop() {
+        let oList = document.getElementById('scrollTopList'),
+            index = 0,
+            length = oList.children.length,
+            hei = oList.children[0].clientHeight,
+            timer;
+
+        auto();
+        function auto() {
+
+            timer = setInterval(function() {
+              if (index < length-1) {
+                index ++;
+                //  oList.style.marginTop = -index * hei + 'px';
+                that.moveFn( oList, {
+                    marginTop: (-index * hei) + 'px'
+                }, 500);
+              } else {
+                index = 0;
+                oList.style.marginTop = `0px`;
+                return index;
+              }
+            }, 2000);
+
+        };
+        oList.addEventListener('mouseenter', function() {
+           clearInterval(timer);
+        });
+        oList.addEventListener('mouseleave', function() {
+           auto();
+        });
+
+        function getStyle(obj, arr) {
+          if(obj.currentStyle){
+            return obj.currentStyle[arr];    //针对ie
+          } else {
+            return document.defaultView.getComputedStyle(obj, null)[arr];
+          }
+        };
+      },
+      moveFn(obj, attrs, time, callback) {
+        window.requestAnimationFrame = window.requestAnimationFrame || function (a){return setTimeout(a,1000/60)};
+        window.cancelAnimationFrame = window.cancelAnimationFrame || clearTimeout;
+
+        let startVal = {},
+            endVal = {},
+            initTime = new Date(); // 保存初始时间
+
+        for (let key in attrs) {
+            startVal[key] = parseFloat( getStyle(obj, key) ); // <--
+            endVal[key] = parseFloat( attrs[key] ); // 讲目标转换为数字
+        };
+        move();
+        function move() {
+          let prop = ( new Date() - initTime ) / time;
+          prop >= 1 ? prop = 1 : requestAnimationFrame(move);
+          for (let key in attrs) {
+              if ( key === 'opacity' ) {
+                  let o = startVal[key] + prop * (endVal[key] - startVal[key]);
+                  obj.style[key] = o;
+                  obj.style.filter = "alpha(opacity="+ 100*o +")";
+              } else {
+                  obj.style[key] = startVal[key] + prop * (endVal[key] - startVal[key]) + 'px';
+              }
+          };
+          if (prop === 1) {
+              callback && callback.call(obj);
+          }
+        };
+
+        function getStyle(obj, attr) {
+          return obj.currentStyle ? obj.currentStyle[attr] : getComputedStyle(obj)[attr];
+        }
       }
     },
     components: {
@@ -541,11 +618,11 @@
       }
       .con-main{
         flex:1;
+        overflow: hidden;
         .list{
           position:relative;
           width:95%;
           height:100%;
-          overflow: hidden;
           .item{
             font-size: 12px;
             a{
