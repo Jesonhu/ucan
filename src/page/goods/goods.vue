@@ -1,11 +1,32 @@
 <template>
     <div class="goods-detail-wrap">
-      <history-header :title="title"></history-header>
 
-      <div class="goods-detail-body">
+      <history-header :title="title" :currentTab="currentTab" @currentTabFn="currentTabFn"></history-header>
+
+      <transition name="move">
+      <!-- tab1内容 -->
+        <div class="goods-detail-body" v-show="currentTab === 0" :key="0">
+          <div class="img-list"><img :src="productDetail.img" alt="" class="img"></div>
+          <div class="body-main-text">
+            <h2 class="text-title">{{productDetail.text}}</h2>
+            <div class="desc"></div>
+            <div class="price-main">
+              <div class="price-left">
+                <span class="price-slide">￥</span>
+                <div class="price">{{productDetail.price}}</div>
+                <span class="price-slide">.00</span>
+              </div>
+              <div class="notice">降价通知</div>
+            </div>
+          </div>
+        </div>
+      </transition>
+
+      <!-- tab2内容 -->
+      <div class="goods-detail-body" v-show="currentTab === 1" :key="1">
         <div class="img-list"><img :src="productDetail.img" alt="" class="img"></div>
         <div class="body-main-text">
-          <h2 class="text-title">{{productDetail.text}}</h2>
+          <h2 class="text-title">222{{productDetail.text}}</h2>
           <div class="desc"></div>
           <div class="price-main">
             <div class="price-left">
@@ -17,6 +38,24 @@
           </div>
         </div>
       </div>
+
+      <!-- tab3内容 -->
+      <div class="goods-detail-body" v-show="currentTab === 2" :key="2">
+        <div class="img-list"><img :src="productDetail.img" alt="" class="img"></div>
+        <div class="body-main-text">
+          <h2 class="text-title">333{{productDetail.text}}</h2>
+          <div class="desc"></div>
+          <div class="price-main">
+            <div class="price-left">
+              <span class="price-slide">￥</span>
+              <div class="price">{{productDetail.price}}</div>
+              <span class="price-slide">.00</span>
+            </div>
+            <div class="notice">降价通知</div>
+          </div>
+        </div>
+      </div>
+
     </div>
 </template>
 
@@ -32,12 +71,13 @@
         id: '', // 获取路由传递过来的参数:page
 
         dataProduct: [],
-        productDetail: null // 保存当前产品详情
+        productDetail: null, // 保存当前产品详情
+
+        currentTab: 0
       };
     },
     created() {
       // 请求获取数据
-      // console.log('created');
       let that = this;
       this._initData();
     },
@@ -51,6 +91,10 @@
             this.productDetail = item;
           }
         });
+      },
+      /* 处理header点击后的效果 */
+      currentTabFn: function(index) {
+        this.currentTab = index;
       }
     },
     /*activated() {

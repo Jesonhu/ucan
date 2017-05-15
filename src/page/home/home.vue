@@ -70,9 +70,9 @@
           <img :src="dataSeckill.titleImg" alt="">
           <span class="time-start">{{dataSeckill.startTime}}</span>
           <div class="time-timing">
-            <span>00</span>:
-            <span>00</span>:
-            <span>00</span>
+            <span id="secskill-hour">00</span>:
+            <span id="secskill-min">00</span>:
+            <span id="secskill-sec">00</span>
           </div>
         </a>
         <a href="" class="title-more">
@@ -220,6 +220,9 @@
     },
     created() {
       that = this;
+      this.$nextTick(function() {
+        this._seckillTime();
+      })
     },
     watch: {
       /* 秒杀监控图片变化 */
@@ -279,6 +282,8 @@
           that.addBg = false;
         }
       };
+
+
     },
     methods: {
       /**
@@ -287,9 +292,11 @@
       /* 滚动框初始化 */
       _initSeckillScroll() {
         if (!this.seckillScroll) {
-          this.seckillScroll = new BScroll(this.$refs.dataSeckill, {
-            click: true
-          });
+          this.$refs.dataSeckill.onload = function() {
+            this.seckillScroll = new BScroll(this.$refs.dataSeckill, {
+              click: true
+            });
+          }
         } else {
           this.scroll.refresh();
         }
@@ -299,8 +306,8 @@
         if (this.dataSeckill.list) {
           let picWidth = 108;
           let width = picWidth * this.dataSeckill.list.length;
-          this.$refs.seckillList.style.width = width + 'px';
           this.$nextTick(() => {
+            this.$refs.seckillList.style.width = width + 'px';
             if (!this.picScroll) {
               this.picScroll = new BSscroll(this.$refs.seckillWrapper, {
                 scrollX: true,
@@ -324,6 +331,58 @@
         this.topSwiperImgHei = $imgHei;
 
         $swiperFloorBannerWrap.css('height',$floorBannerImgHei);
+      },
+
+      /* 倒计时 */
+      _seckillTime() {
+        var endTime = new Date();
+        endTime.setFullYear(2017);
+        endTime.setMonth(4); // 月份从0开始
+        endTime.setDate(15);
+        endTime.setHours(15);
+        endTime.setMinutes(38);
+        endTime.setSeconds(0);
+        var endTimer = endTime.getTime();//获取结束时间
+        //console.log(endTimer);
+
+        var secskill_hour = document.getElementById("secskill-hour"),
+            secskill_min = document.getElementById("secskill-min"),
+            secskill_sec = document.getElementById("secskill-sec"),
+            nowTime, secs, hour, leaveSec, min, sec, str;
+
+        // 时间换算
+        function changeTime(time,obj1,obj2,obj3){
+          nowTime = new Date();
+          secs = (time - nowTime.getTime())/1000; // 秒
+
+          if (secs > 0) // 满足计时条件，计时
+          {
+            hour =  Math.floor(secs / 3600); // 换算为时
+            leaveSec = secs % 3600; // 换算小时后剩下秒钟
+            min = Math.floor(leaveSec / 60); // 换算为分
+            sec = Math.floor(leaveSec % 60); // 换算为秒
+
+            obj1.innerHTML = addZero(hour,2);
+            obj2.innerHTML = addZero(min,2);
+            obj3.innerHTML = addZero(sec,2);
+          } else { // 不满足计时条件
+            clearInterval(timer);
+          }
+        }
+        var timer = setInterval(function(){
+          changeTime(endTimer, secskill_hour, secskill_min, secskill_sec);
+        },1000);
+        changeTime(endTimer, secskill_hour, secskill_min, secskill_sec);
+
+        // 补零功能
+        function addZero(time,n){
+          str = '' + time;
+          while (str.length < n)
+          {
+            str = "0" + time;
+          }
+          return str;
+        }
       }
     },
     components: {

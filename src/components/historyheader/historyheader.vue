@@ -2,9 +2,9 @@
     <div class="history-header-wrap">
       <div class="header-prev" @click="$router.go(-1)">返回</div>
       <div class="header-title">
-        <div class="title-tab">商品</div>
-        <div class="title-tab">详情</div>
-        <div class="title-tab">评价</div>
+        <div class="title-tab" :class="{'is-active': selfCurrentTab===0}" @click="toggleTab(0)">商品</div>
+        <div class="title-tab" :class="{'is-active': selfCurrentTab===1}" @click="toggleTab(1)">详情</div>
+        <div class="title-tab" :class="{'is-active': selfCurrentTab===2}" @click="toggleTab(2)">评价</div>
       </div>
       <div class="header-next">...</div>
     </div>
@@ -12,16 +12,24 @@
 
 <script>
     export default{
-        props: ['title'],
+        props: ['title','currentTab'],
         data() {
             return {
-
+              selfCurrentTab : this.currentTab // 避免直接修改prop
             };
+        },
+        methods: {
+          toggleTab(index) {
+            this.selfCurrentTab = index;
+            this.$emit('currentTabFn', index);
+          }
         }
     };
 </script>
 
 <style lang="scss">
+  @import "../../style/scss/mixin";
+
   $basic_hei: 39px;
 
   .history-header-wrap{
@@ -32,6 +40,7 @@
     line-height: $basic_hei;
     color:#000;
     font-size: 12px;
+    @include bottom-1px-border;
 
     .header-prev{
       flex: 0 0 35px;
@@ -51,6 +60,20 @@
 
     .title-tab{
       flex:1;
+      position:relative;
+      z-index: 50;
+
+      &.is-active:after{
+        content:'';
+        position: absolute;
+        left:0;
+        bottom:0px;
+        z-index: 51;
+        display:block;
+        width:100%;
+        height:2px;
+        background:#000;
+      }
     }
 
     .header-next{
