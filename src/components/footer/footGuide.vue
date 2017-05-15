@@ -38,13 +38,24 @@
   import { Tabbar, TabItem, Badge } from 'mint-ui';
   import { mapState, mapActions } from 'vuex';
 
+  let obj = {
+    a: 1,
+    b: 2
+  };
+
   export default {
     data() {
       return  {
 
       }
     },
-    computed: mapState({
+    created() {
+
+    },
+    computed: {
+      ...mapState([
+        'selectedGoods'
+      ]),
       addShopCartGoodsNum: function(state) {
           if (state.selectedGoods.length) {
               let tatalCount = 0;
@@ -56,7 +67,7 @@
             return false;
           }
       }
-    }),
+    },
     components: {
       Badge
     }
