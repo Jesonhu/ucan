@@ -221,8 +221,8 @@
     created() {
       that = this;
       this.$nextTick(function() {
-        this._seckillTime();
-        this._autoScrollTop();
+        this._seckillTime(); // <--
+        this._autoScrollTop(); // <--
       })
     },
     watch: {
@@ -325,11 +325,10 @@
       _calculateSwiperHei() {
         let $imgHei = $('.swiper-img').height();
         let $swiperWrap = $('.swiper-wrap');
-        let $floorBannerImgHei = $('.floor-banner-img').height();
+        let $floorBannerImgHei = $('.floor-banner-img').height() > 0 ? $('.floor-banner-img').height() : '77px';
         let $swiperFloorBannerWrap = $('.floor-banner-list');
 
-        $swiperWrap.css('height',$imgHei);
-        this.topSwiperImgHei = $imgHei;
+        $swiperWrap.css('height',$imgHei); // wiperImgHei = $imgHei;
 
         $swiperFloorBannerWrap.css('height',$floorBannerImgHei);
       },
@@ -441,8 +440,8 @@
         };
         move();
         function move() {
-          let prop = ( new Date() - initTime ) / time;
-          prop >= 1 ? prop = 1 : requestAnimationFrame(move);
+          let prop = ( new Date() - initTime ) / time; // 单元时间
+          prop >= 1 ? prop = 1 : window.requestAnimationFrame(move); // <--
           for (let key in attrs) {
               if ( key === 'opacity' ) {
                   let o = startVal[key] + prop * (endVal[key] - startVal[key]);
