@@ -40,11 +40,9 @@ export default {
     let selectGood = playload.change;
     let action = playload.action;
 
-    if ( action === UPDATE ) {
-      // 更新购物车中的某项
+    if ( action === UPDATE ) { // 更新购物车中的某项
       state.selectedGoods.splice(index, 1, selectGood);
-    } else if ( action === REMOVE ){
-      // 删除购物车中的某项
+    } else if ( action === REMOVE ){ // 删除购物车中的某项
       state.selectedGoods.splice(index, 1);
     }
   }

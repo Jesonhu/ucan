@@ -137,21 +137,43 @@
       },
       /* 增加商品到购物车里 */
       addCart(item) {
-        if (!item.count) {
-          Vue.set(item, 'count', 1); // 添加购买数量
-          Vue.set(item, 'isCanBuy', true); // 标记为不可点击
+        const id = item.id;
+        const selectedGoods = this.$store.state.selectedGoods;
+
+        if (selectedGoods.length > 0) {
+          selectedGoods.forEach((arr, index) => {
+              if (arr.id === id) { // vuex 已存在这个商品则让vuex商品count+1
+                arr.count++;
+                this.$store.dispatch({ // <-- 提交购物车更改，使导航徽章数量变化
+                  type: 'updateShopCart',
+                  change: arr,
+                  action: 1,
+                  index: index
+                });
+              } else { // vuex 不存在这个商品则添加到购物车里
+
+                if (!item.count) {
+                  Vue.set(item, 'count', 1); // 添加购买数量
+                  Vue.set(item, 'isCanBuy', true); // 标记为不可点击 ？？ 好像没用了
+                  // Vuex store action 方式2
+                  this.$store.dispatch('addShopCart', item); // <-- 提交给Vuex action addShopCart处理 更新Vuex购物车信息
+                }
+              }
+          });
         } else {
-          item.count++;
-        }
-        // this.selectGoods.push(item);
+          if (!item.count) {
+            Vue.set(item, 'count', 1); // 添加购买数量
+            Vue.set(item, 'isCanBuy', true); // 标记为不可点击 ？？ 好像没用了
+            // Vuex store action 方式2
+            this.$store.dispatch('addShopCart', item); // <-- 提交给Vuex action addShopCart处理 更新Vuex购物车信息
+          }
+        };
 
         // Vuex store action 方式1
         /*this.$store.dispatch({
           type: 'addShopCart',
           item: item
         });*/
-        // Vuex store action 方式2
-        this.$store.dispatch('addShopCart', item); // <-- 提交给Vuex action addShopCart处理 更新Vuex购物车信息
 
         this.selectGoods = this.$store.state.selectedGoods; // 获取 Vuex.state.selectedGoods 更新后购物车的状态
         this.typeNum = this.$store.state.selectedGoods.length;
@@ -167,17 +189,6 @@
         } else {
           this.checkAllFlag = false;
         }
-
-        /* 这个做法可以避免再次点击，但是讲购物车里的商品全部删除后也不能再次添加-- 这里改变的是dataRecommend循环的item 但是foods如何操作它呢？
-        if (typeof item.isCanBuy == 'undefined') { // 之前没点击过才能再次点击
-          if (!item.count) {
-            Vue.set(item, 'count', 1); // 添加购买数量
-            Vue.set(item, 'isCanBuy', true); // 标记为不可点击
-          } else {
-            item.count++;
-          }
-          this.foods.push(item);
-        }*/
       },
 
       /* 添加或减少 */
