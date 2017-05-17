@@ -5,7 +5,7 @@
     <shopcart-header></shopcart-header>
 
     <!--选购商品列表-->
-    <div class="selectgood-wrap" id="selectgood-wrap" v-show="isShowCart">
+    <div class="selectgood-wrap" id="selectgood-wrap" v-show="selectGoods.length>0">
       <ul class="list">
         <li class="item" v-for="(item, index) in selectGoods" v-show="item.count">
           <div class="item-body">
@@ -63,7 +63,7 @@
     </div>
 
     <!-- 购物车显示 -->
-    <div class="shopcart-detail" v-show="isShowCart">
+    <div class="shopcart-detail" v-show="selectGoods.length>0">
       <div class="selectall" :class="{'is-selected': checkAllFlag || isSelectAll}" @click="checkAll(!checkAllFlag)">全选</div>
       <div class="count">
         总额:
@@ -98,7 +98,6 @@
         selectGoods : [], // 被选中的商品
         typeNum: -1, // 购物车商品类型的数量
         typeSlectedNum: 0, // 被选中商品的数量
-        isShowCart : false, // 是否显示购物车
         isCanBuy: true, // 推荐是否可以点击购买
 
         totalMoney: 0, //单商品总金额
@@ -111,15 +110,26 @@
     },
     created() {
         that = this;
-        // console.log( mapState );
-        // console.log( mapActions );\
-        // this.$store.dispatch('getShopCart'); // <-- 触发Vuex.store action
-        this.selectGoods = this.$store.state.selectedGoods;
+        this.init();
     },
     filter: {  //局部过滤器
 
     },
     methods: {
+      /* 点击到购物车页面后初始化方法 */
+      init() {
+        this.selectGoods = this.$store.state.selectedGoods; // <--
+        this.typeNum = this.selectGoods.length;
+        this.selectGoods.forEach((item) => {
+          if (!(typeof item.checked == 'undefined') && item.checked) {
+            this.typeSlectedNum++;
+          };
+        });
+        if (this.typeNum === this.typeSlectedNum) {
+            this.checkAllFlag = true;
+            this.calcTotalPrice();
+        }
+      },
       showDetail() {
         // console.log(this.dataRecommend.list);
         // console.log(this.selectGoods);
@@ -127,8 +137,6 @@
       },
       /* 增加商品到购物车里 */
       addCart(item) {
-        that.isShowCart = true;
-
         if (!item.count) {
           Vue.set(item, 'count', 1); // 添加购买数量
           Vue.set(item, 'isCanBuy', true); // 标记为不可点击
@@ -147,6 +155,18 @@
 
         this.selectGoods = this.$store.state.selectedGoods; // 获取 Vuex.state.selectedGoods 更新后购物车的状态
         this.typeNum = this.$store.state.selectedGoods.length;
+        this.typeSlectedNum = 0;
+        this.selectGoods.forEach((item) => {
+          if (!(typeof item.checked == 'undefined') && item.checked) {
+            this.typeSlectedNum++;
+          };
+        });
+        if (this.typeNum === this.typeSlectedNum) {
+          this.checkAllFlag = true;
+          this.calcTotalPrice();
+        } else {
+          this.checkAllFlag = false;
+        }
 
         /* 这个做法可以避免再次点击，但是讲购物车里的商品全部删除后也不能再次添加-- 这里改变的是dataRecommend循环的item 但是foods如何操作它呢？
         if (typeof item.isCanBuy == 'undefined') { // 之前没点击过才能再次点击
