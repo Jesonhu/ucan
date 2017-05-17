@@ -314,6 +314,7 @@ export default {
         "img": "https://m.360buyimg.com//mobilecms/s276x276_jfs/t4681/257/55967336/565371/e9939e85/58c8e329N51e437c3.jpg!q70.jpg",
         "text": "上院地毯 满铺人造草坪  塑料草皮仿真人造草坪幼儿园楼顶阳台人工假草皮假草皮 10mm普通草绿色/直草 宽幅2米每平价",
         "price": "15",
+        "score": 4.7,
         "small": "00"
       },
       {
@@ -321,6 +322,7 @@ export default {
         "img": "https://m.360buyimg.com//mobilecms/s276x276_jfs/t1960/281/2094375806/154873/6944e77f/56f20611N924b233c.jpg!q70.jpg",
         "text": "罗技（Logitech）M185 无线鼠标 黑色灰边",
         "price": "59",
+        "score": 1.5,
         "small": "00"
       },
       {
@@ -328,6 +330,7 @@ export default {
         "img": "https://m.360buyimg.com//mobilecms/s276x276_jfs/t4240/298/1909493847/365522/3f793b0/58c8b2bfN7f3634d2.jpg!q70.jpg",
         "text": "〔买2瓶包邮  仅剩200瓶〕茅台镇酱香型特价收藏53度500ml纯粮食原浆白酒",
         "price": "11",
+        "score": 2.2,
         "small": "90"
       },
       {
@@ -335,6 +338,7 @@ export default {
         "img": "https://m.360buyimg.com//mobilecms/s276x276_jfs/t2458/164/1600971708/466259/6e784a2e/56613700N9ebbbea4.jpg!q70.jpg",
         "text": "【京东超市】温碧泉八杯水亲亲水润五件套装（洁面乳+保湿水+活肤乳+嫩肤霜+赠眼精华）补水保湿护肤化妆品",
         "price": "198",
+        "score": 3.2,
         "small": "00"
       },
       {
@@ -342,6 +346,7 @@ export default {
         "img": "https://m.360buyimg.com//mobilecms/s276x276_jfs/t4681/257/55967336/565371/e9939e85/58c8e329N51e437c3.jpg!q70.jpg",
         "text": "上院地毯 满铺人造草坪  塑料草皮仿真人造草坪幼儿园楼顶阳台人工假草皮假草皮 10mm普通草绿色/直草 宽幅2米每平价",
         "price": "15",
+        "score": 4.2,
         "small": "00"
       },
       {
@@ -349,6 +354,7 @@ export default {
         "img": "https://m.360buyimg.com//mobilecms/s276x276_jfs/t1960/281/2094375806/154873/6944e77f/56f20611N924b233c.jpg!q70.jpg",
         "text": "罗技（Logitech）M185 无线鼠标 黑色灰边",
         "price": "59",
+        "score": 3.7,
         "small": "00"
       },
       {
@@ -356,6 +362,7 @@ export default {
         "img": "https://m.360buyimg.com//mobilecms/s276x276_jfs/t4240/298/1909493847/365522/3f793b0/58c8b2bfN7f3634d2.jpg!q70.jpg",
         "text": "〔买2瓶包邮  仅剩200瓶〕茅台镇酱香型特价收藏53度500ml纯粮食原浆白酒",
         "price": "11",
+        "score": 2.7,
         "small": "90"
       },
       {
@@ -363,6 +370,7 @@ export default {
         "img": "https://m.360buyimg.com//mobilecms/s276x276_jfs/t2458/164/1600971708/466259/6e784a2e/56613700N9ebbbea4.jpg!q70.jpg",
         "text": "【京东超市】温碧泉八杯水亲亲水润五件套装（洁面乳+保湿水+活肤乳+嫩肤霜+赠眼精华）补水保湿护肤化妆品",
         "price": "198",
+        "score": 4.2,
         "small": "00"
       },
       {
@@ -370,6 +378,7 @@ export default {
         "img": "https://m.360buyimg.com//mobilecms/s276x276_jfs/t4681/257/55967336/565371/e9939e85/58c8e329N51e437c3.jpg!q70.jpg",
         "text": "上院地毯 满铺人造草坪  塑料草皮仿真人造草坪幼儿园楼顶阳台人工假草皮假草皮 10mm普通草绿色/直草 宽幅2米每平价",
         "price": "15",
+        "score": 2.5,
         "small": "00"
       },
       {
@@ -377,6 +386,7 @@ export default {
         "img": "https://m.360buyimg.com//mobilecms/s276x276_jfs/t1960/281/2094375806/154873/6944e77f/56f20611N924b233c.jpg!q70.jpg",
         "text": "罗技（Logitech）M185 无线鼠标 黑色灰边",
         "price": "59",
+        "score": 4.2,
         "small": "00"
       },
       {
@@ -384,6 +394,7 @@ export default {
         "img": "https://m.360buyimg.com//mobilecms/s276x276_jfs/t4240/298/1909493847/365522/3f793b0/58c8b2bfN7f3634d2.jpg!q70.jpg",
         "text": "〔买2瓶包邮  仅剩200瓶〕茅台镇酱香型特价收藏53度500ml纯粮食原浆白酒",
         "price": "11",
+        "score": 4.2,
         "small": "90"
       },
       {
@@ -391,6 +402,7 @@ export default {
         "img": "https://m.360buyimg.com//mobilecms/s276x276_jfs/t2458/164/1600971708/466259/6e784a2e/56613700N9ebbbea4.jpg!q70.jpg",
         "text": "【京东超市】温碧泉八杯水亲亲水润五件套装（洁面乳+保湿水+活肤乳+嫩肤霜+赠眼精华）补水保湿护肤化妆品",
         "price": "198",
+        "score": 2.2,
         "small": "00"
       },
       {
@@ -398,6 +410,7 @@ export default {
         "img": "https://m.360buyimg.com//mobilecms/s276x276_jfs/t4681/257/55967336/565371/e9939e85/58c8e329N51e437c3.jpg!q70.jpg",
         "text": "上院地毯 满铺人造草坪  塑料草皮仿真人造草坪幼儿园楼顶阳台人工假草皮假草皮 10mm普通草绿色/直草 宽幅2米每平价",
         "price": "15",
+        "score": 2.7,
         "small": "00"
       },
       {
@@ -405,6 +418,7 @@ export default {
         "img": "https://m.360buyimg.com//mobilecms/s276x276_jfs/t1960/281/2094375806/154873/6944e77f/56f20611N924b233c.jpg!q70.jpg",
         "text": "罗技（Logitech）M185 无线鼠标 黑色灰边",
         "price": "59",
+        "score": 3.2,
         "small": "00"
       },
       {
@@ -412,6 +426,7 @@ export default {
         "img": "https://m.360buyimg.com//mobilecms/s276x276_jfs/t4240/298/1909493847/365522/3f793b0/58c8b2bfN7f3634d2.jpg!q70.jpg",
         "text": "〔买2瓶包邮  仅剩200瓶〕茅台镇酱香型特价收藏53度500ml纯粮食原浆白酒",
         "price": "11",
+        "score": 4.7,
         "small": "90"
       },
       {
@@ -419,6 +434,7 @@ export default {
         "img": "https://m.360buyimg.com//mobilecms/s276x276_jfs/t2458/164/1600971708/466259/6e784a2e/56613700N9ebbbea4.jpg!q70.jpg",
         "text": "【京东超市】温碧泉八杯水亲亲水润五件套装（洁面乳+保湿水+活肤乳+嫩肤霜+赠眼精华）补水保湿护肤化妆品",
         "price": "198",
+        "score": 3.2,
         "small": "00"
       }
     ]

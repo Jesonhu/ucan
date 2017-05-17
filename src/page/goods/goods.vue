@@ -40,6 +40,7 @@
       <transition name="move">
         <div class="goods-detail-body" v-show="currentTab === 2" :key="2">
           <h2>商品评价页面</h2>
+          <star :size="48" :score="score"></star>
         </div>
       </transition>
 
@@ -50,6 +51,7 @@
   import Vue from 'vue';
   import historyHeader from '../../components/historyheader/historyheader.vue';
   import productData from '../../service/mockdata/home';
+  import star from '../../components/star/star';
 
   let that;
   export default{
@@ -61,6 +63,7 @@
         productDetail: null, // 保存当前产品详情
         isShowCartControll: false,
         count: 0,
+        score: 0,
 
         currentTab: 0
       };
@@ -82,6 +85,7 @@
           productData.recommend.list.forEach((item) => {
             if (item.id === this.id) {
               this.productDetail = item;
+              this.score = this.productDetail.score;
             }
           });
         };
@@ -95,6 +99,7 @@
                 this.isShowCartControll = true;
                 this.productDetail = item;  // 数据来自vuex
                 this.count = this.productDetail.count;
+                this.score = this.productDetail.score;
               } else {
                 dataFromDateBase(); // 数据来自数据库
               }
@@ -166,7 +171,8 @@
       next();
     },
     components: {
-      historyHeader
+      historyHeader,
+      star
     }
   };
 </script>
