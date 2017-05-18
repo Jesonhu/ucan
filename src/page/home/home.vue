@@ -48,12 +48,12 @@
     <div class="exprss-new-wrap">
       <div class="new-con">
         <a href="" class="con-left">
-          <img :src="dataExpressNews.image" alt="">
+          <img src="https://st.360buyimg.com/m/images/index/jd-news-tit.png" alt="">
         </a>
         <div class="con-main">
           <ul class="list" id="scrollTopList">
-            <li class="item" v-for="item in dataExpressNews.list">
-              <a href="" class="ellipsis">{{item.text}}</a>
+            <li class="item" v-for="item in dataExpressNews">
+              <a href="" class="ellipsis">{{item.name}}</a>
             </li>
           </ul>
         </div>
@@ -67,8 +67,8 @@
     <div class="seckill-wrap">
       <div class="seckill-title">
         <a href="" class="title-time">
-          <img :src="dataSeckill.titleImg" alt="">
-          <span class="time-start">{{dataSeckill.startTime}}</span>
+          <img src="https://m.360buyimg.com/mobilecms/jfs/t3451/307/73678054/7807/dd9134d/57fdff2eNb7cd186f.png" alt="">
+          <span class="time-start">12点场</span>
           <div class="time-timing">
             <span id="secskill-hour">00</span>:
             <span id="secskill-min">00</span>:
@@ -76,22 +76,22 @@
           </div>
         </a>
         <a href="" class="title-more">
-          {{dataSeckill.titleText}}
+          秒杀给你更好的
           <em class="more-icon"></em>
         </a>
       </div>
       <div class="seckill-con" ref="seckillWrapper">
         <ul class="" ref="seckillList">
-          <li class="item" v-for="item in dataSeckill.list">
+          <li class="item" v-for="item in dataSeckill">
             <div class="con-img right1pxBorder">
-              <img :src="item.image" alt="">
+              <img :src="item.cover" alt="">
             </div>
             <div class="con-price">
               <p class="price-now">
                 <span class="currency">￥</span>
-                <span class="price">{{item.now}}</span>
+                <span class="price">{{item.price}}</span>
               </p>
-              <p class="price-odd">￥{{item.old}}</p>
+              <p class="price-odd">￥{{item.oldprice}}</p>
             </div>
           </li>
         </ul>
@@ -119,22 +119,22 @@
     <!-- 爱生活 -->
     <div class="loveLife-wrap">
       <div class="loveLife-title">
-        <img :src="dataLoveFife.titleImg" alt="" class="title__bg">
+        <img src="https://st.360buyimg.com/m/images/index/floor-tit.png" alt="" class="title__bg">
         <p class="title__img">
-          <img :src="dataLoveFife.tetleTextImg" alt="">
+          <img src="https://m.360buyimg.com/mobilecms/jfs/t2878/152/3484829401/8909/e1cf0ca/578de36bNae7bb54a.png!q70.jpg" alt="">
         </p>
       </div>
       <div class="loveLife-con">
         <ul class="list">
-          <li class="item top1pxBorder" v-for="(item,index) in dataLoveFife.list"
+          <li class="item top1pxBorder" v-for="(item,index) in dataLoveFife"
               :class="[index<=3?'two':'four',(index+1)%2==0?'left1pxBorder':'',index===6?'left1pxBorder':'']">
             <a href="">
               <div class="item-title">
                 <h2 class="title">{{item.title}}</h2>
-                <p class="detail ellipsis">{{item.detail}}</p>
+                <p class="detail ellipsis">{{item.desc}}</p>
               </div>
               <div class="item-con">
-                <img :src="item.img" alt="">
+                <img :src="item.cover" alt="">
               </div>
             </a>
           </li>
@@ -155,24 +155,24 @@
 
     <div class="feature-wrap floor">
       <div class="floor-title floor-title-img">
-        <img :src="dataFeature.titleImg" alt="" class="floor-title-bgimg">
+        <img src="https://st.360buyimg.com/m/images/index/floor-tit.png" alt="" class="floor-title-bgimg">
         <p class="title-img-con">
-          <img :src="dataFeature.titleTextImg" alt="" class="title-img">
+          <img src="https://m.360buyimg.com/mobilecms/jfs/t2617/85/3472523842/8761/d9d50d92/578de6d1N9e38b8e5.png!q70.jpg" alt="" class="title-img">
         </p>
       </div>
       <div class="feature-body">
         <ul class="feature-list">
           <li class="feature-item floor-item"
-              v-for="(item,index) in dataFeature.list"
+              v-for="(item,index) in dataFeature"
               :class="[index==0 || index==3 ?'col-2':'col-4']"
           >
             <a href="">
             <div class="item-title">
               <h2 class="title ellipsis">{{item.title}}</h2>
-              <p class="desc ellipsis">{{item.detail}}</p>
+              <p class="desc ellipsis">{{item.desc}}</p>
             </div>
             <div class="item-body">
-              <img :src="item.img" alt="" class="item-body-img">
+              <img :src="item.cover" alt="" class="item-body-img">
             </div>
             </a>
           </li>
@@ -205,13 +205,13 @@
       return {
         /* 获取api数据 */
         dataSwiper: [],  // 轮播大图
-        dataFloot: [],
-        dataExpressNews: homeData.expressNews,
-        dataSeckill: homeData.seckill,
+        dataFloot: [], // 10大金刚
+        dataExpressNews: [], // 快报
+        dataSeckill: [],
         dataGraphicItem: homeData.seckill.graphicItem,
-        dataLoveFife : homeData.loveLife,
-        dataFeature: homeData.feature,
-        dataRecommend: homeData.recommend,
+        dataLoveFife : [],
+        dataFeature: [],
+        dataRecommend: [],
 
         screenWidth: document.body.clientWidth,
         topSwiperImgHei: 0,
@@ -220,10 +220,10 @@
     },
     created() {
       that = this;
-      this.$nextTick(function() {
+      /*this.$nextTick(function() {
+        this._initSeckillScroll;
         this._seckillTime(); // <--
-        this._autoScrollTop(); // <--
-      })
+      })*/
     },
     watch: {
       /* 秒杀监控图片变化 */
@@ -241,11 +241,6 @@
       }
     },
     mounted() {
-      this.$nextTick(() => {
-        this._initSeckillScroll; // <--
-        this._initSeckillPics(); // <--
-        this._calculateSwiperHei(); // <--
-      });
 
       /* 钩子函数中可以监听到 */
       window.onresize = () => {
@@ -288,6 +283,9 @@
       axios.get('/api/banner/1').then((res) => {
         if (res.status === 200) {
           this.dataSwiper = res.data.result;
+          this.$nextTick(() => {
+            this._calculateSwiperHei(); // <--
+          })
         }
       }).catch((err) => {
         console.log(err);
@@ -302,6 +300,57 @@
         console.log(err);
       });
 
+      /* 快报 */
+      axios.get('/api/news/1').then((res) => {
+        if (res.status === 200) {
+          this.dataExpressNews = res.data.result;
+          this.$nextTick(() => {
+            this._autoScrollTop(); // <--
+          });
+        }
+      }).catch((err) => {
+        console.log(err)
+      });
+
+      /* 秒杀图片 */
+      axios.get('/api/goods_list/0/0').then((res) => {
+        if (res.status === 200) {
+            this.dataSeckill = res.data.result;
+            this.$nextTick(() => {
+              this._initSeckillScroll; // <--
+              this._initSeckillPics(); // <--
+            });
+        }
+      }).catch((err) => {
+        console.log(err)
+      });
+
+      /* 爱生活 */
+      axios.get('/api/goods_list/1/1').then((res) => {
+        if (res.status === 200) {
+            this.dataLoveFife = res.data.result;
+        }
+      }).catch((err) => {
+        console.log(err);
+      });
+
+      /* 购特色 */
+      axios.get('api/goods_list/2/1').then((res) => {
+        if (res.status === 200) {
+            this.dataFeature = res.data.result;
+        }
+      }).catch((err) => {
+        console.log(err);
+      });
+
+      /* 为您推荐 */
+      axios.get('api/goods_recomment/12').then((res) => {
+        if (res.status === 200) {
+            this.dataRecommend = res.data.result;
+        }
+      }).catch((err) => {
+        console.log(err);
+      })
     },
     methods: {
       /**
@@ -411,8 +460,8 @@
             timer;
 
         auto();
-        function auto() {
 
+        function auto() {
             timer = setInterval(function() {
               if (index < length-1) {
                 index ++;
@@ -426,7 +475,6 @@
                 return index;
               }
             }, 2000);
-
         };
         oList.addEventListener('mouseenter', function() {
            clearInterval(timer);

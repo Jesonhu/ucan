@@ -52,6 +52,7 @@
   import historyHeader from '../../components/historyheader/historyheader.vue';
   import productData from '../../service/mockdata/home';
   import star from '../../components/star/star';
+  import axios from 'axios';
 
   let that;
   export default{
@@ -60,7 +61,8 @@
         title: this.$route.params.page,
         id: '', // 获取路由传递过来的参数:page
 
-        productDetail: null, // 保存当前产品详情
+        productDetail: null, // 保存当前产品详情（来源于vuex或者数据库）
+        productDataDetail: null, // 数据库获取商品详情
         isShowCartControll: false,
         count: 0,
         score: 0,
@@ -72,6 +74,9 @@
       // 请求获取数据
       let that = this;
       this._initData();
+    },
+    mounted() {
+
     },
     methods: {
       /* 页面初始化显示 */

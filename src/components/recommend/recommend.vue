@@ -3,16 +3,16 @@
     <div class="recommend-title">
       <span class="title-text">
         <em class="title-arrow"></em>
-        {{dataRecommend.title}}
+        为您推荐
       </span>
     </div>
     <div class="recommend-body">
       <ul class="list">
         <li class="item"
-            v-for="(item, index) in dataRecommend.list">
+            v-for="(item, index) in dataRecommend">
           <router-link :to="`/product/${item.id}.html`" class="item-link">
-            <img v-lazy="item.img" alt="" class="item-img">
-            <p class="desc linetwo">{{item.text}}</p>
+            <img v-lazy="item.cover" alt="" class="item-img">
+            <p class="desc linetwo">{{item.name}}</p>
             <div class="body-bottom">
               <div class="price-content">
                 <span class="yuan">￥</span>
@@ -32,11 +32,7 @@
 <script type="text/ecmascript-6">
   let that;
   export default {
-    props: {
-      dataRecommend: {
-        type: Object
-      }
-    },
+    props: ['dataRecommend'],
     data() {
       return {
 
