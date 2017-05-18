@@ -22,23 +22,6 @@ var proxyTable = config.dev.proxyTable
 
 var app = express();
 
-/**
- * 模拟后台对前台地址请求的处理
- */
-/*var homeData = require('../src/service/mockdata/home.json'); // 获取home.json对象
-
-var apiRoutes = express.Router();
-
-/!* 后台对前台/home的处理 *!/
-apiRoutes.get('/home', function (req, res) {
-  res.json({
-    errno: 0,
-    data: homeData
-  });
-});
-
-app.use('/api', apiRoutes);*/
-
 var compiler = webpack(webpackConfig)
 
 var devMiddleware = require('webpack-dev-middleware')(compiler, {

@@ -17,7 +17,7 @@
       <mt-swipe :auto="4000" class="swiper-list">
         <mt-swipe-item v-for="(item,index) in dataSwiper" class="swiper-item" :key="index">
           <a href="">
-            <img :src="item.image" alt="" ref="swiperImg" class="swiper-img"/>
+            <img :src="item.url" alt="" ref="swiperImg" class="swiper-img"/>
           </a>
         </mt-swipe-item>
       </mt-swipe>
@@ -204,7 +204,7 @@
     data() {
       return {
         /* 获取api数据 */
-        dataSwiper: homeData.swiper,
+        dataSwiper: [],
         dataFloot: homeData.floot.slice(0,10),
         dataExpressNews: homeData.expressNews,
         dataSeckill: homeData.seckill,
@@ -284,6 +284,14 @@
         }
       };
 
+      /* banner大图图片 */
+      axios.get('/api/banner/1').then((res) => {
+        if (res.status === 200) {
+          this.dataSwiper = res.data.result;
+        }
+      }).catch((err) => {
+        console.log(err);
+      });
 
     },
     methods: {
