@@ -28,16 +28,16 @@
       <mt-swipe-item>
         <nav>
           <a href="" v-for="item in dataFloot">
-            <img :src="item.image" alt="">
-            <span>{{item.text}}</span>
+            <img :src="item.src" alt="">
+            <span>{{item.name}}</span>
           </a>
         </nav>
       </mt-swipe-item>
       <mt-swipe-item>
         <nav>
           <a href="" v-for="item in dataFloot">
-            <img :src="item.image" alt="">
-            <span>22{{item.text}}</span>
+            <img :src="item.src" alt="">
+            <span>22{{item.name}}</span>
           </a>
         </nav>
       </mt-swipe-item>
@@ -204,8 +204,8 @@
     data() {
       return {
         /* 获取api数据 */
-        dataSwiper: [],
-        dataFloot: homeData.floot.slice(0,10),
+        dataSwiper: [],  // 轮播大图
+        dataFloot: [],
         dataExpressNews: homeData.expressNews,
         dataSeckill: homeData.seckill,
         dataGraphicItem: homeData.seckill.graphicItem,
@@ -288,6 +288,15 @@
       axios.get('/api/banner/1').then((res) => {
         if (res.status === 200) {
           this.dataSwiper = res.data.result;
+        }
+      }).catch((err) => {
+        console.log(err);
+      });
+
+      /* 10大金刚 */
+      axios.get('/api/nav/1').then((res) => {
+        if (res.status === 200) {
+          this.dataFloot = res.data.result;
         }
       }).catch((err) => {
         console.log(err);
