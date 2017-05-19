@@ -6,9 +6,9 @@
       <transition name="move">
       <!-- tab1内容 -->
         <div class="goods-detail-body" v-show="currentTab === 0" :key="0">
-          <div class="img-list"><img :src="productDetail.img" alt="" class="img"></div>
+          <div class="img-list"><img :src="productDetail.cover" alt="" class="img"></div>
           <div class="body-main-text">
-            <h2 class="text-title">{{productDetail.text}}</h2>
+            <h2 class="text-title">{{productDetail.name}}</h2>
             <div class="desc"></div>
             <div class="price-main">
               <div class="price-left">
@@ -62,6 +62,7 @@
         id: '', // 获取路由传递过来的参数:page
 
         productDetail: null, // 保存当前产品详情（来源于vuex或者数据库）
+        dataFromData: null, // 数据库里的这条数据
         productDataDetail: null, // 数据库获取商品详情
         isShowCartControll: false,
         count: 0,
@@ -73,21 +74,28 @@
     created() {
       // 请求获取数据
       let that = this;
-      this._initData();
     },
     mounted() {
+      const params = this.$route.params; // 获取传递过来的参数
+      const pattern = /\d+/g;
+      this.id = Number( params.page.match(pattern)[0] ); // 只匹配xxx.html xxx部分
 
+      axios.get(`/api/goods_detail/${this.id}`).then((res) => {
+        this.dataFromData = res.data.result;
+        this.$nextTick(() => {
+          this._initData();
+        })
+      }).catch((err) => {
+        console.log(err);
+      })
     },
     methods: {
       /* 页面初始化显示 */
       _initData() {
-        const params = this.$route.params; // 获取传递过来的参数
-        const pattern = /\d+/g;
-        this.id = Number( params.page.match(pattern)[0] ); // 只匹配xxx.html xxx部分
 
         /* 数据来自模拟数据即数据库 */
         const dataFromDateBase = () => {
-          productData.recommend.list.forEach((item) => {
+          this.dataFromData.forEach((item) => {
             if (item.id === this.id) {
               this.productDetail = item;
               this.score = this.productDetail.score;

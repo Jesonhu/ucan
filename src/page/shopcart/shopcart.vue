@@ -11,10 +11,10 @@
           <div class="item-body">
             <div class="select" @click="selectedProduct(item, index)" :class="{'is-selected':item.checked}">选</div>
             <div class="img-wrap">
-              <img :src="item.img" alt="" class="img">
+              <img :src="item.cover" alt="" class="img">
             </div>
             <div class="item-main">
-              <p class="main-desc">{{item.text}}</p>
+              <p class="main-desc">{{item.name}}</p>
               <div class="main-bottom">
                 <div class="price">￥{{item.price}}</div>
                 <div class="controll">
@@ -34,21 +34,21 @@
       <div class="recommend-title" @click="showDetail()">
       <span class="title-text">
         <em class="title-arrow"></em>
-        {{dataRecommend.title}}
+        为您推荐
       </span>
       </div>
       <div class="recommend-body">
         <ul class="list">
           <li class="item"
-              v-for="(item,index) in dataRecommend.list">
+              v-for="(item,index) in dataRecommend">
             <a href="" class="item-link">
-              <img v-lazy="item.img" alt="" class="item-img">
-              <p class="desc linetwo">{{item.text}}</p>
+              <img v-lazy="item.cover" alt="" class="item-img">
+              <p class="desc linetwo">{{item.name}}</p>
               <div class="body-bottom" id="shopcart-page-body-bottom">
                 <div class="price-content">
                   <span class="yuan">￥</span>
                   <span class="price">{{item.price}}</span>
-                  <span class="zero">.{{item.small}}</span>
+                  <span class="zero">.22</span>
                 </div>
 
                 <!--<div class="similar">购买</div>-->
@@ -85,6 +85,7 @@
   import shopcartHeader from '../../components/shopcartheader/shopcartheader';
   import cartControll from '../../components/cartcontroll/cartcontroll';
   import { MessageBox } from 'mint-ui';
+  import axios from 'axios';
 
   import homeData from '../../service/mockdata/home';
 
@@ -111,6 +112,15 @@
     created() {
         that = this;
         this.init();
+    },
+    mounted() {
+      axios.get('/api/goods_recomment/:count').then((res) => {
+        if (res.status === 200) {
+          this.dataRecommend = res.data.result;
+        }
+      }).catch((err) => {
+        console.log(err);
+      })
     },
     filter: {  //局部过滤器
 

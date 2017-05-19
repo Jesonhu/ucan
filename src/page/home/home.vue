@@ -145,9 +145,9 @@
     <!-- 楼层banner图片 -->
     <div class="floor-swiper-wrap">
       <mt-swipe :auto="4000" class="list floor-banner-list">
-        <mt-swipe-item class="item" v-for="(item,index) in dataFeature.slideImg" :key="index">
+        <mt-swipe-item class="item" v-for="(item,index) in dataFloorSwiper" :key="index">
           <a href="">
-            <img :src="item.img" alt="" class="floor-banner-img">
+            <img :src="item.url" alt="" class="floor-banner-img">
           </a>
         </mt-swipe-item>
       </mt-swipe>
@@ -193,7 +193,7 @@
   import { Swipe, SwipeItem } from 'mint-ui';
   import homeData from '../../service/mockdata/home';
   import axios from 'axios';
-  import BSscroll from 'better-scroll';
+  import BScroll from 'better-scroll';
   import header from '../../components/header/head';
   import recommend from '../../components/recommend/recommend';
   import $ from 'jquery';
@@ -211,6 +211,7 @@
         dataGraphicItem: homeData.seckill.graphicItem,
         dataLoveFife : [],
         dataFeature: [],
+        dataFloorSwiper: [],
         dataRecommend: [],
 
         screenWidth: document.body.clientWidth,
@@ -227,13 +228,13 @@
     },
     watch: {
       /* 秒杀监控图片变化 */
-      'dataSeckill'() {
+      /*'dataSeckill'() {
         this.$nextTick( () => {
             this._initSeckillScroll;
             this._initSeckillPics();
           }
         )
-      },
+      },*/
       screenWidth(val) {
           this.$nextTick(() => {
             that._calculateSwiperHei();
@@ -334,6 +335,15 @@
         console.log(err);
       });
 
+      /* 楼层banner */
+      axios.get('/api/banner/2').then((res) => {
+        if (res.status === 200) {
+            this.dataFloorSwiper = res.data.result;
+        }
+      }).catch((err) => {
+        console.log(err);
+      });
+
       /* 购特色 */
       axios.get('api/goods_list/2/1').then((res) => {
         if (res.status === 200) {
@@ -350,7 +360,7 @@
         }
       }).catch((err) => {
         console.log(err);
-      })
+      });
     },
     methods: {
       /**
@@ -359,41 +369,39 @@
       /* 滚动框初始化 */
       _initSeckillScroll() {
         if (!this.seckillScroll) {
-          this.$refs.dataSeckill.onload = function() {
-            this.seckillScroll = new BScroll(this.$refs.dataSeckill, {
-              click: true
-            });
-          }
+          this.seckillScroll = new BScroll(this.$refs.dataSeckill, {
+            click: true
+          });
         } else {
-          this.scroll.refresh();
+          this.seckillScroll.refresh();
         }
       },
       /* 秒杀图片容器宽度计算 */
       _initSeckillPics() {
-        if (this.dataSeckill.list) {
-          let picWidth = 108;
-          let width = picWidth * this.dataSeckill.list.length;
-          this.$nextTick(() => {
-            this.$refs.seckillList.style.width = width + 'px';
-            if (!this.picScroll) {
-              this.picScroll = new BSscroll(this.$refs.seckillWrapper, {
-                scrollX: true,
-                eventPassthrough: 'vertical'
-              });
-            } else {
-                this.picScroll.refresh();
-            }
-          })
+        if (this.dataSeckill) {
+          const picWidth = 108;
+          const width = picWidth * this.dataSeckill.length;
+
+          this.$refs.seckillList.style.width = width + 'px';
+          if (!this.picScroll) {
+            this.picScroll = new BScroll(this.$refs.seckillWrapper, {
+              scrollX: true,
+              eventPassthrough: 'vertical'
+            });
+          } else {
+              this.picScroll.refresh();
+          }
         }
       },
 
       /* 轮播高度计算 */
       _calculateSwiperHei() {
-        let $imgHei = $('.swiper-img').height();
+        let $imgHei = $('.swiper-img').height() || 137;
         let $swiperWrap = $('.swiper-wrap');
         let $floorBannerImgHei = $('.floor-banner-img').height() > 0 ? $('.floor-banner-img').height() : '77px';
         let $swiperFloorBannerWrap = $('.floor-banner-list');
 
+        this.topSwiperImgHei = $imgHei;
         $swiperWrap.css('height',$imgHei); // wiperImgHei = $imgHei;
 
         $swiperFloorBannerWrap.css('height',$floorBannerImgHei);
