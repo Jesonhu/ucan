@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 2017-05-19 06:05:24
--- 服务器版本： 5.7.14
+-- Generation Time: 2017-07-11 10:18:41
+-- 服务器版本： 5.5.47
 -- PHP Version: 5.6.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -105,6 +105,8 @@ CREATE TABLE `goods_list` (
   `cover` longtext,
   `title` varchar(64) DEFAULT NULL,
   `desc` longtext,
+  `price` varchar(64) NOT NULL DEFAULT '66',
+  `oldprice` varchar(64) NOT NULL DEFAULT '88',
   `link` longtext
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -112,25 +114,25 @@ CREATE TABLE `goods_list` (
 -- 转存表中的数据 `goods_list`
 --
 
-INSERT INTO `goods_list` (`id`, `type`, `sectype`, `cover`, `title`, `desc`, `link`) VALUES
-(1, 1, 1, 'https://m.360buyimg.com/mobilecms/jfs/t4513/85/3938015974/8560/4b70366/5907eea7N97af34fe.jpg!q70.jpg', '玩3C', 'iPhone 5s', NULL),
-(2, 1, 2, 'https://m.360buyimg.com/mobilecms/jfs/t4639/187/149060276/13271/7eb8e9e4/58ca6aabN39057594.jpg!q70.jpg', '京东家电', '30天延期付款', NULL),
-(3, 1, 3, 'https://m.360buyimg.com/mobilecms/jfs/t5299/178/983349663/8877/4538bd04/5909c804N64b597c8.jpg!q70.jpg', '京东超市', '荔枝29.9元每斤', NULL),
-(4, 1, 4, 'https://m.360buyimg.com/mobilecms/jfs/t5482/122/559499264/30545/ed09521d/5901cd15N9b167f8b.jpg!q70.jpg', '爱家', '2件85折', NULL),
-(5, 1, 5, 'https://m.360buyimg.com/mobilecms/jfs/t4513/85/3938015974/8560/4b70366/5907eea7N97af34fe.jpg!q70.jpg', '爱宝宝', '低至7.3折', NULL),
-(6, 1, 6, 'https://m.360buyimg.com/mobilecms/jfs/t4033/288/1248007040/23380/1441761c/586f7ea7Nbad7117c.png!q70.jpg', '爱美丽', 'YSL圆管口红', NULL),
-(7, 1, 7, 'https://m.360buyimg.com/mobilecms/jfs/t4399/158/3713606647/21076/c0ebdb4b/59031fa3Na815df3b.jpg!q70.jpg', '爱吃', '39.9任选5件', NULL),
-(8, 1, 8, 'https://m.360buyimg.com/mobilecms/jfs/t4960/92/1133510483/5011/ea41c162/58ed9007N70666163.jpg!q70.jpg', '爱穿搭', '运动199-50', NULL),
-(9, 2, 1, 'https://m.360buyimg.com/mobilecms/jfs/t4450/321/502591655/43433/fd0fc5c9/58d08ba1Nd7d9e82a.jpg!q70.jpg', '智能生活', '时尚智能表', NULL),
-(10, 2, 2, 'https://m.360buyimg.com/mobilecms/jfs/t4441/105/4147754759/10022/1f88beec/590a8917Nf44fbd21.jpg!q70.jpg', '京东众筹', '1元秒杀', NULL),
-(11, 2, 3, 'https://m.360buyimg.com/mobilecms/jfs/t4243/38/2071438630/8234/17ef60a3/58cb7493Naa1b29c7.jpg!q70.jpg', '京东旅行', '9.9秒杀!', NULL),
-(12, 2, 4, 'https://m.360buyimg.com/mobilecms/jfs/t5062/28/2525268992/7142/6038fa33/5901c1e4N501873d8.jpg!q70.jpg', '白条商城', '12期免息 买', NULL),
-(13, 2, 5, 'https://m.360buyimg.com/mobilecms/jfs/t4762/126/2315434555/24150/3e5a16ed/58fd749aN081a36b6.jpg!q70.jpg', '爱车生活', '每日五折', NULL),
-(14, 2, 6, 'https://m.360buyimg.com/mobilecms/jfs/t4438/288/4120880312/6787/cd3d3abb/5909ac04Nf135d13d.jpg!q70.jpg', '生活娱乐', '今日特惠', NULL),
-(15, 2, 7, 'https://m.360buyimg.com/mobilecms/jfs/t3307/361/6758961248/5097/139ba994/58acf800N0ced20ff.jpg!q70.jpg', '二手清仓', 'iPhone6 秒杀', NULL),
-(16, 2, 8, 'https://m.360buyimg.com/mobilecms/jfs/t3307/361/6758961248/5097/139ba994/58acf800N0ced20ff.jpg!q70.jpg', '二手清仓2', 'iPhone6 秒杀', NULL),
-(17, 2, 9, 'https://m.360buyimg.com/mobilecms/jfs/t3307/361/6758961248/5097/139ba994/58acf800N0ced20ff.jpg!q70.jpg', '二手清仓3', 'iPhone6 秒杀', NULL),
-(18, 2, 10, 'https://m.360buyimg.com/mobilecms/jfs/t3307/361/6758961248/5097/139ba994/58acf800N0ced20ff.jpg!q70.jpg', '二手清仓4', 'iPhone6 秒杀', NULL);
+INSERT INTO `goods_list` (`id`, `type`, `sectype`, `cover`, `title`, `desc`, `price`, `oldprice`, `link`) VALUES
+(1, 1, 1, 'https://m.360buyimg.com/mobilecms/jfs/t4513/85/3938015974/8560/4b70366/5907eea7N97af34fe.jpg!q70.jpg', '玩3C', 'iPhone 5s', '66', '88', NULL),
+(2, 1, 2, 'https://m.360buyimg.com/mobilecms/jfs/t4639/187/149060276/13271/7eb8e9e4/58ca6aabN39057594.jpg!q70.jpg', '京东家电', '30天延期付款', '66', '88', NULL),
+(3, 1, 3, 'https://m.360buyimg.com/mobilecms/jfs/t5299/178/983349663/8877/4538bd04/5909c804N64b597c8.jpg!q70.jpg', '京东超市', '荔枝29.9元每斤', '66', '88', NULL),
+(4, 1, 4, 'https://m.360buyimg.com/mobilecms/jfs/t5482/122/559499264/30545/ed09521d/5901cd15N9b167f8b.jpg!q70.jpg', '爱家', '2件85折', '66', '88', NULL),
+(5, 1, 5, 'https://m.360buyimg.com/mobilecms/jfs/t4513/85/3938015974/8560/4b70366/5907eea7N97af34fe.jpg!q70.jpg', '爱宝宝', '低至7.3折', '66', '88', NULL),
+(6, 1, 6, 'https://m.360buyimg.com/mobilecms/jfs/t4033/288/1248007040/23380/1441761c/586f7ea7Nbad7117c.png!q70.jpg', '爱美丽', 'YSL圆管口红', '66', '88', NULL),
+(7, 1, 7, 'https://m.360buyimg.com/mobilecms/jfs/t4399/158/3713606647/21076/c0ebdb4b/59031fa3Na815df3b.jpg!q70.jpg', '爱吃', '39.9任选5件', '66', '88', NULL),
+(8, 1, 8, 'https://m.360buyimg.com/mobilecms/jfs/t4960/92/1133510483/5011/ea41c162/58ed9007N70666163.jpg!q70.jpg', '爱穿搭', '运动199-50', '66', '88', NULL),
+(9, 2, 1, 'https://m.360buyimg.com/mobilecms/jfs/t4450/321/502591655/43433/fd0fc5c9/58d08ba1Nd7d9e82a.jpg!q70.jpg', '智能生活', '时尚智能表', '66', '88', NULL),
+(10, 2, 2, 'https://m.360buyimg.com/mobilecms/jfs/t4441/105/4147754759/10022/1f88beec/590a8917Nf44fbd21.jpg!q70.jpg', '京东众筹', '1元秒杀', '66', '88', NULL),
+(11, 2, 3, 'https://m.360buyimg.com/mobilecms/jfs/t4243/38/2071438630/8234/17ef60a3/58cb7493Naa1b29c7.jpg!q70.jpg', '京东旅行', '9.9秒杀!', '66', '88', NULL),
+(12, 2, 4, 'https://m.360buyimg.com/mobilecms/jfs/t5062/28/2525268992/7142/6038fa33/5901c1e4N501873d8.jpg!q70.jpg', '白条商城', '12期免息 买', '66', '88', NULL),
+(13, 2, 5, 'https://m.360buyimg.com/mobilecms/jfs/t4762/126/2315434555/24150/3e5a16ed/58fd749aN081a36b6.jpg!q70.jpg', '爱车生活', '每日五折', '66', '88', NULL),
+(14, 2, 6, 'https://m.360buyimg.com/mobilecms/jfs/t4438/288/4120880312/6787/cd3d3abb/5909ac04Nf135d13d.jpg!q70.jpg', '生活娱乐', '今日特惠', '66', '88', NULL),
+(15, 2, 7, 'https://m.360buyimg.com/mobilecms/jfs/t3307/361/6758961248/5097/139ba994/58acf800N0ced20ff.jpg!q70.jpg', '二手清仓', 'iPhone6 秒杀', '66', '88', NULL),
+(16, 2, 8, 'https://m.360buyimg.com/mobilecms/jfs/t3307/361/6758961248/5097/139ba994/58acf800N0ced20ff.jpg!q70.jpg', '二手清仓2', 'iPhone6 秒杀', '66', '88', NULL),
+(17, 2, 9, 'https://m.360buyimg.com/mobilecms/jfs/t3307/361/6758961248/5097/139ba994/58acf800N0ced20ff.jpg!q70.jpg', '二手清仓3', 'iPhone6 秒杀', '66', '88', NULL),
+(18, 2, 10, 'https://m.360buyimg.com/mobilecms/jfs/t3307/361/6758961248/5097/139ba994/58acf800N0ced20ff.jpg!q70.jpg', '二手清仓4', 'iPhone6 秒杀', '66', '88', NULL);
 
 -- --------------------------------------------------------
 

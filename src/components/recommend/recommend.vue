@@ -12,12 +12,12 @@
             v-for="(item, index) in dataRecommend">
           <router-link :to="`/product/${item.id}.html`" class="item-link">
             <img v-lazy="item.cover" alt="" class="item-img">
-            <p class="desc linetwo">{{item.name}}</p>
+            <p class="desc linetwo">{{item.title}}</p>
             <div class="body-bottom">
               <div class="price-content">
                 <span class="yuan">￥</span>
-                <span class="price">{{item.price}}</span>
-                <span class="zero">.{{item.small}}</span>
+                <span class="price">{{item.price || 66}}</span>
+                <span class="zero">.{{item.oldprice}}</span>
               </div>
 
               <div class="similar">看相似</div>

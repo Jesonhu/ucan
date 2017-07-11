@@ -283,7 +283,7 @@
       /* banner大图图片 */
       axios.get('/api/banner/1').then((res) => {
         if (res.status === 200) {
-          this.dataSwiper = res.data.result;
+          this.dataSwiper = res.data.data;
           this.$nextTick(() => {
             this._calculateSwiperHei(); // <--
           })
@@ -295,7 +295,7 @@
       /* 10大金刚 */
       axios.get('/api/nav/1').then((res) => {
         if (res.status === 200) {
-          this.dataFloot = res.data.result;
+          this.dataFloot = res.data.data;
         }
       }).catch((err) => {
         console.log(err);
@@ -304,7 +304,7 @@
       /* 快报 */
       axios.get('/api/news/1').then((res) => {
         if (res.status === 200) {
-          this.dataExpressNews = res.data.result;
+          this.dataExpressNews = res.data.data;
           this.$nextTick(() => {
             this._autoScrollTop(); // <--
           });
@@ -316,7 +316,7 @@
       /* 秒杀图片 */
       axios.get('/api/goods_list/0/0').then((res) => {
         if (res.status === 200) {
-            this.dataSeckill = res.data.result;
+            this.dataSeckill = res.data.data;
             this.$nextTick(() => {
               this._initSeckillScroll; // <--
               this._initSeckillPics(); // <--
@@ -329,7 +329,7 @@
       /* 爱生活 */
       axios.get('/api/goods_list/1/1').then((res) => {
         if (res.status === 200) {
-            this.dataLoveFife = res.data.result;
+            this.dataLoveFife = res.data.data;
         }
       }).catch((err) => {
         console.log(err);
@@ -338,7 +338,7 @@
       /* 楼层banner */
       axios.get('/api/banner/2').then((res) => {
         if (res.status === 200) {
-            this.dataFloorSwiper = res.data.result;
+            this.dataFloorSwiper = res.data.data;
         }
       }).catch((err) => {
         console.log(err);
@@ -347,7 +347,7 @@
       /* 购特色 */
       axios.get('api/goods_list/2/1').then((res) => {
         if (res.status === 200) {
-            this.dataFeature = res.data.result;
+            this.dataFeature = res.data.data;
         }
       }).catch((err) => {
         console.log(err);
@@ -356,7 +356,7 @@
       /* 为您推荐 */
       axios.get('api/goods_recomment/12').then((res) => {
         if (res.status === 200) {
-            this.dataRecommend = res.data.result;
+            this.dataRecommend = res.data.data;
         }
       }).catch((err) => {
         console.log(err);

@@ -81,7 +81,7 @@
       this.id = Number( params.page.match(pattern)[0] ); // 只匹配xxx.html xxx部分
 
       axios.get(`/api/goods_detail/${this.id}`).then((res) => {
-        this.dataFromData = res.data.result;
+        this.dataFromData = res.data.data;
         this.$nextTick(() => {
           this._initData();
         })
