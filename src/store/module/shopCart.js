@@ -1,8 +1,10 @@
 /**
  * Created by Jesonhu on 2017/7/13.
  */
+import shopCart from '../../plugins/shopCart'
+
 const state = {
-  selectedGoods: []
+  selectedGoods: shopCart.getRemoteData() || []
 }
 
 const actions = {

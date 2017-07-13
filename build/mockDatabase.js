@@ -10,6 +10,7 @@ const mainNav = require('../src/mock/mobileNav.json')
 const scrollNews = require('../src/mock/scrollNews.json')
 const goodsList = require('../src/mock/goodsList.json')
 const goodsDetail = require('../src/mock/goodsDetail.json')
+const shopCart = require('../src/mock/shopCart.json')
 
 // 获取顶部banner
 apiRoutes.get('/top/banner', (req, res) => {
@@ -77,6 +78,11 @@ apiRoutes.get('/product/detail/:id', (req, res) => {
     res.json({
       data: resultData
     })
+})
+
+// 数据库中购物车数据
+apiRoutes.get('/get/shopcart', (req, res) => {
+  res.send(shopCart)
 })
 
 module.exports = apiRoutes

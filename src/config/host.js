@@ -19,6 +19,9 @@ const host = {
   product: { // 产品
     list: '',
     detail: `/api/product/detail`
+  },
+  shopCart: {
+    list: '/api/get/shopcart'
   }
 }
 
