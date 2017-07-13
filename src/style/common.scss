@@ -219,3 +219,22 @@ image[lazy=loading] {
   margin: auto;
 }
 
+/* 顶部导航 */
+  .nav-swiper{
+    overflow: hidden;
+    position:relative;
+    &:before {
+      z-index: 5;
+      content: '';
+      position:absolute;
+      bottom:-20px;
+      left:0;
+      display:block;
+      width:100%;
+      height:20px;
+      background-image:url('images/hu-top1.png');
+      background-size:100% 100%;
+      background-color:red;
+    }
+  }
+

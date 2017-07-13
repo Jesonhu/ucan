@@ -12,6 +12,12 @@ import MintUI from 'mint-ui';
 import { Lazyload } from 'mint-ui';
 import 'mint-ui/lib/style.css'
 
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+Vue.use(VueAwesomeSwiper)
+
+import host from './config/host'
+Vue.prototype.host = host
+
 /* fastclick使用 */
 if ('addEventListener' in document) {
   document.addEventListener('DOMContentLoaded', function () {

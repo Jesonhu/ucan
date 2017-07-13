@@ -13,7 +13,7 @@
     </div>
 
     <!-- swiper -->
-    <div class="swiper-wrap" ref="swiperWrap">
+    <!--<div class="swiper-wrap" ref="swiperWrap">
       <mt-swipe :auto="4000" class="swiper-list">
         <mt-swipe-item v-for="(item,index) in dataSwiper" class="swiper-item" :key="index">
           <a href="">
@@ -21,7 +21,11 @@
           </a>
         </mt-swipe-item>
       </mt-swipe>
-    </div>
+    </div>-->
+    <v-banner
+     v-if="dataSwiper.length > 0"
+     ref="swiperWrap"
+     :swiper="dataSwiper"></v-banner>
 
     <!--nav-->
     <mt-swipe style="height:130px;" :auto="0" :continuous="false" class="nav-swiper">
@@ -197,6 +201,8 @@
   import header from '../../components/header/head';
   import recommend from '../../components/recommend/recommend';
   import $ from 'jquery';
+  import banner from 'components/swiper/swiper'
+  import countDown from '../../plugins/countdown'
 
   const ERR_OK = 0;
   let that;
@@ -215,16 +221,16 @@
         dataRecommend: [],
 
         screenWidth: document.body.clientWidth,
-        topSwiperImgHei: 0,
+        topSwiperImgHei: 100,
         addBg: false
       };
     },
     created() {
       that = this;
-      /*this.$nextTick(function() {
-        this._initSeckillScroll;
-        this._seckillTime(); // <--
-      })*/
+      this.$nextTick(function() {
+//        this._initSeckillScroll;
+        countDown() // => 倒计时函数开启
+      })
     },
     watch: {
       /* 秒杀监控图片变化 */
@@ -257,8 +263,7 @@
           });
 
           let scrollHei = this.scrollY;
-          let imgHei = that.topSwiperImgHei;
-          // console.log(imgHei +','+ scrollHei);
+          const imgHei = that.topSwiperImgHei;
           if (scrollHei >= imgHei) {
             that.addBg = true;
           } else {
@@ -270,7 +275,7 @@
 
       window.onscroll = function(ev) {
         let scrollHei = this.scrollY;
-        let imgHei = that.topSwiperImgHei;
+        const imgHei = that.topSwiperImgHei;
 
         // console.log(imgHei +','+ scrollHei);
         if (scrollHei >= imgHei) {
@@ -281,7 +286,7 @@
       };
 
       /* banner大图图片 */
-      axios.get('/api/banner/1').then((res) => {
+      axios.get(this.host.index.banner).then((res) => {
         if (res.status === 200) {
           this.dataSwiper = res.data.data;
           this.$nextTick(() => {
@@ -293,7 +298,7 @@
       });
 
       /* 10大金刚 */
-      axios.get('/api/nav/1').then((res) => {
+      axios.get(this.host.index.nav).then((res) => {
         if (res.status === 200) {
           this.dataFloot = res.data.data;
         }
@@ -302,7 +307,7 @@
       });
 
       /* 快报 */
-      axios.get('/api/news/1').then((res) => {
+      axios.get(this.host.index.topNews).then((res) => {
         if (res.status === 200) {
           this.dataExpressNews = res.data.data;
           this.$nextTick(() => {
@@ -314,7 +319,7 @@
       });
 
       /* 秒杀图片 */
-      axios.get('/api/goods_list/0/0').then((res) => {
+      axios.get(this.host.index.seckill).then((res) => {
         if (res.status === 200) {
             this.dataSeckill = res.data.data;
             this.$nextTick(() => {
@@ -327,7 +332,7 @@
       });
 
       /* 爱生活 */
-      axios.get('/api/goods_list/1/1').then((res) => {
+      axios.get(this.host.index.life).then((res) => {
         if (res.status === 200) {
             this.dataLoveFife = res.data.data;
         }
@@ -336,7 +341,7 @@
       });
 
       /* 楼层banner */
-      axios.get('/api/banner/2').then((res) => {
+      axios.get(this.host.index.featureBanner).then((res) => {
         if (res.status === 200) {
             this.dataFloorSwiper = res.data.data;
         }
@@ -345,7 +350,7 @@
       });
 
       /* 购特色 */
-      axios.get('api/goods_list/2/1').then((res) => {
+      axios.get(this.host.index.feature).then((res) => {
         if (res.status === 200) {
             this.dataFeature = res.data.data;
         }
@@ -354,7 +359,7 @@
       });
 
       /* 为您推荐 */
-      axios.get('api/goods_recomment/12').then((res) => {
+      axios.get(this.host.index.recommend).then((res) => {
         if (res.status === 200) {
             this.dataRecommend = res.data.data;
         }
@@ -396,15 +401,15 @@
 
       /* 轮播高度计算 */
       _calculateSwiperHei() {
-        let $imgHei = $('.swiper-img').height() || 137;
-        let $swiperWrap = $('.swiper-wrap');
-        let $floorBannerImgHei = $('.floor-banner-img').height() > 0 ? $('.floor-banner-img').height() : '77px';
-        let $swiperFloorBannerWrap = $('.floor-banner-list');
-
-        this.topSwiperImgHei = $imgHei;
-        $swiperWrap.css('height',$imgHei); // wiperImgHei = $imgHei;
-
-        $swiperFloorBannerWrap.css('height',$floorBannerImgHei);
+//        let $imgHei = $('.swiper-img').height() || 137;
+//        let $swiperWrap = $('.swiper-wrap');
+//        let $floorBannerImgHei = $('.floor-banner-img').height() > 0 ? $('.floor-banner-img').height() : '77px';
+//        let $swiperFloorBannerWrap = $('.floor-banner-list');
+//
+//        this.topSwiperImgHei = $imgHei;
+//        $swiperWrap.css('height',$imgHei); // wiperImgHei = $imgHei;
+//
+//        $swiperFloorBannerWrap.css('height',$floorBannerImgHei);
       },
 
       /* 倒计时 */
@@ -538,6 +543,7 @@
       Swipe,
       SwipeItem,
       vHeader: header,
+      vBanner: banner,
       recommend
     }
   };
@@ -549,7 +555,7 @@
   /* header */
   .header{
     &.addBg{
-      background:#E4393C;
+      background:rgba(228,57,60,1);
     }
 
     position:fixed;
@@ -619,6 +625,7 @@
 
     }
     .swiper-item{
+      z-index:1;
       /*float:left;*/
     }
     img{
@@ -632,6 +639,19 @@
   /* 顶部导航 */
   .nav-swiper{
     overflow: hidden;
+    position:relative;
+    // &:before{
+    //   content: '';
+    //   position:absolute;
+    //   bottom:-20px;
+    //   left:0;
+    //   display:block;
+    //   width:100%;
+    //   height:20px;
+    //   background-image:url(../../images/hu-top1.png);
+    //   background-size:100% 100%;
+    //   background-color:red;
+    // }
     .mint-swipe-indicators{
       bottom:0;
       background:#eee;
