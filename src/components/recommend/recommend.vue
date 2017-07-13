@@ -111,6 +111,7 @@
     .item-img{
       display:block;
       width:100%;
+      height:6.7rem;
     }
 
     .desc{

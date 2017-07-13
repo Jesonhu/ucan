@@ -4,15 +4,21 @@
  */
 
 export default (year, month, date, hours, mintues, seconds) => {
-  const endTime = new Date()
-  const argYear = endTime.setFullYear(year) || endTime.getFullYear()
-  const argMonth = endTime.setFullYear(month) || endTime.getMonth()
-  const argDate = endTime.setFullYear(date) || endTime.getDate()
-  const argHour = endTime.setFullYear(hours) || (endTime.getHours() + 2)
-  const argMinutes = endTime.setFullYear(mintues) || endTime.getMinutes()
-  const argSeconds = endTime.setFullYear(seconds) || endTime.getSeconds()
+  let endTime = new Date()
+  // year = year || endTime.getFullYear()
+  // month = month || endTime.setMonth()
+  // date = date || endTime.setDate() + 1
+  hours = hours || (endTime.getHours() + 2)
+  // mintues = mintues || endTime.setMinutes()
+  // seconds = mintues || endTime.setSeconds()
+
+  endTime.setFullYear(2017)
+  endTime.setMonth(6)
+  endTime.setDate(13)
+  endTime.setHours(hours)
+  endTime.setMinutes(0)
+  endTime.setSeconds(0)
   let endTimer = endTime.getTime();//获取结束时间
-  //console.log(endTimer);
 
   // 获取倒计时显示容器元素
   let secskill_hour = document.getElementById("secskill-hour"),
@@ -32,6 +38,9 @@ export default (year, month, date, hours, mintues, seconds) => {
       leaveSec = secs % 3600; // 换算小时后剩下秒钟
       min = Math.floor(leaveSec / 60); // 换算为分
       sec = Math.floor(leaveSec % 60); // 换算为秒
+
+      // console.log(`,${hour},${min},${sec}`)
+      // console.log(hourWrap, mintuesWrap, secoundsWrap)
 
       hourWrap.innerHTML = addZero(hour,2);
       mintuesWrap.innerHTML = addZero(min,2);

@@ -28,7 +28,7 @@
      :swiper="dataSwiper"></v-banner>
 
     <!--nav-->
-    <mt-swipe style="height:130px;" :auto="0" :continuous="false" class="nav-swiper">
+    <mt-swipe style="height:130px;" :auto="0" :continuous="false" class="nav-swiper" v-if="dataFloot.length > 0">
       <mt-swipe-item>
         <nav>
           <a href="" v-for="item in dataFloot">
@@ -49,7 +49,8 @@
 
 
     <!-- 快报 -->
-    <div class="exprss-new-wrap">
+    <div class="exprss-new-wrap"
+     v-if="dataExpressNews.length > 0">
       <div class="new-con">
         <a href="" class="con-left">
           <img src="https://st.360buyimg.com/m/images/index/jd-news-tit.png" alt="">
@@ -68,15 +69,16 @@
     </div>
 
     <!-- 京东秒杀 -->
-    <div class="seckill-wrap">
+    <div class="seckill-wrap"
+     v-if="dataSeckill.length > 0">
       <div class="seckill-title">
         <a href="" class="title-time">
           <img src="https://m.360buyimg.com/mobilecms/jfs/t3451/307/73678054/7807/dd9134d/57fdff2eNb7cd186f.png" alt="">
           <span class="time-start">12点场</span>
           <div class="time-timing">
             <span id="secskill-hour">00</span>:
-            <span id="secskill-min">00</span>:
-            <span id="secskill-sec">00</span>
+            <span id="secskill-min">01</span>:
+            <span id="secskill-sec">03</span>
           </div>
         </a>
         <a href="" class="title-more">
@@ -103,7 +105,8 @@
     </div>
 
     <!-- 发现好货 -->
-    <div class="find-goods-wrap top1pxBorder">
+    <div class="find-goods-wrap top1pxBorder"
+     v-if="dataGraphicItem.length > 0">
       <ul class="list">
         <li class="item " v-for="(item,index) in dataGraphicItem"
             :class="[index === 0?'first':'',index>0?'left1pxBorder':'']">
@@ -121,7 +124,8 @@
     </div>
 
     <!-- 爱生活 -->
-    <div class="loveLife-wrap">
+    <div class="loveLife-wrap"
+     v-if="dataLoveFife.length > 0">
       <div class="loveLife-title">
         <img src="https://st.360buyimg.com/m/images/index/floor-tit.png" alt="" class="title__bg">
         <p class="title__img">
@@ -147,7 +151,8 @@
     </div>
 
     <!-- 楼层banner图片 -->
-    <div class="floor-swiper-wrap">
+    <div class="floor-swiper-wrap" style="height:100px;"
+     v-if="dataFloorSwiper.length > 0">
       <mt-swipe :auto="4000" class="list floor-banner-list">
         <mt-swipe-item class="item" v-for="(item,index) in dataFloorSwiper" :key="index">
           <a href="">
@@ -157,7 +162,8 @@
       </mt-swipe>
     </div>
 
-    <div class="feature-wrap floor">
+    <div class="feature-wrap floor"
+     v-if="dataFeature.length > 0">
       <div class="floor-title floor-title-img">
         <img src="https://st.360buyimg.com/m/images/index/floor-tit.png" alt="" class="floor-title-bgimg">
         <p class="title-img-con">
@@ -185,7 +191,8 @@
     </div>
 
     <!-- 推荐 -->
-    <recommend :dataRecommend="dataRecommend"></recommend>
+    <recommend :dataRecommend="dataRecommend"
+     v-if="dataRecommend.length > 0"></recommend>
     <div style="height:50px;"></div>
 
   </div>
@@ -226,11 +233,10 @@
       };
     },
     created() {
-      that = this;
-      this.$nextTick(function() {
-//        this._initSeckillScroll;
+      that = this
+      setTimeout(() => {
         countDown() // => 倒计时函数开启
-      })
+      }, 1000)
     },
     watch: {
       /* 秒杀监控图片变化 */
@@ -248,31 +254,6 @@
       }
     },
     mounted() {
-
-      /* 钩子函数中可以监听到 */
-      window.onresize = () => {
-        return (() => {
-          window.screenWidth = document.body.clientWidth;
-          that.screenWidth = window.screenWidth;
-          that.addBg = false;
-
-          this.$nextTick(() => {
-            this._initSeckillScroll; // <--
-            this._initSeckillPics(); // <--
-            this._calculateSwiperHei(); // <--
-          });
-
-          let scrollHei = this.scrollY;
-          const imgHei = that.topSwiperImgHei;
-          if (scrollHei >= imgHei) {
-            that.addBg = true;
-          } else {
-            that.addBg = false;
-          }
-
-        })()
-      };
-
       window.onscroll = function(ev) {
         let scrollHei = this.scrollY;
         const imgHei = that.topSwiperImgHei;
@@ -286,16 +267,18 @@
       };
 
       /* banner大图图片 */
-      axios.get(this.host.index.banner).then((res) => {
-        if (res.status === 200) {
-          this.dataSwiper = res.data.data;
-          this.$nextTick(() => {
-            this._calculateSwiperHei(); // <--
-          })
-        }
-      }).catch((err) => {
-        console.log(err);
-      });
+      axios.get(this.host.index.banner)
+        .then((res) => {
+          if (res.status === 200) {
+            this.dataSwiper = res.data.data;
+            this.$nextTick(() => {
+              this._calculateSwiperHei(); // <--
+            })
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
       /* 10大金刚 */
       axios.get(this.host.index.nav).then((res) => {
@@ -350,7 +333,7 @@
       });
 
       /* 购特色 */
-      axios.get(this.host.index.featureBanner).then((res) => {
+      axios.get(this.host.index.featureList).then((res) => {
         if (res.status === 200) {
             this.dataFeature = res.data.data;
         }
@@ -557,11 +540,10 @@
     &.addBg{
       background:rgba(228,57,60,1);
     }
-
+    z-index: 999;
     position:fixed;
     top:0;
     left:0;
-    z-index: 50;
     display:flex;
     flex-flow: row nowrap;
     height: 39px;

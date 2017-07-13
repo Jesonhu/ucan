@@ -46,7 +46,30 @@
   export default {
     data() {
       return  {
-
+        navList: [
+          {
+            name: '首页',
+            pic: '../../images/a-home.png',
+            linkTo: '/home'
+          },
+          {
+            name: '分类',
+            pic: '../../images/a-home.png',
+            linkTo: '/list'
+          },
+          {
+            name: '发现',
+            linkTo: '/mm'
+          },
+          {
+            name: '购物车',
+            linkTo: '/shopcart'
+          },
+          {
+            name: '我的',
+            linkTo: '/mine'
+          }
+        ]
       }
     },
     created() {

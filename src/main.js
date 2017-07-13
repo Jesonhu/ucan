@@ -7,6 +7,7 @@ import store from './store';
 import App from './App';
 import './config/rem';
 import FaskClick from 'fastclick';
+import 'babel-polyfill'
 
 import MintUI from 'mint-ui';
 import { Lazyload } from 'mint-ui';

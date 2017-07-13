@@ -3,7 +3,7 @@
  * @param url: axios请求域
  */
 
-const url = 'http://localhost:8555/'
+const url = 'http://192.168.1.15:8555/'
 
 export default {
   BASE_URL: url
