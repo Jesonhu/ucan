@@ -63,5 +63,21 @@ apiRoutes.get('/recommend', (req, res) => {
     res.send(goodsList)
 })
 
+// 商品详情
+apiRoutes.get('/product/detail', (req, res) => {
+    const queryId = req.query.id
+    const dataArr = goodsList.data
+    const resultData = null
+    console.log(queryId)
+    for (let i = 0, length = dataArr.length; i < length; i++ ) {
+      if (dataArr[i].id = queryId) {
+        resultData = dataArr[i]
+      }
+    }
+    res.json({
+      data: resultData
+    })
+})
+
 module.exports = apiRoutes
 

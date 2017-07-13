@@ -15,6 +15,10 @@ const host = {
     featureBanner: `/api/life/banner`,
     featureList: `/api/feature`,
     recommend: `/api/recommend`
+  },
+  product: { // 产品
+    list: '',
+    detail: `/api/product/detail`
   }
 }
 

@@ -5,7 +5,7 @@ import VueRouter from 'vue-router';
 import routes from './router/index';
 import store from './store';
 import App from './App';
-import './config/rem';
+import './plugins/rem';
 import FaskClick from 'fastclick';
 import 'babel-polyfill'
 

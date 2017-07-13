@@ -10,7 +10,8 @@
       <ul class="list">
         <li class="item"
             v-for="(item, index) in dataRecommend">
-          <router-link :to="`/product/${item.id}.html`" class="item-link">
+          <router-link class="item-link"
+           :to="{name: 'proDetail', query: {id: item.id}}" >
             <img v-lazy="item.cover" alt="" class="item-img">
             <p class="desc linetwo">{{item.title}}</p>
             <div class="body-bottom">

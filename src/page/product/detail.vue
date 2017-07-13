@@ -78,12 +78,12 @@
     mounted() {
       const params = this.$route.params; // 获取传递过来的参数
       const pattern = /\d+/g;
-      this.id = Number( params.page.match(pattern)[0] ); // 只匹配xxx.html xxx部分
-
-      axios.get(`/api/goods_detail/${this.id}`).then((res) => {
+//      this.id = Number( params.page.match(pattern)[0] ); // 只匹配xxx.html xxx部分
+      const queryId = this.$route.query.id
+      axios.get(`${this.host.product.detail}/${queryId}`).then((res) => {
         this.dataFromData = res.data.data;
         this.$nextTick(() => {
-          this._initData();
+//          this._initData();
         })
       }).catch((err) => {
         console.log(err);

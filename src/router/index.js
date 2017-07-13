@@ -1,11 +1,8 @@
-import App from '../App';
-
-// const home = r => require.ensure([], () => r(require('../page/home/home')), 'home');
 import home from '../page/home/home';
 import list from '../page/list/list';
 import mm from '../page/mm/mm';
 import shopcart from '../page/shopcart/shopcart.vue';
-import goods from '../page/goods/goods';
+import goods from '../page/product/detail.vue'; // 商品详情
 import mine from '../page/mine/mine';
 
 export default [
@@ -22,7 +19,8 @@ export default [
     component: list
   },
   {
-    path: '/product/:page',
+    path: '/product/detail',
+    name: 'proDetail',
     component: goods
   },
   {

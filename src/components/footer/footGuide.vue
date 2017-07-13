@@ -141,12 +141,12 @@
   }
 
   .m-tabBar {
+    z-index: 99;
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
     justify-content: space-around;
     position: fixed;
-    z-index: 5;
     left: 0;
     bottom: 0;
     width: 100%;
