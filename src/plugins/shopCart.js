@@ -4,20 +4,33 @@
 import axios from 'axios'
 import host from '../config/host'
 
-export default {
-  async getRemoteData () {
-    let result = []
-    await axios.get(host.shopCart.list)
+axios.default.timeout = 5000
+
+function fetchGet () {
+  return new Promise((resolve, reject) => {
+    axios.get(host.shopCart.list)
       .then((res) => {
         if (res.status === 200) {
           console.log('init shopCart data')
-          console.log(res.data.data)
           resolve(res.data.data)
         }
       })
       .catch((err) => {
+        reject(error)
+      })
+    })
+}
+
+export default {
+  getRemoteData () {
+    let dataArr = []
+    fetchGet()
+      .then((data) => {
+        dataArr = data
+      })
+      .catch((err) => {
         console.log(err)
       })
-    return result
+    return [2]
   }
 }

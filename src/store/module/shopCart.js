@@ -4,7 +4,7 @@
 import shopCart from '../../plugins/shopCart'
 
 const state = {
-  selectedGoods: shopCart.getRemoteData() || []
+  selectedGoods: shopCart.getRemoteData() || [1]
 }
 
 const actions = {
