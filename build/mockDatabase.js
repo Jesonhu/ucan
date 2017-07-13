@@ -64,13 +64,13 @@ apiRoutes.get('/recommend', (req, res) => {
 })
 
 // 商品详情
-apiRoutes.get('/product/detail', (req, res) => {
-    const queryId = req.query.id
+apiRoutes.get('/product/detail/:id', (req, res) => {
+    const paramId = req.params.id
     const dataArr = goodsList.data
-    const resultData = null
-    console.log(queryId)
+    let resultData = null
+    // console.log(paramId)
     for (let i = 0, length = dataArr.length; i < length; i++ ) {
-      if (dataArr[i].id = queryId) {
+      if (dataArr[i].id == paramId) {
         resultData = dataArr[i]
       }
     }

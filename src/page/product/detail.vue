@@ -1,5 +1,5 @@
 <template>
-    <div class="goods-detail-wrap">
+    <div class="goods-detail-wrap" v-if="productDetail !== null">
 
       <history-header :title="title" :currentTab="currentTab" @currentTabFn="currentTabFn"></history-header>
 
@@ -83,7 +83,7 @@
       axios.get(`${this.host.product.detail}/${queryId}`).then((res) => {
         this.dataFromData = res.data.data;
         this.$nextTick(() => {
-//          this._initData();
+          this._initData();
         })
       }).catch((err) => {
         console.log(err);
@@ -95,18 +95,20 @@
 
         /* 数据来自模拟数据即数据库 */
         const dataFromDateBase = () => {
-          this.dataFromData.forEach((item) => {
-            if (item.id === this.id) {
-              this.productDetail = item;
-              this.score = this.productDetail.score;
-            }
-          });
+//          this.dataFromData.forEach((item) => {
+//            if (item.id === this.id) {
+//              this.productDetail = item;
+//              this.score = this.productDetail.score;
+//            }
+//          });
+          this.productDetail = this.dataFromData
         };
 
         /* 详情页数据获取 */
         const getData = () => {
-          const storeStateSelectedGoods = this.$store.state.selectedGoods;
-          if (storeStateSelectedGoods.length) {
+          const storeStateSelectedGoods = this.$store.state.shopCart.selectedGoods
+
+          if (storeStateSelectedGoods.length) { // vuex购物车里有数据
             storeStateSelectedGoods.forEach((item) => {
               if ( item.id === this.id ) {
                 this.isShowCartControll = true;
@@ -137,7 +139,7 @@
       },
       /* 购物车里商品数量添加或减少 */
       changeCount(action) {
-        const index = this.$store.state.selectedGoods.length - 1; // 当前商品在购物车的索引值
+        const index = this.$store.state.shopCart.selectedGoods.length - 1; // 当前商品在购物车的索引值
         if (action > 0) { // 点击了+
           this.productDetail.count++;
         } else { // 点击了-

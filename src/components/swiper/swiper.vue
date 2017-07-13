@@ -6,8 +6,8 @@
     >
         <!-- 这部分放你要渲染的那些内容 -->
         <swiper-slide
-          v-for="item in swiper"
-          :key="item"
+          v-for="(item,index) in swiper"
+          :key="index"
         >
           <a href="">
               <img alt=""

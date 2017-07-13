@@ -114,9 +114,10 @@
         this.init();
     },
     mounted() {
-      axios.get('/api/goods_recomment/:count').then((res) => {
+
+      axios.get(this.host.index.recommend).then((res) => {
         if (res.status === 200) {
-          this.dataRecommend = res.data.result;
+          this.dataRecommend = res.data.data;
         }
       }).catch((err) => {
         console.log(err);
@@ -128,7 +129,7 @@
     methods: {
       /* 点击到购物车页面后初始化方法 */
       init() {
-        this.selectGoods = this.$store.state.selectedGoods; // <--
+        this.selectGoods = this.shopCart; // <--
         this.typeNum = this.selectGoods.length;
         this.selectGoods.forEach((item) => {
           if (!(typeof item.checked == 'undefined') && item.checked) {
@@ -148,7 +149,7 @@
       /* 增加商品到购物车里 */
       addCart(item) {
         const id = item.id;
-        const selectedGoods = this.$store.state.selectedGoods;
+        const selectedGoods = this.shopCart;
 
         if (selectedGoods.length > 0) {
           selectedGoods.forEach((arr, index) => {
@@ -185,8 +186,8 @@
           item: item
         });*/
 
-        this.selectGoods = this.$store.state.selectedGoods; // 获取 Vuex.state.selectedGoods 更新后购物车的状态
-        this.typeNum = this.$store.state.selectedGoods.length;
+        this.selectGoods = this.shopCart; // 获取 Vuex.state.selectedGoods 更新后购物车的状态
+        this.typeNum = this.shopCart.length;
         this.typeSlectedNum = 0;
         this.selectGoods.forEach((item) => {
           if (!(typeof item.checked == 'undefined') && item.checked) {
@@ -359,6 +360,9 @@
 
     },
     computed: {
+      ...mapState({
+        shopCart: state => state.shopCart.selectedGoods
+      }),
       isSelectAll() {
           if (this.typeNum === this.typeSlectedNum) { // 此时将全选另一个切换标识也设为true，避免通过上面单个类型全选，全选样式变化，再次点击底部全选还是全选而不是取消全选问题
               this.checkAllFlag = true;

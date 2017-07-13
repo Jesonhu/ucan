@@ -3,6 +3,7 @@
     <router-link  v-for="(item,index) in footerList"
      :to="item.linkTo" class="item"
      :key="index">
+
       <div>
         <i class="" :class="item.fontClass" >
         </i>
@@ -10,10 +11,11 @@
       </div>
       <div class="badge-show"
        v-if="index === 3">
-      <div class="badge-wrap" v-show="addShopCartGoodsNum">-->
-        <mt-badge size="small" color="red">{{addShopCartGoodsNum}}</mt-badge>
+        <div class="badge-wrap" v-show="addShopCartGoodsNum">
+          <mt-badge size="small" color="red">{{addShopCartGoodsNum}}</mt-badge>
         </div>
       </div>
+
     </router-link>
   </nav>
 </template>
@@ -77,7 +79,7 @@
       addShopCartGoodsNum: function(state) {
           if (this.shopCart.length) {
               let tatalCount = 0;
-              state.selectedGoods.forEach((item) => {
+              this.shopCart.forEach((item) => {
                   tatalCount += item.count;
               })
               return tatalCount;
@@ -170,7 +172,15 @@
   /* 徽章 */
   .badge-show{
     position:absolute;
-    top: -10px;
-    right: 26%;
+    top: -2px;
+    right: -26%;
+    .mint-badge.is-size-small{
+      display:block!important;
+      width: 20px !important;
+      height:20px!important;
+      text-align: center;
+      line-height: 20px;
+      padding:0!important;
+    }
   }
 </style>
