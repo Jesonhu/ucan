@@ -1,0 +1,202 @@
+{
+  "data": [
+    {
+      "id": 18,
+      "type": 2,
+      "sectype": 10,
+      "cover": "https://m.360buyimg.com/mobilecms/jfs/t3307/361/6758961248/5097/139ba994/58acf800N0ced20ff.jpg!q70.jpg",
+      "title": "二手清仓4",
+      "desc": "iPhone6 秒杀",
+      "price": "66",
+      "oldprice": "88",
+      "link": null
+    },
+    {
+      "id": 17,
+      "type": 2,
+      "sectype": 9,
+      "cover": "https://m.360buyimg.com/mobilecms/jfs/t3307/361/6758961248/5097/139ba994/58acf800N0ced20ff.jpg!q70.jpg",
+      "title": "二手清仓3",
+      "desc": "iPhone6 秒杀",
+      "price": "66",
+      "oldprice": "88",
+      "link": null
+    },
+    {
+      "id": 16,
+      "type": 2,
+      "sectype": 8,
+      "cover": "https://m.360buyimg.com/mobilecms/jfs/t3307/361/6758961248/5097/139ba994/58acf800N0ced20ff.jpg!q70.jpg",
+      "title": "二手清仓2",
+      "desc": "iPhone6 秒杀",
+      "price": "66",
+      "oldprice": "88",
+      "link": null
+    },
+    {
+      "id": 15,
+      "type": 2,
+      "sectype": 7,
+      "cover": "https://m.360buyimg.com/mobilecms/jfs/t3307/361/6758961248/5097/139ba994/58acf800N0ced20ff.jpg!q70.jpg",
+      "title": "二手清仓",
+      "desc": "iPhone6 秒杀",
+      "price": "66",
+      "oldprice": "88",
+      "link": null
+    },
+    {
+      "id": 14,
+      "type": 2,
+      "sectype": 6,
+      "cover": "https://m.360buyimg.com/mobilecms/jfs/t4438/288/4120880312/6787/cd3d3abb/5909ac04Nf135d13d.jpg!q70.jpg",
+      "title": "生活娱乐",
+      "desc": "今日特惠",
+      "price": "66",
+      "oldprice": "88",
+      "link": null
+    },
+    {
+      "id": 13,
+      "type": 2,
+      "sectype": 5,
+      "cover": "https://m.360buyimg.com/mobilecms/jfs/t4762/126/2315434555/24150/3e5a16ed/58fd749aN081a36b6.jpg!q70.jpg",
+      "title": "爱车生活",
+      "desc": "每日五折",
+      "price": "66",
+      "oldprice": "88",
+      "link": null
+    },
+    {
+      "id": 12,
+      "type": 2,
+      "sectype": 4,
+      "cover": "https://m.360buyimg.com/mobilecms/jfs/t5062/28/2525268992/7142/6038fa33/5901c1e4N501873d8.jpg!q70.jpg",
+      "title": "白条商城",
+      "desc": "12期免息 买",
+      "price": "66",
+      "oldprice": "88",
+      "link": null
+    },
+    {
+      "id": 11,
+      "type": 2,
+      "sectype": 3,
+      "cover": "https://m.360buyimg.com/mobilecms/jfs/t4243/38/2071438630/8234/17ef60a3/58cb7493Naa1b29c7.jpg!q70.jpg",
+      "title": "京东旅行",
+      "desc": "9.9秒杀!",
+      "price": "66",
+      "oldprice": "88",
+      "link": null
+    },
+    {
+      "id": 10,
+      "type": 2,
+      "sectype": 2,
+      "cover": "https://m.360buyimg.com/mobilecms/jfs/t4441/105/4147754759/10022/1f88beec/590a8917Nf44fbd21.jpg!q70.jpg",
+      "title": "京东众筹",
+      "desc": "1元秒杀",
+      "price": "66",
+      "oldprice": "88",
+      "link": null
+    },
+    {
+      "id": 9,
+      "type": 2,
+      "sectype": 1,
+      "cover": "https://m.360buyimg.com/mobilecms/jfs/t4450/321/502591655/43433/fd0fc5c9/58d08ba1Nd7d9e82a.jpg!q70.jpg",
+      "title": "智能生活",
+      "desc": "时尚智能表",
+      "price": "66",
+      "oldprice": "88",
+      "link": null
+    },
+    {
+      "id": 8,
+      "type": 1,
+      "sectype": 8,
+      "cover": "https://m.360buyimg.com/mobilecms/jfs/t4960/92/1133510483/5011/ea41c162/58ed9007N70666163.jpg!q70.jpg",
+      "title": "爱穿搭",
+      "desc": "运动199-50",
+      "price": "66",
+      "oldprice": "88",
+      "link": null
+    },
+    {
+      "id": 7,
+      "type": 1,
+      "sectype": 7,
+      "cover": "https://m.360buyimg.com/mobilecms/jfs/t4399/158/3713606647/21076/c0ebdb4b/59031fa3Na815df3b.jpg!q70.jpg",
+      "title": "爱吃",
+      "desc": "39.9任选5件",
+      "price": "66",
+      "oldprice": "88",
+      "link": null
+    },
+    {
+      "id": 6,
+      "type": 1,
+      "sectype": 6,
+      "cover": "https://m.360buyimg.com/mobilecms/jfs/t4033/288/1248007040/23380/1441761c/586f7ea7Nbad7117c.png!q70.jpg",
+      "title": "爱美丽",
+      "desc": "YSL圆管口红",
+      "price": "66",
+      "oldprice": "88",
+      "link": null
+    },
+    {
+      "id": 5,
+      "type": 1,
+      "sectype": 5,
+      "cover": "https://m.360buyimg.com/mobilecms/jfs/t4513/85/3938015974/8560/4b70366/5907eea7N97af34fe.jpg!q70.jpg",
+      "title": "爱宝宝",
+      "desc": "低至7.3折",
+      "price": "66",
+      "oldprice": "88",
+      "link": null
+    },
+    {
+      "id": 4,
+      "type": 1,
+      "sectype": 4,
+      "cover": "https://m.360buyimg.com/mobilecms/jfs/t5482/122/559499264/30545/ed09521d/5901cd15N9b167f8b.jpg!q70.jpg",
+      "title": "爱家",
+      "desc": "2件85折",
+      "price": "66",
+      "oldprice": "88",
+      "link": null
+    },
+    {
+      "id": 3,
+      "type": 1,
+      "sectype": 3,
+      "cover": "https://m.360buyimg.com/mobilecms/jfs/t5299/178/983349663/8877/4538bd04/5909c804N64b597c8.jpg!q70.jpg",
+      "title": "京东超市",
+      "desc": "荔枝29.9元每斤",
+      "price": "66",
+      "oldprice": "88",
+      "link": null
+    },
+    {
+      "id": 2,
+      "type": 1,
+      "sectype": 2,
+      "cover": "https://m.360buyimg.com/mobilecms/jfs/t4639/187/149060276/13271/7eb8e9e4/58ca6aabN39057594.jpg!q70.jpg",
+      "title": "京东家电",
+      "desc": "30天延期付款",
+      "price": "66",
+      "oldprice": "88",
+      "link": null
+    },
+    {
+      "id": 1,
+      "type": 1,
+      "sectype": 1,
+      "cover": "https://m.360buyimg.com/mobilecms/jfs/t4513/85/3938015974/8560/4b70366/5907eea7N97af34fe.jpg!q70.jpg",
+      "title": "玩3C",
+      "desc": "iPhone 5s",
+      "price": "66",
+      "oldprice": "88",
+      "link": null
+    }
+  ]
+}

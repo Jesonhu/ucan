@@ -350,7 +350,7 @@
       });
 
       /* 购特色 */
-      axios.get(this.host.index.feature).then((res) => {
+      axios.get(this.host.index.featureBanner).then((res) => {
         if (res.status === 200) {
             this.dataFeature = res.data.data;
         }
