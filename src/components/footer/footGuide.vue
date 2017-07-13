@@ -68,11 +68,14 @@
 
     },
     computed: {
-      ...mapState([
-        'selectedGoods'
-      ]),
+//      ...mapState([ // 一般写法
+//       'selectedGoods'
+//      ]),
+      ...mapState({ // 模块化引入
+        shopCart: state => state.shopCart.selectedGoods
+      }),
       addShopCartGoodsNum: function(state) {
-          if (state.selectedGoods.length) {
+          if (this.shopCart.length) {
               let tatalCount = 0;
               state.selectedGoods.forEach((item) => {
                   tatalCount += item.count;
