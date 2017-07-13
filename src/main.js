@@ -16,6 +16,8 @@ import 'mint-ui/lib/style.css'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 Vue.use(VueAwesomeSwiper)
 
+import 'font-awesome/css/font-awesome.min.css'
+
 import host from './config/host'
 Vue.prototype.host = host
 

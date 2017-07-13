@@ -1,37 +1,21 @@
 <template>
-  <div id="common-footer">
-    <div class="tab">
-      <div class="tab-item">
-        <router-link to="/home">
-          <img src="../../images/a-home.png" alt="home">
-        </router-link>
+  <nav class="m-tabBar">
+    <router-link  v-for="(item,index) in footerList"
+     :to="item.linkTo" class="item"
+     :key="index">
+      <div>
+        <i class="" :class="item.fontClass" >
+        </i>
+        <span class="txt" >{{item.name}}</span>
       </div>
-      <div class="tab-item">
-        <router-link to="/list">
-          <img src="../../images/n-catergry.png" alt="catergry">
-        </router-link>
+      <div class="badge-show"
+       v-if="index === 3">
+      <div class="badge-wrap" v-show="addShopCartGoodsNum">-->
+        <mt-badge size="small" color="red">{{addShopCartGoodsNum}}</mt-badge>
+        </div>
       </div>
-      <div class="tab-item">
-        <router-link to="/mm">
-          <img src="../../images/n-find.png" alt="find">
-        </router-link>
-      </div>
-      <div class="tab-item">
-        <router-link to="/shopcart">
-          <div class="badge-wrap" v-show="addShopCartGoodsNum">
-            <mt-badge size="small" color="red">{{addShopCartGoodsNum}}</mt-badge>
-          </div>
-          <img src="../../images/n-cart.png" alt="cart">
-        </router-link>
-      </div>
-      <div class="tab-item">
-        <router-link to="/mine">
-          <img src="../../images/n-me.png" alt="me">
-        </router-link>
-      </div>
-    </div>
-
-  </div>
+    </router-link>
+  </nav>
 </template>
 
 <script>
@@ -46,27 +30,35 @@
   export default {
     data() {
       return  {
-        navList: [
+        footerList: [
           {
             name: '首页',
             pic: '../../images/a-home.png',
+            fontClass: 'fa fa-home',
             linkTo: '/home'
           },
           {
             name: '分类',
             pic: '../../images/a-home.png',
+            fontClass: 'fa fa-list-alt',
             linkTo: '/list'
           },
           {
             name: '发现',
+            pic: '../../images/a-home.png',
+            fontClass: 'fa fa-telegram',
             linkTo: '/mm'
           },
           {
             name: '购物车',
+            pic: '../../images/a-home.png',
+            fontClass: 'fa fa-shopping-cart',
             linkTo: '/shopcart'
           },
           {
             name: '我的',
+            pic: '../../images/a-home.png',
+            fontClass: 'fa fa-user-circle-o',
             linkTo: '/mine'
           }
         ]
@@ -97,7 +89,7 @@
   };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
   #common-footer{
     position: fixed;
     bottom:0;
@@ -126,13 +118,56 @@
             display:block;
             height:100%;
           }
-          .badge-wrap{
-            position:absolute;
-            top: -10px;
-            right: 26%;
-          }
         }
       }
     }
+  }
+
+  .m-tabBar{
+    height:50px!important;
+  }
+  .footer{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 10000;
+  }
+  .m-tabBar>.item.active i,
+  .m-tabBar>.item.active .txt {
+    color: #b4282d;
+  }
+
+  .m-tabBar {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-around;
+    position: fixed;
+    z-index: 5;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1.30667rem;
+    background-color: #fafafa;
+    border-top: 1px solid #d9d9d9;
+  }
+
+  .m-tabBar>.item .txt {
+    display: block;
+    margin-top: .09333rem;
+    font-size: .32rem;
+    color: #666;
+    line-height: 1;
+  }
+  .item {
+    position: relative;
+    text-align: center;
+  }
+
+  /* 徽章 */
+  .badge-show{
+    position:absolute;
+    top: -10px;
+    right: 26%;
   }
 </style>
