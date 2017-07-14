@@ -31,15 +31,19 @@
 </template>
 
 <script type="text/ecmascript-6">
+  import { mapState } from 'vuex'
+
   let that;
   export default {
     props: ['dataRecommend'],
-    data() {
+    data () {
       return {
 
       }
     },
-    created() {
+    created () {
+    },
+    computed: {
     },
     components: {}
   };

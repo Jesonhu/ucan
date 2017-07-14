@@ -3,7 +3,8 @@ import list from '../page/list/list';
 import mm from '../page/mm/mm';
 import shopcart from '../page/shopcart/shopcart.vue';
 import goods from '../page/product/detail.vue'; // 商品详情
-import mine from '../page/mine/mine';
+import mine from '../page/user/info';
+import login from '../page/user/login.vue'
 
 export default [
   {
@@ -34,5 +35,9 @@ export default [
   {
     path: '/mine',
     component: mine
+  },
+  {
+    path: '/login',
+    component: login
   }
 ];

@@ -2,12 +2,13 @@
  * Created by Jesonhu on 2017/7/13 0013.
  */
 const STORAGE_USER_KEY = 'STORAGE_USER_KEY'
+import Vue from 'vue'
 
 export default {
   // get
   getLocal (key = STORAGE_USER_KEY) {
     console.log('get local operation')
-    return JSON.parse(window.localStorage.setItem(key))
+    return JSON.parse(window.localStorage.getItem(key))
   },
 
   // set

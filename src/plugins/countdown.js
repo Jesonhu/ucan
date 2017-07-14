@@ -5,16 +5,14 @@
 
 export default (year, month, date, hours, mintues, seconds) => {
   let endTime = new Date()
-  // year = year || endTime.getFullYear()
-  // month = month || endTime.setMonth()
-  // date = date || endTime.setDate() + 1
+  year = year || endTime.getFullYear()
+  month = month || endTime.getMonth()
+  date = date || endTime.getDate()
   hours = hours || (endTime.getHours() + 2)
-  // mintues = mintues || endTime.setMinutes()
-  // seconds = mintues || endTime.setSeconds()
 
-  endTime.setFullYear(2017)
-  endTime.setMonth(6)
-  endTime.setDate(13)
+  endTime.setFullYear(year)
+  endTime.setMonth(month)
+  endTime.setDate(date)
   endTime.setHours(hours)
   endTime.setMinutes(0)
   endTime.setSeconds(0)

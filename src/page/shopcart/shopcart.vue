@@ -1,81 +1,98 @@
 <template>
   <div id="shopcart" class="shopcart-page">
+    <div class="shop-wrap" v-show="isLogin">
+      <!-- header -->
+      <shopcart-header></shopcart-header>
 
-    <!-- header -->
-    <shopcart-header></shopcart-header>
-
-    <!--选购商品列表-->
-    <div class="selectgood-wrap" id="selectgood-wrap" v-show="selectGoods.length>0">
-      <ul class="list">
-        <li class="item" v-for="(item, index) in selectGoods" v-show="item.count">
-          <div class="item-body">
-            <div class="select" @click="selectedProduct(item, index)" :class="{'is-selected':item.checked}">选</div>
-            <div class="img-wrap">
-              <img :src="item.cover" alt="" class="img">
-            </div>
-            <div class="item-main">
-              <p class="main-desc">{{item.name}}</p>
-              <div class="main-bottom">
-                <div class="price">￥{{item.price}}</div>
-                <div class="controll">
-                  <span class="decrease" @click="changeMoney(item,-1,index)">-</span>
-                  <span class="num" v-model="item.count">{{item.count}}</span>
-                  <span class="add" @click="changeMoney(item,1,index)">+</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </li>
-      </ul>
-    </div>
-
-    <!-- 推荐 -->
-    <div id="recommend" class="shopcart-recommend-wrap">
-      <div class="recommend-title" @click="showDetail()">
-      <span class="title-text">
-        <em class="title-arrow"></em>
-        为您推荐
-      </span>
-      </div>
-      <div class="recommend-body">
+      <!--选购商品列表-->
+      <div class="selectgood-wrap" id="selectgood-wrap" v-show="selectGoods.length>0">
         <ul class="list">
-          <li class="item"
-              v-for="(item,index) in dataRecommend">
-            <a href="" class="item-link">
-              <img v-lazy="item.cover" alt="" class="item-img">
-              <p class="desc linetwo">{{item.name}}</p>
-              <div class="body-bottom" id="shopcart-page-body-bottom">
-                <div class="price-content">
-                  <span class="yuan">￥</span>
-                  <span class="price">{{item.price}}</span>
-                  <span class="zero">.22</span>
-                </div>
-
-                <!--<div class="similar">购买</div>-->
-                <!-- 购买 -->
-                <div class="similar" :class="{'is-active': isCanBuy}" @click.stop.prevent="addCart(item)">购买</div>
-
+          <li class="item" v-for="(item, index) in selectGoods" v-show="item.count">
+            <div class="item-body">
+              <div class="select" @click="selectedProduct(item, index)" :class="{'is-selected':item.checked}">选</div>
+              <div class="img-wrap">
+                <img :src="item.cover" alt="" class="img">
               </div>
-            </a>
+              <div class="item-main">
+                <p class="main-desc">{{item.name}}</p>
+                <div class="main-bottom">
+                  <div class="price">￥{{item.price}}</div>
+                  <div class="controll">
+                    <span class="decrease" @click="changeMoney(item,-1,index)">-</span>
+                    <span class="num" v-model="item.count">{{item.count}}</span>
+                    <span class="add" @click="changeMoney(item,1,index)">+</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </li>
         </ul>
       </div>
+
+      <!-- 推荐 -->
+      <div id="recommend" class="shopcart-recommend-wrap">
+        <div class="recommend-title" @click="showDetail()">
+        <span class="title-text">
+          <em class="title-arrow"></em>
+          为您推荐
+        </span>
+        </div>
+        <div class="recommend-body">
+          <ul class="list">
+            <li class="item"
+                v-for="(item,index) in dataRecommend">
+              <a href="" class="item-link">
+                <img v-lazy="item.cover" alt="" class="item-img">
+                <p class="desc linetwo">{{item.name}}</p>
+                <div class="body-bottom" id="shopcart-page-body-bottom">
+                  <div class="price-content">
+                    <span class="yuan">￥</span>
+                    <span class="price">{{item.price}}</span>
+                    <span class="zero">.22</span>
+                  </div>
+
+                  <!--<div class="similar">购买</div>-->
+                  <!-- 购买 -->
+                  <div class="similar" :class="{'is-active': isCanBuy}" @click.stop.prevent="addCart(item)">购买</div>
+
+                </div>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 购物车显示 -->
+      <div class="shopcart-detail" v-show="selectGoods.length>0">
+        <div class="selectall" :class="{'is-selected': checkAllFlag || isSelectAll}" @click="checkAll(!checkAllFlag)">全选</div>
+        <div class="count">
+          总额:
+          <span class="total-price" v-show="calcTotalPrice">￥{{totalAllPrice}}</span>
+        </div>
+        <div class="gobuy" @click="goBuy">
+          去结算
+          <span class="buy-num">{{totalAllNum}}</span>
+        </div>
+      </div>
     </div>
 
-    <!-- 购物车显示 -->
-    <div class="shopcart-detail" v-show="selectGoods.length>0">
-      <div class="selectall" :class="{'is-selected': checkAllFlag || isSelectAll}" @click="checkAll(!checkAllFlag)">全选</div>
-      <div class="count">
-        总额:
-        <span class="total-price" v-show="calcTotalPrice">￥{{totalAllPrice}}</span>
-      </div>
-      <div class="gobuy" @click="goBuy">
-        去结算
-        <span class="buy-num">{{totalAllNum}}</span>
+    <!-- 未登录 -->
+    <div class="no-login" v-show="!isLogin">
+      <v-header :hasBorder="true">
+        <div class="mine-header">
+          <div class="header-left"></div>
+          <div class="header-title">未登录</div>
+          <div class="header-right"></div>
+        </div>
+      </v-header>
+      <div class="go-login-wrap">
+        <div class="main-wrap">
+          <div class="img-wrap"></div>
+          <p class="text">登录后才能查看购物车</p>
+          <router-link to="/login" class="link">登录</router-link>
+        </div>
       </div>
     </div>
-
-
   </div>
 </template>
 
@@ -88,6 +105,7 @@
   import axios from 'axios';
 
   import homeData from '../../service/mockdata/home';
+  import vHeader from 'components/header/hasSearch'
 
   let that;
 
@@ -112,9 +130,13 @@
     created() {
         that = this;
         this.init();
-    },
-    mounted() {
 
+    },
+
+    mounted() {
+        setTimeout(() => {
+          this.abc()
+        },1000)
       axios.get(this.host.index.recommend).then((res) => {
         if (res.status === 200) {
           this.dataRecommend = res.data.data;
@@ -129,16 +151,22 @@
     methods: {
       /* 点击到购物车页面后初始化方法 */
       init() {
+        this.$store.dispatch('fetchGet')
+      },
+      abc() {
+        console.log(this.shopCart);
         this.selectGoods = this.shopCart; // <--
         this.typeNum = this.selectGoods.length;
-        this.selectGoods.forEach((item) => {
-          if (!(typeof item.checked == 'undefined') && item.checked) {
-            this.typeSlectedNum++;
-          };
-        });
-        if (this.typeNum === this.typeSlectedNum) {
+        if (typeof this.selectGoods == 'undefined') {
+          this.selectGoods.forEach((item) => {
+            if (!(typeof item.checked == 'undefined') && item.checked) {
+              this.typeSlectedNum++;
+            };
+          });
+          if (this.typeNum === this.typeSlectedNum) {
             this.checkAllFlag = true;
             this.calcTotalPrice();
+          }
         }
       },
       showDetail() {
@@ -361,7 +389,8 @@
     },
     computed: {
       ...mapState({
-        shopCart: state => state.shopCart.selectedGoods
+        shopCart: state => state.shopCart.selectedGoods,
+        isLogin: state => !!state.user.localUserInfo.loginStatus
       }),
       isSelectAll() {
           if (this.typeNum === this.typeSlectedNum) { // 此时将全选另一个切换标识也设为true，避免通过上面单个类型全选，全选样式变化，再次点击底部全选还是全选而不是取消全选问题
@@ -375,12 +404,13 @@
     components: {
       shopcartHeader,
       cartControll,
-      MessageBox
+      MessageBox,
+      vHeader
     }
   };
 </script>
 
-<style>
+<style scoped>
   .shopcart-page{
   /* 推荐 */
     .shopcart-recommend-wrap{
@@ -612,5 +642,48 @@
 
   #shopcart-page-body-bottom{
     position:relative;
+  }
+
+  /* 未登录时 */
+  .go-login-wrap{
+    position: fixed;
+    display: flex;
+    top:30px;
+    left:0;
+    width:100%;
+    bottom:50px;
+    background:#fff;
+    align-items: center;
+    justify-content: center;
+    .main-wrap{
+      width:60%;
+      .img-wrap{
+        background-image: url(http://yanxuan.nosdn.127.net/hxm/yanxuan-wap/p/20161201/style/img/icon-normal/noCart-a8fe3f12e5.png);
+        display: inline-block;
+        vertical-align: middle;
+        width: 105px;
+        height: 105px;
+        margin-bottom: 5px;
+        background-size: 105px 105px;
+        background-position: 50%;
+        background-repeat: no-repeat;
+      }
+      .text{
+        text-align: center;
+        font-size:12px;
+        margin-bottom:5px;
+      }
+      .link{
+        display: block;
+        width: 100%;
+        height: 40px;
+        font-size: 16px;
+        line-height: 40px;
+        color: #fff;
+        background-color: #b4282d;
+        border-radius: 4px;
+        text-align: center;
+      }
+    }
   }
 </style>

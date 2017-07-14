@@ -1,6 +1,6 @@
 <template>
     <div id="list" class="list-wrap">
-      <v-header></v-header>
+      <v-header :hasBg="true"></v-header>
 
       <!-- 左侧分类导航 -->
       <menu-wrapper :dataMenuList="dataMenuList" @selectedIndex="selectIndex"></menu-wrapper>
@@ -12,7 +12,7 @@
 
 <script>
     /* 依赖组件 */
-    import head from '../../components/header/head';
+    import head from '../../components/header/hasSearch';
     import menuWrapper from '../../components/menu-wrapper/menu-wrapper';
     import branchScroll from '../../components/branchscroll/branchscroll';
 

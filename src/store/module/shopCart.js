@@ -3,9 +3,11 @@
  */
 import axios from 'axios'
 import host from '../../config/host'
+import shopCart from '../../plugins/shopCart2'
 
 const state = {
   selectedGoods: []
+
 }
 
 const actions = {
@@ -14,7 +16,7 @@ const actions = {
     axios.get(host.shopCart.list)
       .then((res) => {
         if (res.status === 200) {
-          console.log('init shopCart data')
+          console.log('init shopCart data action')
           // resolve(res.data.data)
           commit('INIT_GET_SHOPCART', res.data.data)
         }
@@ -50,6 +52,10 @@ const actions = {
     // console.log(nowSelectedGoods);
     commit('UPDATE_SHOPCART', nowSelectedGoods);
   },
+
+  removeShopCart ({commit}) {
+    commit('REMOVE_SHOPCART')
+  }
 }
 
 const mutations = {
@@ -85,6 +91,11 @@ const mutations = {
     } else if ( action === REMOVE ){ // 删除购物车中的某项
       state.selectedGoods.splice(index, 1);
     }
+  },
+
+  /* 清空购物车 */
+  REMOVE_SHOPCART (state) {
+    state.selectedGoods = {}
   }
 }
 

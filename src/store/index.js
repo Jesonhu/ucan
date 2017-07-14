@@ -6,7 +6,8 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 // import mutations from './mutations';
 // import actions from './action';
-import shopCart from './module/shopCart'
+import shopCart from './module/shopCart' // 购物车状态
+import user from './module/user' // 用户状态
 import getters from './getters';
 
 Vue.use(Vuex);
@@ -27,6 +28,7 @@ Vue.use(Vuex);
 /* vuex模块化方式 */
 export default new Vuex.Store({
   modules: {
+    user,
     shopCart
   }
 })

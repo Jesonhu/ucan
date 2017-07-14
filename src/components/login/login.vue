@@ -13,17 +13,15 @@
           <mt-button type="primary" :disabled="canSubmit" @click.stop.prevent="submitHandle" class="submit">登录</mt-button>
         </div>
       </form>
-
-      <!-- 登录后 -->
-      <login-ok :isShow="canShowMe" @goBack="goBack"></login-ok>
-
     </div>
+
 </template>
 
 <script>
     import {Field} from 'mint-ui';
     import { Switch } from 'mint-ui';
     import { Button } from 'mint-ui';
+    import { mapState } from 'vuex'
 
     import loginOk from '../../components/loginok/loginok';
 
@@ -61,13 +59,21 @@
       },
       methods: {
         submitHandle() {
-          console.log('点击了登录');
-          this.canShowMe = true;
+          // 可以登录了
+          this.$store.dispatch('setUserInfo', {tel: '18872244331', loginStatus: true})
+          this._autoPrevPage()
+          this.$store.dispatch('fetchGet')
         },
 
         /* 处理loginok.vue $emit发布的请求 */
         goBack() {
             this.canShowMe = false;
+        },
+        _autoPrevPage () {
+          const _this = this
+          setTimeout(() => {
+            _this.$router.go(-1)
+          }, 500)
         }
       },
       computed: {
@@ -84,9 +90,8 @@
 
 <style lang="scss">
   .login-wrap{
-    margin-top:10vh;
     width:100%;
-    padding:10px 0px;
+    padding:50px 0px;
 
     .mint-cell-wrapper{
       background-image:none;

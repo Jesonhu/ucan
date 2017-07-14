@@ -1,25 +1,32 @@
 <template>
   <div>
-    <div class="header s1">
-      <div class="logo"></div>
-      <div class="search-wrap">
-        <em class="search-icon"></em>
-        <form action="" class="top-search">
-          <input type="text" maxlength="20" autocomplete="off" placeholder="5.4超级单品日 爆款神价格">
-        </form>
-      </div>
-      <div class="login">登录</div>
+    <div class="header s1"
+     :class="{'addBg': hasBg, 'addBorder': hasBorder}">
+      <slot>
+        <div class="logo"></div>
+        <div class="search-wrap">
+          <em class="search-icon"></em>
+          <form action="" class="top-search">
+            <input type="text" maxlength="20" autocomplete="off" placeholder="5.4超级单品日 爆款神价格">
+          </form>
+        </div>
+        <div class="login">登录</div>
+      </slot>
+
+      <slot name="hasarrow">
+
+      </slot>
     </div>
   </div>
 </template>
 
 <script>
   export default {
-
+    props:['hasBg', 'hasBorder', 'titleName']
   };
 </script>
 
-<style lang="scss" >
+<style lang="scss" scoped>
   @import "../../style/scss/mixin";
 
   .header{
@@ -32,6 +39,20 @@
     height: 39px;
     width:100%;
     background-color:rgba(255,255,255,.0);
+
+    &.addBg{
+      background-color:rgba(255,255,255,1);
+      .login{
+        color:#333!important;
+      }
+    }
+    &.addBorder{
+      border-bottom: 1px solid #E3E3E4;
+      background:#fff;
+      .mine-header{
+        width:100%;
+      }
+    }
 
   .logo{
     width:39px;

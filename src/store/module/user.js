@@ -5,6 +5,7 @@ import cookie from '../../plugins/cookie'
 import { Toast } from 'mint-ui'
 
 const state = {
+  // 加载就获取本地存储,有就返回本地用户，没有就是初始值
   localUserInfo: cookie.getLocal() || {}
 }
 const actions = {
@@ -21,6 +22,10 @@ const actions = {
   removeUserInfo ({commit}) {
     cookie.removeLocal()
     commit('REMOVE_USER')
+  },
+  checkUserInfo ({commit}, res) {
+    cookie.getLocal(res)
+    commit('CHECK_USER', res)
   }
 }
 
@@ -35,6 +40,11 @@ const mutations = {
   },
   REMOVE_USER (state) {
     state.localUserInfo = {}
+  },
+  CHECK_USER (state, res) {
+    if (res === 'undefined') {
+      return false
+    }
   }
 }
 

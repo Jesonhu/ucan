@@ -9,7 +9,9 @@
           <input type="text" maxlength="20" autocomplete="off" placeholder="5.4超级单品日 爆款神价格">
         </form>
       </div>
-      <div class="login">登录</div>
+      <div class="login">
+        <router-link to="/login">登录</router-link>
+      </div>
     </div>
 
     <!-- swiper -->
@@ -205,7 +207,7 @@
   import homeData from '../../service/mockdata/home';
   import axios from 'axios';
   import BScroll from 'better-scroll';
-  import header from '../../components/header/head';
+  import header from '../../components/header/hasSearch';
   import recommend from '../../components/recommend/recommend';
   import $ from 'jquery';
   import banner from 'components/swiper/swiper'
@@ -255,7 +257,6 @@
       }
     },
     mounted() {
-      this.$store.dispatch('fetchGet')
 
       window.onscroll = function(ev) {
         let scrollHei = this.scrollY;

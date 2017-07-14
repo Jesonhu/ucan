@@ -53,6 +53,8 @@
   import productData from '../../service/mockdata/home';
   import star from '../../components/star/star';
   import axios from 'axios';
+  import { mapState } from 'vuex'
+  import { MessageBox } from 'mint-ui'
 
   let that;
   export default{
@@ -132,10 +134,22 @@
       },
       /* 点击添加到购物车 */
       addCart() {
-        this.isShowCartControll = true;
-        this.count = 1;
-        Vue.set(this.productDetail, 'count', 1);
-        this.$store.dispatch('addShopCart', this.productDetail);
+        if (this.isLogin) {
+          this.isShowCartControll = true;
+          this.count = 1;
+          Vue.set(this.productDetail, 'count', 1);
+          this.$store.dispatch('addShopCart', this.productDetail);
+        } else {
+          MessageBox.confirm('您暂未登录,请登录!', '友情提示').then(() => {
+//            this.toLoginPage() // mint-ui有时这里有个坑，直接编程式导航不能跳转
+            this.$router.push({path: '/login'})
+          }).catch(function () {
+            // catch 点击确定也会走
+          })
+        }
+      },
+      toLoginPage () {
+        this.$router.push({path: '/login'})
       },
       /* 购物车里商品数量添加或减少 */
       changeCount(action) {
@@ -184,6 +198,11 @@
       // console.log(arguments);
 
       next();
+    },
+    computed: {
+      ...mapState({
+        isLogin: state => !!state.user.localUserInfo.loginStatus
+      })
     },
     components: {
       historyHeader,
