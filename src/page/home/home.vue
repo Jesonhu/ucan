@@ -210,6 +210,7 @@
   import $ from 'jquery';
   import banner from 'components/swiper/swiper'
   import countDown from '../../plugins/countdown'
+  import { mapState, mapActions } from 'vuex'
 
   const ERR_OK = 0;
   let that;
@@ -254,6 +255,8 @@
       }
     },
     mounted() {
+      this.$store.dispatch('fetchGet')
+
       window.onscroll = function(ev) {
         let scrollHei = this.scrollY;
         const imgHei = that.topSwiperImgHei;

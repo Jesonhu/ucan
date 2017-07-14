@@ -1,13 +1,29 @@
 /**
  * Created by Jesonhu on 2017/7/13.
  */
-import shopCart from '../../plugins/shopCart'
+import axios from 'axios'
+import host from '../../config/host'
 
 const state = {
-  selectedGoods: shopCart.getRemoteData() || [1]
+  selectedGoods: []
 }
 
 const actions = {
+  // 后台获取shopCart购物车数据
+  fetchGet ({ commit }) {
+    axios.get(host.shopCart.list)
+      .then((res) => {
+        if (res.status === 200) {
+          console.log('init shopCart data')
+          // resolve(res.data.data)
+          commit('INIT_GET_SHOPCART', res.data.data)
+        }
+      })
+      .catch((err) => {
+        // reject(error)
+      })
+  },
+
   /* 提交mutaion:获取购物车数据 */
   /*getDaShopCart(context) {  // 未简写方式
    context.commit('GET_SHOPCART')
@@ -37,6 +53,11 @@ const actions = {
 }
 
 const mutations = {
+  // 初始后台数据到vuex购物车
+  INIT_GET_SHOPCART (state, playload) {
+    state.selectedGoods = playload
+  },
+
   /* 添加商品到购物车里 */
   ADD_SHOPCART (state, playload) {
     // 选择的商品添加到 Vuex.store state里
