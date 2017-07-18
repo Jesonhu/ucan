@@ -5,9 +5,9 @@
       <shopcart-header></shopcart-header>
 
       <!--选购商品列表-->
-      <div class="selectgood-wrap" id="selectgood-wrap" v-show="selectGoods.length>0">
+      <div class="selectgood-wrap" id="selectgood-wrap" v-if="totalCount != 0">
         <ul class="list">
-          <li class="item" v-for="(item, index) in selectGoods" v-show="item.count">
+          <li class="item" v-for="(item, index) in shopCart" v-show="item.count">
             <div class="item-body">
               <div class="select" @click="selectedProduct(item, index)" :class="{'is-selected':item.checked}">选</div>
               <div class="img-wrap">
@@ -30,7 +30,7 @@
       </div>
 
       <!-- 购物车显示 -->
-      <div class="shopcart-detail" v-show="selectGoods.length>0">
+      <div class="shopcart-detail" v-if="totalCount != 0">
         <div class="selectall" :class="{'is-selected': checkAllFlag || isSelectAll}" @click="checkAll(!checkAllFlag)">全选</div>
         <div class="count">
           总额:
@@ -40,6 +40,12 @@
           去结算
           <span class="buy-num">{{totalAllNum}}</span>
         </div>
+      </div>
+
+      <!-- 购物车被清空的时候 -->
+      <div class="shopcart-empty"
+       v-if="totalCount == 0">
+        购物车空空如也
       </div>
     </div>
 
@@ -74,7 +80,7 @@
   import homeData from '../../service/mockdata/home';
   import vHeader from 'components/header/hasSearch'
 
-  let that;
+  let that
 
   export default{
     data() {
@@ -103,20 +109,17 @@
         this.initData()
       },300)
     },
-    filter: {  //局部过滤器
-    },
     methods: {
       /* 点击到购物车页面后初始化方法 */
       getData() {
         this.$store.dispatch('fetchGet')
       },
       initData() {
-        this.selectGoods = this.shopCart // <--
         // 购物车里面有商品
         if (this.totalCount) {
-          this.selectGoods.forEach((item) => {
+          this.shopCart.forEach((item) => {
             if (!(typeof item.checked == 'undefined') && item.checked) {
-              this.typeSlectedNum++
+              this.typeSlectedNum += item.count
             }
           })
           // 当购物车里的商品全部被标记为全选时，全选状态激活
@@ -130,43 +133,30 @@
       /* 添加或减少 */
       changeMoney: function (item, action, index) { //商品数量增加和减少
         if (action>0) { //点击了+
-          item.count ++;
-          this.$store.dispatch({ // <-- 提交购物车更改，使导航徽章数量变化
-            type: 'updateShopCart',
-            change: item,
-            action: 1,
-            index: index
-          });
-
+          item.count ++
         } else { //点击了-
-          item.count --;
-          this.$store.dispatch({ // <-- 提交购物车更改，使导航徽章数量变化
-            type: 'updateShopCart',
-            change: item,
-            action: 1,
-            index: index
-          });
+          item.count --
 
+          // 当前数量被减数到0
+          // 此时要从购物车中删除该商品
           if (!item.count) {
-
-            this.typeNum --;
-
-            // 1 避免商品商品从来未被选中时，将改商品添加的购物车数量减少到0时，被选中的商品类型的数量也-1的问题
-            // 2 避免被选中的商品取消选中后，... (取消选中我已经做了-1，再-1就多操作一次)
-            if (!(typeof item.checked == 'undefined') && item.checked) {
-              this.typeSlectedNum--;
-            };
-
-            delete item.checked;
-            this.$store.dispatch({ // <-- 提交购物车更改，使导航徽章数量变化
+            this.$store.dispatch({ // <-- 提交购物车更改，删除该商品
               type: 'updateShopCart',
               change: item,
               action: 0,
               index: index
-            });
-            if (!this.selectGoods.length) this.isShowCart = false;
+            })
+            this.calcTotalPrice(); // <--
+            if (!this.selectGoods.length) this.isShowCart = false
+            return
           }
         }
+        this.$store.dispatch({ // <-- 提交购物车更改，使导航徽章数量变化
+          type: 'updateShopCart',
+          change: item,
+          action: 1,
+          index: index
+        })
         this.calcTotalPrice(); // <--
       },
       /* 计算总额 */
@@ -174,30 +164,33 @@
         this.totalAllPrice = 0;
         this.totalAllNum = 0;
 
-        this.selectGoods.forEach((item, index) => {
+        this.shopCart.forEach((item, index) => {
           if (item.checked) { // 说明这个商品选中了
             this.totalAllPrice += item.price*item.count;
             this.totalAllNum += item.count;
           }
         })
       },
-      /* 选中或取消 */
+
+      /* 选中或取消选中 */
       selectedProduct: function (item,index) {
 
         if (typeof item.checked == 'undefined') { // 判断item.checked是否存在
-          Vue.set(item, 'checked', true); //向item全局注册了一个属性checked值为true
-          // this.$set(item, 'checked', true);//局部注册item.checke
+          Vue.set(item, 'checked', true); // 向item全局注册了一个属性checked值为true
+          // this.$set(item, 'checked', true);// 局部注册item.checke
           this.typeSlectedNum++;
-        } else { //存在--即至少点击了一次后
-          item.checked = !item.checked;
-          item.checked > 0 ? this.typeSlectedNum++ : this.typeSlectedNum--; // 当前item被选中时，被选中商品类型的数量+1，没选中时-1
+        } else { // 存在--即至少点击了一次后
+          item.checked = !item.checked
+          // 当前item被选中时，被选中商品类型的数量+1，没选中时-1
+          item.checked > 0 ? this.typeSlectedNum += item.count : this.typeSlectedNum -= item.count
 
-          if (this.typeNum === this.typeSlectedNum) { // 此时将全选另一个切换标识也设为true，避免通过上面单个类型全选，全选样式变化，再次点击底部全选还是全选而不是取消全选问题
+          // 此时将全选控制(||)另一个切换标识也设为true，避免通过上面单个类型全选，
+          // 全选样式变化，再次点击底部全选还是全选而不是取消全选问题
+          if (this.totalCount === this.typeSlectedNum) {
             this.checkAllFlag = true;
           } else {
             this.checkAllFlag = false;
           }
-
         };
 
         this.$store.dispatch({ // <-- 提交购物车更改 添加属性 check:
@@ -215,7 +208,7 @@
         this.checkAllFlag = flag;
 
         if (flag) { //
-          this.typeSlectedNum = this.typeNum;
+          this.typeSlectedNum = this.totalCount;
         } else {
           this.typeSlectedNum = 0;
         }
@@ -297,12 +290,12 @@
       isSelectAll() {
           // 此时将全选另一个切换标识也设为true，避免通过上面单个类型全选，
           // 全选样式变化，再次点击底部全选还是全选而不是取消全选问题
-          if (this.typeNum === this.typeSlectedNum) {
+          if (this.totalCount === this.typeSlectedNum) {
               this.checkAllFlag = true;
           } else {
              this.checkAllFlag = false;
           }
-          return this.typeNum === this.typeSlectedNum;
+          return this.totalCount === this.typeSlectedNum;
       }
     },
     components: {
