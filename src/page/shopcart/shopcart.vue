@@ -29,39 +29,6 @@
         </ul>
       </div>
 
-      <!-- 推荐 -->
-      <div id="recommend" class="shopcart-recommend-wrap">
-        <div class="recommend-title" @click="showDetail()">
-        <span class="title-text">
-          <em class="title-arrow"></em>
-          为您推荐
-        </span>
-        </div>
-        <div class="recommend-body">
-          <ul class="list">
-            <li class="item"
-                v-for="(item,index) in dataRecommend">
-              <a href="" class="item-link">
-                <img v-lazy="item.cover" alt="" class="item-img">
-                <p class="desc linetwo">{{item.name}}</p>
-                <div class="body-bottom" id="shopcart-page-body-bottom">
-                  <div class="price-content">
-                    <span class="yuan">￥</span>
-                    <span class="price">{{item.price}}</span>
-                    <span class="zero">.22</span>
-                  </div>
-
-                  <!--<div class="similar">购买</div>-->
-                  <!-- 购买 -->
-                  <div class="similar" :class="{'is-active': isCanBuy}" @click.stop.prevent="addCart(item)">购买</div>
-
-                </div>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-
       <!-- 购物车显示 -->
       <div class="shopcart-detail" v-show="selectGoods.length>0">
         <div class="selectall" :class="{'is-selected': checkAllFlag || isSelectAll}" @click="checkAll(!checkAllFlag)">全选</div>
@@ -98,7 +65,7 @@
 
 <script>
   import Vue from 'vue';
-  import { mapState, mapActions } from 'vuex';
+  import { mapState, mapActions, mapGetters } from 'vuex';
   import shopcartHeader from '../../components/shopcartheader/shopcartheader';
   import cartControll from '../../components/cartcontroll/cartcontroll';
   import { MessageBox } from 'mint-ui';
@@ -112,7 +79,7 @@
   export default{
     data() {
       return {
-        dataRecommend: homeData.recommend,
+        dataRecommend: [],
 
         selectGoods : [], // 被选中的商品
         typeNum: -1, // 购物车商品类型的数量
@@ -129,110 +96,39 @@
     },
     created() {
         that = this;
-        this.init();
-
+        if (this.isLogin) this.getData()  //如果登录了
     },
-
     mounted() {
-        setTimeout(() => {
-          this.abc()
-        },1000)
-      axios.get(this.host.index.recommend).then((res) => {
-        if (res.status === 200) {
-          this.dataRecommend = res.data.data;
-        }
-      }).catch((err) => {
-        console.log(err);
-      })
+      setTimeout(() => {
+        this.initData()
+      },300)
     },
     filter: {  //局部过滤器
-
     },
     methods: {
       /* 点击到购物车页面后初始化方法 */
-      init() {
+      getData() {
         this.$store.dispatch('fetchGet')
       },
-      abc() {
-        console.log(this.shopCart);
-        this.selectGoods = this.shopCart; // <--
-        this.typeNum = this.selectGoods.length;
-        if (typeof this.selectGoods == 'undefined') {
+      initData() {
+        this.selectGoods = this.shopCart // <--
+        // 购物车里面有商品
+        if (this.totalCount) {
           this.selectGoods.forEach((item) => {
             if (!(typeof item.checked == 'undefined') && item.checked) {
-              this.typeSlectedNum++;
-            };
-          });
-          if (this.typeNum === this.typeSlectedNum) {
-            this.checkAllFlag = true;
-            this.calcTotalPrice();
+              this.typeSlectedNum++
+            }
+          })
+          // 当购物车里的商品全部被标记为全选时，全选状态激活
+          if (this.totalCount === this.typeSlectedNum) {
+            this.checkAllFlag = true
           }
-        }
-      },
-      showDetail() {
-        // console.log(this.dataRecommend.list);
-        // console.log(this.selectGoods);
-        // console.log(that.isShowCart);
-      },
-      /* 增加商品到购物车里 */
-      addCart(item) {
-        const id = item.id;
-        const selectedGoods = this.shopCart;
-
-        if (selectedGoods.length > 0) {
-          selectedGoods.forEach((arr, index) => {
-              if (arr.id === id) { // vuex 已存在这个商品则让vuex商品count+1
-                arr.count++;
-                this.$store.dispatch({ // <-- 提交购物车更改，使导航徽章数量变化
-                  type: 'updateShopCart',
-                  change: arr,
-                  action: 1,
-                  index: index
-                });
-              } else { // vuex 不存在这个商品则添加到购物车里
-
-                if (!item.count) {
-                  Vue.set(item, 'count', 1); // 添加购买数量
-                  Vue.set(item, 'isCanBuy', true); // 标记为不可点击 ？？ 好像没用了
-                  // Vuex store action 方式2
-                  this.$store.dispatch('addShopCart', item); // <-- 提交给Vuex action addShopCart处理 更新Vuex购物车信息
-                }
-              }
-          });
-        } else {
-          if (!item.count) {
-            Vue.set(item, 'count', 1); // 添加购买数量
-            Vue.set(item, 'isCanBuy', true); // 标记为不可点击 ？？ 好像没用了
-            // Vuex store action 方式2
-            this.$store.dispatch('addShopCart', item); // <-- 提交给Vuex action addShopCart处理 更新Vuex购物车信息
-          }
-        };
-
-        // Vuex store action 方式1
-        /*this.$store.dispatch({
-          type: 'addShopCart',
-          item: item
-        });*/
-
-        this.selectGoods = this.shopCart; // 获取 Vuex.state.selectedGoods 更新后购物车的状态
-        this.typeNum = this.shopCart.length;
-        this.typeSlectedNum = 0;
-        this.selectGoods.forEach((item) => {
-          if (!(typeof item.checked == 'undefined') && item.checked) {
-            this.typeSlectedNum++;
-          };
-        });
-        if (this.typeNum === this.typeSlectedNum) {
-          this.checkAllFlag = true;
-          this.calcTotalPrice();
-        } else {
-          this.checkAllFlag = false;
+          this.calcTotalPrice()
         }
       },
 
       /* 添加或减少 */
       changeMoney: function (item, action, index) { //商品数量增加和减少
-
         if (action>0) { //点击了+
           item.count ++;
           this.$store.dispatch({ // <-- 提交购物车更改，使导航徽章数量变化
@@ -292,7 +188,6 @@
           Vue.set(item, 'checked', true); //向item全局注册了一个属性checked值为true
           // this.$set(item, 'checked', true);//局部注册item.checke
           this.typeSlectedNum++;
-
         } else { //存在--即至少点击了一次后
           item.checked = !item.checked;
           item.checked > 0 ? this.typeSlectedNum++ : this.typeSlectedNum--; // 当前item被选中时，被选中商品类型的数量+1，没选中时-1
@@ -381,19 +276,28 @@
               }
               return str;
           }
-      }
+      },
 
+      formatJson (_arr) {
+          const length = _arr.length
+          for (let i = 0; i < length; i++) {
+              JSON.parse(_arr[i])
+          }
+          return _arr
+      }
     },
     watch: {
-
     },
     computed: {
       ...mapState({
         shopCart: state => state.shopCart.selectedGoods,
         isLogin: state => !!state.user.localUserInfo.loginStatus
       }),
+      ...mapGetters(['totalCount']),
       isSelectAll() {
-          if (this.typeNum === this.typeSlectedNum) { // 此时将全选另一个切换标识也设为true，避免通过上面单个类型全选，全选样式变化，再次点击底部全选还是全选而不是取消全选问题
+          // 此时将全选另一个切换标识也设为true，避免通过上面单个类型全选，
+          // 全选样式变化，再次点击底部全选还是全选而不是取消全选问题
+          if (this.typeNum === this.typeSlectedNum) {
               this.checkAllFlag = true;
           } else {
              this.checkAllFlag = false;
@@ -412,6 +316,8 @@
 
 <style scoped>
   .shopcart-page{
+    min-height:100vh;
+    width；100%；
   /* 推荐 */
     .shopcart-recommend-wrap{
       padding:2px 0 0 0;

@@ -31,7 +31,7 @@ const actions = {
 
 const getters = {
   localUserInfo: (state) => {
-    state.localUserInfo
+    return state.localUserInfo
   }
 }
 const mutations = {

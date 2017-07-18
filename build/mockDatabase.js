@@ -81,7 +81,7 @@ apiRoutes.get('/product/detail/:id', (req, res) => {
 })
 
 // 数据库中购物车数据
-apiRoutes.get('/get/shopcart', (req, res) => {
+  apiRoutes.get('/get/shopcart', (req, res) => {
   res.send(shopCart)
 })
 

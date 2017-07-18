@@ -11,8 +11,8 @@
       </div>
       <div class="badge-show"
        v-if="index === 3">
-        <div class="badge-wrap" v-show="addShopCartGoodsNum">
-          <mt-badge size="small" color="red">{{addShopCartGoodsNum}}</mt-badge>
+        <div class="badge-wrap" v-show="totalCount != 0">
+          <mt-badge size="small" color="red">{{totalCount}}</mt-badge>
         </div>
       </div>
 
@@ -22,7 +22,7 @@
 
 <script>
   import { Tabbar, TabItem, Badge } from 'mint-ui';
-  import { mapState, mapActions } from 'vuex';
+  import { mapState, mapActions, mapGetters } from 'vuex';
 
   let obj = {
     a: 1,
@@ -76,17 +76,7 @@
       ...mapState({ // 模块化引入
         shopCart: state => state.shopCart.selectedGoods
       }),
-      addShopCartGoodsNum: function(state) {
-          if (this.shopCart.length) {
-              let tatalCount = 0;
-              this.shopCart.forEach((item) => {
-                  tatalCount += item.count;
-              })
-              return tatalCount;
-          } else {
-            return false;
-          }
-      }
+      ...mapGetters(['totalCount'])
     },
     components: {
       Badge

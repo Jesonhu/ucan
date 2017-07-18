@@ -7,17 +7,17 @@ import shopCart from '../../plugins/shopCart2'
 
 const state = {
   selectedGoods: []
-
 }
 
 const actions = {
-  // 后台获取shopCart购物车数据
+  // 请求后台获取shopCart购物车数据
   fetchGet ({ commit }) {
     axios.get(host.shopCart.list)
       .then((res) => {
         if (res.status === 200) {
-          console.log('init shopCart data action')
+          console.log('init shopCart data')
           // resolve(res.data.data)
+          // console.log(res.data.data)
           commit('INIT_GET_SHOPCART', res.data.data)
         }
       })
@@ -55,6 +55,20 @@ const actions = {
 
   removeShopCart ({commit}) {
     commit('REMOVE_SHOPCART')
+  }
+}
+
+const getters = { // 类似利于computed
+  // 已经加入购物车商品总数量
+  totalCount: state => {
+    let total = 0
+    const length = state.selectedGoods.length
+    if (length > 0) {
+      state.selectedGoods.forEach((item) => {
+          total += item.count
+      })
+    }
+    return total
   }
 }
 
@@ -103,5 +117,6 @@ const mutations = {
 export default {
   state,
   actions,
+  getters,
   mutations
 }
