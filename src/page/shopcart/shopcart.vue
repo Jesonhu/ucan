@@ -87,8 +87,6 @@
       return {
         dataRecommend: [],
 
-        selectGoods : [], // 被选中的商品
-        typeNum: -1, // 购物车商品类型的数量
         typeSlectedNum: 0, // 被选中商品的数量
         isCanBuy: true, // 推荐是否可以点击购买
 
@@ -209,29 +207,38 @@
 
         if (flag) { //
           this.typeSlectedNum = this.totalCount;
-        } else {
-          this.typeSlectedNum = 0;
+        } else { // 全不选
+          this.typeSlectedNum = 0
         }
 
-        this.selectGoods.forEach((item, index) => {
-          // 这里存在一个问题当用户直接点击全选
-          // 此时item.check还未存在这个属性 所以要检测一下
-          if(typeof item.checked == 'undefined'){
-            // Vue.set(item, 'checked', true);
-            this.$set(item, 'checked', this.checkAllFlag); // <-- 箭头函数内部还是外部作用域的this
-          }else{
-            item.checked = this.checkAllFlag;
-          }
-
-          this.$store.dispatch({ // <-- 提交购物车更改 添加属性 check:
-            type: 'updateShopCart',
-            change: item,
-            action: 1,
-            index: index
-          });
-
-        });
+        if (this.shopCart.length > 0) {
+          this.shopCart.forEach((item) => {
+            item.checked = flag
+          })
+        }
+//        this.selectGoods.forEach((item, index) => {
+//          // 这里存在一个问题当用户直接点击全选
+//          // 此时item.check还未存在这个属性 所以要检测一下
+//          if(typeof item.checked == 'undefined'){
+//            // Vue.set(item, 'checked', true);
+//            this.$set(item, 'checked', this.checkAllFlag); // <-- 箭头函数内部还是外部作用域的this
+//          }else{
+//            item.checked = this.checkAllFlag;
+//          }
+//
+//          this.$store.dispatch({ // <-- 提交购物车更改 添加属性 check:
+//            type: 'updateShopCart',
+//            change: item,
+//            action: 1,
+//            index: index
+//          });
+//        });
         this.calcTotalPrice(); // <--
+        this.$store.dispatch({ // <-- // 状态设置为全选或全不选
+          type: 'updateShopCart',
+          checked: flag,
+          action: 2
+        });
       },
 
       /* 点击结算 */
@@ -291,11 +298,11 @@
           // 此时将全选另一个切换标识也设为true，避免通过上面单个类型全选，
           // 全选样式变化，再次点击底部全选还是全选而不是取消全选问题
           if (this.totalCount === this.typeSlectedNum) {
-              this.checkAllFlag = true;
+              this.checkAllFlag = true
           } else {
-             this.checkAllFlag = false;
+             this.checkAllFlag = false
           }
-          return this.totalCount === this.typeSlectedNum;
+          return this.totalCount === this.typeSlectedNum
       }
     },
     components: {

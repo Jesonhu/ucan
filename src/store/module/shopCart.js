@@ -94,8 +94,9 @@ const mutations = {
 
   /* 更新购物车里商品的信息 */
   UPDATE_SHOPCART (state, playload) {
-    let UPDATE = 1;
     let REMOVE = 0;
+    let UPDATE = 1;
+    let SELECT_ALL = 2
     let index = playload.index;
     let selectGood = playload.change;
     let action = playload.action;
@@ -104,6 +105,10 @@ const mutations = {
       state.selectedGoods.splice(index, 1, selectGood);
     } else if ( action === REMOVE ){ // 删除购物车中的某项
       state.selectedGoods.splice(index, 1);
+    } else if ( action === SELECT_ALL ) {
+      state.selectedGoods.forEach((item) => {
+        item.checked = playload.checked
+      })
     }
   },
 
