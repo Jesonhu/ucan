@@ -46,6 +46,7 @@
     import { Button } from 'mint-ui';
     import { mapState } from 'vuex'
     import { required } from 'vuelidate/lib/validators'
+    import axios from 'axios'
 
     import loginOk from '../../components/loginok/loginok';
 
@@ -103,10 +104,26 @@
         },
         submit () {
           if (this.isCanLogin) {
-              console.log('可以提交')
-              return
-          }
-          alert('不能提交')
+            axios.post(this.host.user.login, this.form)
+              .then((res) => {
+                  const status = res.data.status
+                  if (status === 1) {
+                      this.$store.dispatch('setUserInfo', {user: this.form.user, loginStatus: true})
+                      this.$store.dispatch('fetchGet')
+                      this.backPrev()
+                  } else {
+
+                  }
+              })
+              .catch((err) => {
+                  console.log(err)
+              })
+          } else { alert('不能提交') }
+        },
+        backPrev() {
+            setTimeout(() => {
+                this.$router.go(-1)
+            }, 1000)
         },
         empty (value) {
             console.log(this.form[value])

@@ -3,9 +3,10 @@
  * @param url: axios请求域
  */
 
-const url = 'http://192.168.1.15:8555/'
+const mockUrl = 'http://192.168.1.15:8555/'
+const url = ''
 
 export default {
-  BASE_URL: url
+  BASE_URL: mockUrl
 }
 

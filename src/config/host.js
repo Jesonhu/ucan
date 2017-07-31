@@ -22,6 +22,9 @@ const host = {
   },
   shopCart: {
     list: '/api/get/shopcart'
+  },
+  user: {
+    login: '/api/login'
   }
 }
 

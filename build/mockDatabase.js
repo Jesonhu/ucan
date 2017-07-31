@@ -85,5 +85,13 @@ apiRoutes.get('/product/detail/:id', (req, res) => {
   res.send(shopCart)
 })
 
+// 用户登录
+apiRoutes.post('/login', (req, res) => {
+    // console.log(req.body)
+    res.json({
+      status: 1
+    })
+})
+
 module.exports = apiRoutes
 
