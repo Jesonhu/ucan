@@ -1,4 +1,6 @@
 // scroll 外层盒子
+$themColor: rgb(180,40,45);
+
 @mixin scroll-outwrap($top: 0px, $bottom: 0px) {
   position:absolute;
   top: $top;

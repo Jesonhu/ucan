@@ -17,11 +17,11 @@
                 <span class="price-slide">.00</span>
               </div>
               <div class="controll">
-                <div class="main" v-show="isShowCartControll">
-                  <span class="decrease" @click="changeCount(-1)">-</span>
-                  <input type="text" class="count" v-model="count">
-                  <span class="add" @click="changeCount(1)">+</span>
-                </div>
+                <!--<div class="main" v-show="isShowCartControll">-->
+                  <!--<span class="decrease" @click="changeCount(-1)">-</span>-->
+                  <!--<input type="text" class="count" v-model="count">-->
+                  <!--<span class="add" @click="changeCount(1)">+</span>-->
+                <!--</div>-->
                 <div class="add-cart" @click="addCart" v-show="!isShowCartControll">加入购物车</div>
               </div>
             </div>
@@ -44,6 +44,46 @@
         </div>
       </transition>
 
+      <!-- 选购商品 -->
+      <div class="selected-goods-wrap" :class="{'is-active': isShowCartControll}">
+        <!--<div class="bg-wrap"></div>-->
+        <div class="main-bd">
+          <div class="goods-pro bottom-1px">
+            <div class="img-wrap"
+             :style="{backgroundImage:'url('+ dataFromData.cover +')'}"></div>
+            <div class="info">
+              <div class="info-bd">
+                <p class="price">价格:<span>￥{{dataFromData.price}}</span></p>
+                <p class="quantity">库存:{{dataFromData.quantity}}</p>
+                <p class="info-txt">已选:{{dataFromData.title}}</p>
+              </div>
+            </div>
+          </div>
+          <section class="goods-bd">
+            <h5 class="title">选择</h5>
+            <ul class="list bottom-1px">
+              <li class="item" v-for="(item,index) in dataFromData.typeLists"
+               @click="selected(index)"
+               :class="{'is-active': currentType == index}">
+                {{item.title}}
+              </li>
+            </ul>
+            <div class="shop-controller">
+              <span class="title">数量</span>
+              <div class="controll-bar-wrap">
+                <i class="controll-btn reduce" @click="changeCount(-1)"></i>
+                <input type="number" class="count-inp" v-model="dataFromData.count">
+                <i class="controll-btn add" @click="changeCount(1)"></i>
+              </div>
+            </div>
+          </section>
+          <div class="footer">
+            <div class="add-cart">立即购买</div>
+            <div class="to-buy">加入购物车</div>
+          </div>
+          <i class="remove fa fa-close" @click="isShowCartControll = false"></i>
+        </div>
+      </div>
     </div>
 </template>
 
@@ -63,14 +103,15 @@
         title: this.$route.params.page,
         id: '', // 获取路由传递过来的参数:page
 
-        productDetail: null, // 保存当前产品详情（来源于vuex或者数据库）
-        dataFromData: null, // 数据库里的这条数据
+        productDetail: null, // 保存当前产品详情
+        dataFromData: null, // 数据库里的这条数据 （来源于vuex说明该商品已被添加到购物里了）
         productDataDetail: null, // 数据库获取商品详情
         isShowCartControll: false,
         count: 0,
         score: 0,
 
-        currentTab: 0
+        currentTab: 0,
+        currentType: -1
       };
     },
     created() {
@@ -82,6 +123,7 @@
       const pattern = /\d+/g;
 //      this.id = Number( params.page.match(pattern)[0] ); // 只匹配xxx.html xxx部分
       const queryId = this.$route.query.id
+      console.log(1, this.isaddedShopCart(queryId))
       axios.get(`${this.host.product.detail}/${queryId}`).then((res) => {
         this.dataFromData = res.data.data;
         this.$nextTick(() => {
@@ -137,8 +179,9 @@
         if (this.isLogin) {
           this.isShowCartControll = true;
           this.count = 1;
-          Vue.set(this.productDetail, 'count', 1);
-          this.$store.dispatch('addShopCart', this.productDetail);
+          this.isShowCartController = true
+          Vue.set(this.dataFromData, 'count', 1);
+//          this.$store.dispatch('addShopCart', this.productDetail);
         } else {
           MessageBox.confirm('您暂未登录,请登录!', '友情提示').then(() => {
 //            this.toLoginPage() // mint-ui有时这里有个坑，直接编程式导航不能跳转
@@ -166,6 +209,7 @@
           }
         };
         this.count = this.productDetail.count;
+        this.dataFromData.price = this.productDetail.count * this.dataFromData.price
         this.updateShopCart(1, index); // <--
       },
       /* vuex更新购物车里面商品的数量 */
@@ -176,6 +220,22 @@
           action: action,
           index: index
         });
+      },
+      selected(_index) {
+        this.dataFromData.price = this.dataFromData.typeLists[_index].price * this.count
+        this.dataFromData.quantity = this.dataFromData.typeLists[_index].quantity
+        this.dataFromData.desc = this.dataFromData.typeLists[_index].desc
+        this.currentType = _index
+      },
+      // 检查当前商品是否已经被加入了购物车
+      isaddedShopCart(_id) {
+        function isSame(current, index, _array) {
+            console.log(2, current)
+            return current.id === _id
+        }
+        if ( this.shopCartData.length > 0 ) {
+            return this.shopCartData.some(isSame)
+        }
       }
     },
     /* 如果添加keep-alive可以使用该方法
@@ -201,7 +261,8 @@
     },
     computed: {
       ...mapState({
-        isLogin: state => !!state.user.localUserInfo.loginStatus
+        isLogin: state => !!state.user.localUserInfo.loginStatus,
+        shopCartData: state => state.shopCart.selectedGoods
       })
     },
     components: {
@@ -213,6 +274,7 @@
 
 <style lang="scss">
   @import "../../style/scss/mixin";
+
 
   /* 参照#app relative */
   $fontSize: 12px;
@@ -307,5 +369,174 @@
 
   @import "../../style/scss/media-queries";
 
+  .selected-goods-wrap{
+    z-index: 100;
+    position:fixed;
+    top:0;
+    left:0;
+    bottom:0;
+    width:100%;
+    height:100vh;
+    visibility: hidden;
+    transition: all 0.5s linear;
+    background:rgba(0,0,0,.5);
+    .bg-wrap{
+      z-index:99;
+      position: relative;
+      width:100%;
+      height:100%;
+      background:rgba(0,0,0,.5);
+    }
+    .main-bd{
+      z-index: 1000;
+      position: absolute;
+      bottom:0;
+      width:100%;
+      height:60vh;
+      transform: translateY(60vh);
+      background:#fff;
+      transition: 0.2s transform linear;
+      .remove{
+        position:absolute;
+        top:-21px;
+        right:5px;
+        display:block;
+        width:20px;
+        height:20px;
+        text-align: center;
+        line-height: 19px;
+        border:1px solid rgba(255,255,255,.5);
+        border-radius:50%;
+        color:#fff;
+        font-size:12px;
+      }
+      .goods-pro{
+        display: flex;
+        padding: 0 5px;
+        font-size:0.6rem;
+        .img-wrap{
+          position: relative;
+          top:-10px;
+          width:4.86rem;
+          height:4.86rem;
+          flex: 0 0 4.86rem;
+          border-radius:5px;
+          background-color:#fff;
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size:100%;
+        }
+        .info{
+          display:flex;
+          flex:1;
+          padding:.5rem;
+          align-items: center;
+          .price{
+            & > * {
+              font-size:16px;
+              color:#f23030;
+            }
+          }
+        }
+      }
+      .goods-bd{
+        .title{
+          text-indent: 20px;
+          text-align: left;
+        }
+        .list{
+          padding:10px 0;
+        }
+        .item{
+          display:inline-block;
+          padding:5px 10px;
+          font-size:.5rem;
+          &.is-active{
+            color:#fff;
+            background-color:$themColor;
+          }
+        }
 
+        .shop-controller{
+          display:flex;
+          flex-wrap: nowrap;
+          align-items: center;
+          padding-right:20px;
+          justify-content: space-between;
+          .controll-bar-wrap{
+            display:flex;
+            flex-wrap: nowrap;
+            width:100px;
+            .controll-btn{
+              position: relative;
+              flex:0 0 20px;
+              height:20px;
+              text-align: center;
+              line-height: 20px;
+              border:1px solid rgba(0,0,0,.5);
+              border-radius:50%;
+              &:before{
+                content:'';
+                position: absolute;
+                display:block;
+                top:50%;
+                left:15%;
+                width:70%;
+                height:2px;
+                margin-top:-1px;
+                background:rgba(0,0,0,.5);
+              }
+              &.add:after{
+                content:'';
+                position: absolute;
+                display:block;
+                top:50%;
+                left:15%;
+                width:70%;
+                height:2px;
+                margin-top:-1px;
+                background:rgba(0,0,0,.5);
+                transform:rotate(-90deg);
+              }
+              &.is-active{
+                border-color:$themColor;
+              }
+            }
+            .count-inp{
+              width:40px;
+              text-align: center;
+            }
+          }
+        }
+      }
+
+      .footer{
+        position: absolute;
+        left:0;
+        bottom:0;
+        width:100%;
+        display: flex;
+        text-align: center;
+        font-size:.8rem;
+        & > *{
+          flex:1;
+          text-align: center;
+          height:1.75rem;
+          line-height: 1.75rem;
+          color:#fff;
+          background: lighten($themColor, 10%);
+        }
+        & > :first-child{
+          background: lighten($themColor, 20%);
+          border-right:1px solid #fff;
+        }
+      }
+    }
+    &.is-active{
+      visibility: visible;
+      .main-bd{
+        transform: translateY(0);
+      }
+    }
+  }
 </style>

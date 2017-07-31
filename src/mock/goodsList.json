@@ -9,6 +9,30 @@
       "desc": "iPhone6 秒杀",
       "price": "66",
       "oldprice": "88",
+      "quantity": 100,
+      "typeLists": [
+        {
+          "title": "二手清仓类型1",
+          "desc": "iPhone6 秒杀1",
+          "price": "66",
+          "oldprice": "88",
+          "quantity": 100
+        },
+        {
+          "title": "二手清仓类型2",
+          "desc": "iPhone6 秒杀2",
+          "price": "67",
+          "oldprice": "88",
+          "quantity": 80
+        },
+        {
+          "title": "二手清仓类型3",
+          "desc": "iPhone6 秒杀3",
+          "price": "68",
+          "oldprice": "88",
+          "quantity": 60
+        }
+      ],
       "link": null
     },
     {
