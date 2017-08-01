@@ -21,7 +21,8 @@ const host = {
     detail: `/api/product/detail`
   },
   shopCart: {
-    list: '/api/get/shopcart'
+    list: '/api/get/shopcart',
+    update: '/api/update/shopcart'
   },
   user: {
     login: '/api/login'

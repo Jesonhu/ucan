@@ -48,9 +48,46 @@ const actions = {
    }*/
 
   /* 更新购物车里的商品信息 */
-  updateShopCart({commit}, nowSelectedGoods) {
-    // console.log(nowSelectedGoods);
-    commit('UPDATE_SHOPCART', nowSelectedGoods);
+  updateShopCart({commit, state}, payload) {
+    let ADDSHOPCART = 3;
+      // 判断添加到购物车的商品是否已经在购物车中存在
+      // 存在,更新对应购物商品的count
+      // 不存在，往购物车数据数组中末尾添加这个商品
+      let isSame = false;
+      for (let i = 0;i < state.selectedGoods.length; i++) {
+        if (state.selectedGoods[i].id === payload.id) {
+          isSame = true
+          // 复制一份已被添加到购物车的这个商品，避免对象间引用问题
+          const updataGoods = Object.assign({}, state.selectedGoods[i])
+          updataGoods.count += payload.count
+          console.log(updataGoods)
+          commit('UPDATE_SHOPCART', {
+            change: updataGoods,
+            index: i,
+            action: 1
+          })
+          updataBackEndShopCart({
+            action: 1,
+            data: updataGoods,
+            index: i,
+          })
+        }
+      }
+      if (!isSame) {
+        payload.checked = false
+        commit('ADD_SHOPCART', payload)
+        updataBackEndShopCart({
+          action: 0,
+          data: payload
+        })
+      }
+      function updataBackEndShopCart(data) {
+          console.log(data)
+          axios.post(host.shopCart.update, data).catch((err) => {
+              console.log(err)
+          })
+      }
+
   },
 
   removeShopCart ({commit}) {
@@ -83,10 +120,6 @@ const mutations = {
     // 选择的商品添加到 Vuex.store state里
     state.selectedGoods.push(playload);
   },
-  /* 已选择商品数量增加 */
-  ADD_SHOPCARTCOUNT (state, playload) {
-
-  },
   /* 获取购物车里的商品 */
   GET_SHOPCART (state, playload) {
     return state.selectedGoods;
@@ -95,8 +128,11 @@ const mutations = {
   /* 更新购物车里商品的信息 */
   UPDATE_SHOPCART (state, playload) {
     let REMOVE = 0;
+    // 购物车页面获取了vuex购物车数据,直接修改了vuex的购物车数据状态
     let UPDATE = 1;
-    let SELECT_ALL = 2
+    let SELECT_ALL = 2;
+    // 通过商品详情页面，将当前商品添加到购物车
+    let ADDSHOPCART = 3;
     let index = playload.index;
     let selectGood = playload.change;
     let action = playload.action;

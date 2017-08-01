@@ -81,8 +81,20 @@ apiRoutes.get('/product/detail/:id', (req, res) => {
 })
 
 // 数据库中购物车数据
-  apiRoutes.get('/get/shopcart', (req, res) => {
+apiRoutes.get('/get/shopcart', (req, res) => {
   res.send(shopCart)
+})
+// 更新购物车数据
+apiRoutes.post('/update/shopcart', (req, res) => {
+    const UPDATE_COUNT = 1
+    const PUSH = 0
+    const action = req.body.action
+    if (action === UPDATE_COUNT) {
+      shopCart.data.splice(req.index, 1, req.data)
+    } else if ( action ===  PUSH ) {
+      shopCart.data.push(req.body.data)
+    }
+    res.json({status: 1})
 })
 
 // 用户登录

@@ -5,11 +5,45 @@
       "type": 2,
       "sectype": 10,
       "cover": "https://m.360buyimg.com//mobilecms/s276x276_jfs/t595/197/509204436/102860/1bd3c1b/546e9e81N8f2d62eb.jpg!q70.jpg",
-      "title": "二手清仓4",
+      "title": "二手清仓",
+      "desc": "iPhone6 秒杀",
+      "price": "110",
+      "oldprice": "120",
+      "quantity": 100,
+      "typeLists": [
+        {
+          "title": "二手清仓类型1",
+          "desc": "iPhone6 秒杀1",
+          "price": "110",
+          "oldprice": "130",
+          "quantity": 100
+        },
+        {
+          "title": "二手清仓类型2",
+          "desc": "iPhone6 秒杀2",
+          "price": "120",
+          "oldprice": "130",
+          "quantity": 80
+        },
+        {
+          "title": "二手清仓类型3",
+          "desc": "iPhone6 秒杀3",
+          "price": "130",
+          "oldprice": "140",
+          "quantity": 60
+        }
+      ],
+      "link": null
+    },
+    {
+      "id": 17,
+      "type": 2,
+      "sectype": 9,
+      "cover": "https://m.360buyimg.com//mobilecms/s276x276_jfs/t1870/267/171353668/127181/240b7ebe/55f29bc2N0409a30d.jpg!q70.jpg",
+      "title": "二手清仓3",
       "desc": "iPhone6 秒杀",
       "price": "66",
       "oldprice": "88",
-      "quantity": 100,
       "typeLists": [
         {
           "title": "二手清仓类型1",
@@ -36,17 +70,6 @@
       "link": null
     },
     {
-      "id": 17,
-      "type": 2,
-      "sectype": 9,
-      "cover": "https://m.360buyimg.com//mobilecms/s276x276_jfs/t1870/267/171353668/127181/240b7ebe/55f29bc2N0409a30d.jpg!q70.jpg",
-      "title": "二手清仓3",
-      "desc": "iPhone6 秒杀",
-      "price": "66",
-      "oldprice": "88",
-      "link": null
-    },
-    {
       "id": 16,
       "type": 2,
       "sectype": 8,
@@ -55,6 +78,29 @@
       "desc": "iPhone6 秒杀",
       "price": "66",
       "oldprice": "88",
+      "typeLists": [
+        {
+          "title": "二手清仓类型1",
+          "desc": "iPhone6 秒杀1",
+          "price": "66",
+          "oldprice": "88",
+          "quantity": 100
+        },
+        {
+          "title": "二手清仓类型2",
+          "desc": "iPhone6 秒杀2",
+          "price": "67",
+          "oldprice": "88",
+          "quantity": 80
+        },
+        {
+          "title": "二手清仓类型3",
+          "desc": "iPhone6 秒杀3",
+          "price": "68",
+          "oldprice": "88",
+          "quantity": 60
+        }
+      ],
       "link": null
     },
     {
@@ -66,6 +112,29 @@
       "desc": "iPhone6 秒杀",
       "price": "66",
       "oldprice": "88",
+      "typeLists": [
+        {
+          "title": "二手清仓类型1",
+          "desc": "iPhone6 秒杀1",
+          "price": "66",
+          "oldprice": "88",
+          "quantity": 100
+        },
+        {
+          "title": "二手清仓类型2",
+          "desc": "iPhone6 秒杀2",
+          "price": "67",
+          "oldprice": "88",
+          "quantity": 80
+        },
+        {
+          "title": "二手清仓类型3",
+          "desc": "iPhone6 秒杀3",
+          "price": "68",
+          "oldprice": "88",
+          "quantity": 60
+        }
+      ],
       "link": null
     },
     {
@@ -77,6 +146,29 @@
       "desc": "今日特惠",
       "price": "66",
       "oldprice": "88",
+      "typeLists": [
+        {
+          "title": "生活娱乐",
+          "desc": "今日特惠1",
+          "price": "66",
+          "oldprice": "88",
+          "quantity": 100
+        },
+        {
+          "title": "生活娱乐2",
+          "desc": "今日特惠2",
+          "price": "67",
+          "oldprice": "88",
+          "quantity": 80
+        },
+        {
+          "title": "生活娱乐3",
+          "desc": "今日特惠3",
+          "price": "68",
+          "oldprice": "88",
+          "quantity": 60
+        }
+      ],
       "link": null
     },
     {
@@ -88,6 +180,29 @@
       "desc": "每日五折",
       "price": "66",
       "oldprice": "88",
+      "typeLists": [
+        {
+          "title": "爱车生活1",
+          "desc": "每日五折1",
+          "price": "66",
+          "oldprice": "66",
+          "quantity": 100
+        },
+        {
+          "title": "爱车生活2",
+          "desc": "每日五折2",
+          "price": "67",
+          "oldprice": "67",
+          "quantity": 80
+        },
+        {
+          "title": "爱车生活3",
+          "desc": "每日五折3",
+          "price": "68",
+          "oldprice": "68",
+          "quantity": 60
+        }
+      ],
       "link": null
     },
     {
@@ -99,6 +214,29 @@
       "desc": "12期免息 买",
       "price": "66",
       "oldprice": "88",
+      "typeLists": [
+        {
+          "title": "白条商城1",
+          "desc": "12期免息 买1",
+          "price": "66",
+          "oldprice": "66",
+          "quantity": 100
+        },
+        {
+          "title": "白条商城2",
+          "desc": "12期免息 买2",
+          "price": "67",
+          "oldprice": "67",
+          "quantity": 80
+        },
+        {
+          "title": "白条商城3",
+          "desc": "12期免息 买3",
+          "price": "68",
+          "oldprice": "68",
+          "quantity": 60
+        }
+      ],
       "link": null
     },
     {
@@ -110,6 +248,22 @@
       "desc": "9.9秒杀!",
       "price": "66",
       "oldprice": "88",
+      "typeLists": [
+        {
+          "title": "京东旅行1",
+          "desc": "9.9秒杀!1",
+          "price": "66",
+          "oldprice": "66",
+          "quantity": 100
+        },
+        {
+          "title": "京东旅行2",
+          "desc": "9.9秒杀!2",
+          "price": "67",
+          "oldprice": "67",
+          "quantity": 80
+        }
+      ],
       "link": null
     },
     {

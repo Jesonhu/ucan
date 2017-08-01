@@ -1,19 +1,19 @@
 <template>
-    <div class="goods-detail-wrap" v-if="productDetail !== null">
+    <div class="goods-detail-wrap" v-if="dataFromData !== null">
 
       <history-header :title="title" :currentTab="currentTab" @currentTabFn="currentTabFn"></history-header>
 
       <transition name="move">
       <!-- tab1内容 -->
         <div class="goods-detail-body" v-show="currentTab === 0" :key="0">
-          <div class="img-list"><img :src="productDetail.cover" alt="" class="img"></div>
+          <div class="img-list"><img :src="dataFromData.cover" alt="" class="img"></div>
           <div class="body-main-text">
-            <h2 class="text-title">{{productDetail.name}}</h2>
+            <h2 class="text-title">{{dataFromData.name}}</h2>
             <div class="desc"></div>
             <div class="price-main">
               <div class="price-left">
                 <span class="price-slide">￥</span>
-                <div class="price">{{productDetail.price}}</div>
+                <div class="price">{{dataFromData.price}}</div>
                 <span class="price-slide">.00</span>
               </div>
               <div class="controll">
@@ -45,7 +45,8 @@
       </transition>
 
       <!-- 选购商品 -->
-      <div class="selected-goods-wrap" :class="{'is-active': isShowCartControll}">
+      <div class="selected-goods-wrap"
+       :class="{'is-active': isShowCartControll}">
         <!--<div class="bg-wrap"></div>-->
         <div class="main-bd">
           <div class="goods-pro bottom-1px">
@@ -53,7 +54,7 @@
              :style="{backgroundImage:'url('+ dataFromData.cover +')'}"></div>
             <div class="info">
               <div class="info-bd">
-                <p class="price">价格:<span>￥{{dataFromData.price}}</span></p>
+                <p class="price">价格:<span>￥{{totalPrice}}</span></p>
                 <p class="quantity">库存:{{dataFromData.quantity}}</p>
                 <p class="info-txt">已选:{{dataFromData.title}}</p>
               </div>
@@ -61,9 +62,9 @@
           </div>
           <section class="goods-bd">
             <h5 class="title">选择</h5>
-            <ul class="list bottom-1px">
+            <ul class="list bottom-1px clearfix">
               <li class="item" v-for="(item,index) in dataFromData.typeLists"
-               @click="selected(index)"
+               @click="selectedType(index)"
                :class="{'is-active': currentType == index}">
                 {{item.title}}
               </li>
@@ -78,8 +79,8 @@
             </div>
           </section>
           <div class="footer">
-            <div class="add-cart">立即购买</div>
-            <div class="to-buy">加入购物车</div>
+            <div class="add-cart" @click="goBuy">立即购买</div>
+            <div class="to-buy" @click="addShopCart">加入购物车</div>
           </div>
           <i class="remove fa fa-close" @click="isShowCartControll = false"></i>
         </div>
@@ -92,7 +93,6 @@
   import historyHeader from '../../components/historyheader/historyheader.vue';
   import productData from '../../service/mockdata/home';
   import star from '../../components/star/star';
-  import axios from 'axios';
   import { mapState } from 'vuex'
   import { MessageBox } from 'mint-ui'
 
@@ -103,9 +103,7 @@
         title: this.$route.params.page,
         id: '', // 获取路由传递过来的参数:page
 
-        productDetail: null, // 保存当前产品详情
-        dataFromData: null, // 数据库里的这条数据 （来源于vuex说明该商品已被添加到购物里了）
-        productDataDetail: null, // 数据库获取商品详情
+        dataFromData: null, // 这个商品的数据 目前使用的数据
         isShowCartControll: false,
         count: 0,
         score: 0,
@@ -119,16 +117,10 @@
       let that = this;
     },
     mounted() {
-      const params = this.$route.params; // 获取传递过来的参数
-      const pattern = /\d+/g;
-//      this.id = Number( params.page.match(pattern)[0] ); // 只匹配xxx.html xxx部分
       const queryId = this.$route.query.id
-      console.log(1, this.isaddedShopCart(queryId))
-      axios.get(`${this.host.product.detail}/${queryId}`).then((res) => {
+      // ajax获取当前商品详情
+      this.$http.get(`${this.host.product.detail}/${queryId}`).then((res) => {
         this.dataFromData = res.data.data;
-        this.$nextTick(() => {
-          this._initData();
-        })
       }).catch((err) => {
         console.log(err);
       })
@@ -167,14 +159,14 @@
             dataFromDateBase(); // 数据来自数据库
           }
         };
-
         getData();
       },
       /* 处理header点击后的效果 */
       currentTabFn: function(index) {
         this.currentTab = index;
       },
-      /* 点击添加到购物车 */
+
+      /* 点击加入购物车按钮 */
       addCart() {
         if (this.isLogin) {
           this.isShowCartControll = true;
@@ -191,27 +183,26 @@
           })
         }
       },
+
       toLoginPage () {
         this.$router.push({path: '/login'})
       },
-      /* 购物车里商品数量添加或减少 */
+
+      /* 选择商品数量添加或减少 */
       changeCount(action) {
         const index = this.$store.state.shopCart.selectedGoods.length - 1; // 当前商品在购物车的索引值
         if (action > 0) { // 点击了+
-          this.productDetail.count++;
+          this.dataFromData.count++;
         } else { // 点击了-
-          this.productDetail.count--;
-          if (this.productDetail.count <=0 ) {
+          this.dataFromData.count--;
+          if (this.dataFromData.count <=0 ) {
             this.count = 0;
             this.isShowCartControll = false;
-            this.updateShopCart(0, index);
             return;
           }
         };
-        this.count = this.productDetail.count;
-        this.dataFromData.price = this.productDetail.count * this.dataFromData.price
-        this.updateShopCart(1, index); // <--
       },
+
       /* vuex更新购物车里面商品的数量 */
       updateShopCart(action, index) {
         this.$store.dispatch({ // <-- 提交购物车更改，使导航徽章数量变化
@@ -221,16 +212,30 @@
           index: index
         });
       },
-      selected(_index) {
-        this.dataFromData.price = this.dataFromData.typeLists[_index].price * this.count
+
+      // 选择商品套餐类型
+      selectedType(_index) {
+        Vue.set(this.dataFromData, 'slectedType', true)
+        this.dataFromData.price = this.dataFromData.typeLists[_index].price
         this.dataFromData.quantity = this.dataFromData.typeLists[_index].quantity
-        this.dataFromData.desc = this.dataFromData.typeLists[_index].desc
+        this.dataFromData.title = this.dataFromData.typeLists[_index].title
         this.currentType = _index
       },
+
+      // 点击底部加入购物车
+      addShopCart() {
+        this.$store.dispatch('updateShopCart', this.dataFromData)
+        this.isShowCartControll = false
+      },
+      // 点击立即购买
+      goBuy() {
+
+      },
+
       // 检查当前商品是否已经被加入了购物车
-      isaddedShopCart(_id) {
+      // 也可以不检查，当添加添加到购物车的时候统一检查
+      isAddedShopCart(_id) {
         function isSame(current, index, _array) {
-            console.log(2, current)
             return current.id === _id
         }
         if ( this.shopCartData.length > 0 ) {
@@ -263,7 +268,10 @@
       ...mapState({
         isLogin: state => !!state.user.localUserInfo.loginStatus,
         shopCartData: state => state.shopCart.selectedGoods
-      })
+      }),
+      totalPrice() {
+          return this.dataFromData.count * this.dataFromData.price
+      }
     },
     components: {
       historyHeader,
@@ -378,7 +386,7 @@
     width:100%;
     height:100vh;
     visibility: hidden;
-    transition: all 0.5s linear;
+    transition: all 0.3s linear;
     background:rgba(0,0,0,.5);
     .bg-wrap{
       z-index:99;
@@ -392,8 +400,8 @@
       position: absolute;
       bottom:0;
       width:100%;
-      height:60vh;
-      transform: translateY(60vh);
+      height:70vh;
+      transform: translateY(70vh);
       background:#fff;
       transition: 0.2s transform linear;
       .remove{
@@ -445,12 +453,14 @@
           text-align: left;
         }
         .list{
-          padding:10px 0;
+          padding:10px;
         }
         .item{
+          float:left;
           display:inline-block;
           padding:5px 10px;
           font-size:.5rem;
+          margin-bottom:5px;
           &.is-active{
             color:#fff;
             background-color:$themColor;

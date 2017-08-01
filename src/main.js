@@ -24,6 +24,9 @@ import 'font-awesome/css/font-awesome.min.css'
 import host from './config/host'
 Vue.prototype.host = host
 
+import axios from 'axios'
+Vue.prototype.$http = axios
+
 /* fastclick使用 */
 if ('addEventListener' in document) {
   document.addEventListener('DOMContentLoaded', function () {
